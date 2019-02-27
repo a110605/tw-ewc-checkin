@@ -6,5 +6,5 @@ applications:
   buildpack: sdk-for-nodejs
   command: npm start
   memory: 512MB
-  routes:
-    - route: tw-ewc-checkin.mybluemix.net
+  domain: mybluemix.net
+  host: tw-ewc-checkin
