@@ -4,13 +4,12 @@ var jwt = require("jsonwebtoken");
 
 const IBMCloudEnv = require('ibm-cloud-env');
 IBMCloudEnv.init();
-const environment = IBMCloudEnv.getString('node_env') || 'development';
-var cloudant_url = gConfig[environment].credentials.cloudant_url;
-var cloudant_username = gConfig[environment].cloudant_username;
-var cloudant_password = gConfig[environment].cloudant_password;
-var gmail_id = gConfig.common.gmail_id;
-var gmail_pw = gConfig.common.gmail_pw;
-var sms_url = gConfig.common.sms_url;
+var cloudant_url = IBMCloudEnv.getString('cloudant_url');
+var cloudant_username = IBMCloudEnv.getString('cloudant_username');
+var cloudant_password = IBMCloudEnv.getString('cloudant_password');
+var gmail_id = IBMCloudEnv.getString('gmail_id');
+var gmail_pw = IBMCloudEnv.getString('gmail_pw');
+var sms_url = IBMCloudEnv.getString('sms_url');
 
 // 讀取 Cloudant library
 var Cloudant = require('@cloudant/cloudant');

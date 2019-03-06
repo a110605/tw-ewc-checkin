@@ -18,8 +18,7 @@ require('./services/index')(app);
 
 const IBMCloudEnv = require('ibm-cloud-env');
 IBMCloudEnv.init();
-
-global.gConfig = IBMCloudEnv.getDictionary('tw-ewc-config')
+console.log(IBMCloudEnv.getString('w3id_app_host'))
 const environment = IBMCloudEnv.getString('node_env') || 'development';
 const log4js = require('log4js');
 const logger = log4js.getLogger(appName);
@@ -34,7 +33,8 @@ var bodyParser = require('body-parser');
 
 // view engine setup
 const event_idx = parseInt(IBMCloudEnv.getString('node_checkin_event_idx'));
-const event = gConfig.common.node_checkin_events[event_idx]
+const config = IBMCloudEnv.getDictionary('tw-ewc-config')
+const event = config.node_checkin_events[event_idx]
 logger.info(path.join(__dirname, 'views', event))
 app.set('views', path.join(__dirname, 'views', event));
 app.set('view engine', 'jade');
@@ -94,7 +94,7 @@ server.listen(port, function(){
 /***
  * Enable HTTPS if running locally
  */
-const https_port = gConfig[environment].node_https_port
+const https_port = IBMCloudEnv.getString('node_https_port')
 if (https_port){
     var https = require('https');
     var fs = require('fs');
