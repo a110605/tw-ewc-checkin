@@ -20,8 +20,6 @@ const log4js = require('log4js');
 const IBMCloudEnv = require('ibm-cloud-env');
 IBMCloudEnv.init();
 
-console.log(IBMCloudEnv.getString('w3id_app_host'))
-
 const logger = log4js.getLogger(appName);
 logger.level = IBMCloudEnv.getString('node_log_level').value || 'info'
 app.use(log4js.connectLogger(logger, { level: logger.level }));
