@@ -16,11 +16,11 @@ const app = express();
 const serviceManager = require('./services/service-manager');
 require('./services/index')(app);
 
+const log4js = require('log4js');
 const IBMCloudEnv = require('ibm-cloud-env');
 IBMCloudEnv.init();
+IBMCloudEnv.setLogLevel(log4js.levels.TRACE);
 
-const environment = IBMCloudEnv.getString('node_env') || 'development';
-const log4js = require('log4js');
 const logger = log4js.getLogger(appName);
 logger.level = IBMCloudEnv.getString('node_log_level') || 'info'
 app.use(log4js.connectLogger(logger, { level: logger.level }));
@@ -58,6 +58,7 @@ app.use(function(req, res, next) {
 
 // development error handler
 // will print stacktrace
+const environment = IBMCloudEnv.getString('node_env') || 'development';
 if (environment === 'development') {
   app.use(function(err, req, res, next) {
     res.status(err.status || 500);
