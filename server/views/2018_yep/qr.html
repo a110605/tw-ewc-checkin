@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>TW EWC 62nd Checkin System</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template -->
+    <link href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/one-page-wonder.min.css" rel="stylesheet">
+
+    <style>
+
+      .alert-text, .mustMark {
+        color: #ee0979;
+      }
+      .mustMark {
+        font-weight: 800;
+      }
+      .has-error input,
+      .has-error select {
+        border-color: #ee0979;
+      }
+    </style>
+
+  </head>
+
+  <body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top" style="padding: 0;">
+      <div class="container">
+        <a class="navbar-brand" href="#">TW EWC 62nd Checkin System</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <!--
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+
+            <li class="nav-item">
+              <a class="nav-link" id="username" style="color: #fff;"> Hi IBMer,</a>
+            </li>
+            
+          </ul>
+        </div>
+        -->
+      </div>
+    </nav>
+
+    <section id="rocker">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-lg-6 order-lg-2">
+            <div class="p-5" style="text-align: center;">
+              <a id="qrImgBtn" href="img/03.jpg" download>
+                <img id="qrImg" class="img-fluid" src="img/03.jpg" style="border-radius: 10%;" alt="">
+              </a>
+            </div>
+          </div>
+          <div class="col-lg-6 order-lg-1">
+            <div class="p-5">
+              <h2 class="display-4">立刻將 QR Code 存起來吧！</h2>
+              <p>請將 QR Code 存在手機中或列印出來，在報到處可以加速報到流程，請注意！您仍須攜帶 IBM Badge 查驗。 (當然，這是選擇性的)</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-5 bg-black" >
+      <div class="container">
+        <p class="m-0 text-center text-white small">Copyright &copy; TW EWC 2018</p>
+      </div>
+      <!-- /.container -->
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+
+    <script type="text/javascript">
+
+      // 取得參數 QueryString
+      var getParameterByName = function(name, url) {
+        if (!url) url = window.location.href;
+        name = name.replace(/[\[\]]/g, '\\$&');
+        var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, ' '));
+      }
+
+      var ajaxProcessor = function(method, path, data, callback, failCallback, async) {
+        // POST
+        $.ajax({
+          "method": method,
+          "url": path,
+          "context": document.body,
+          "data": data,
+          "processData": true,
+          "cache": false,
+          "async": async
+        }).done(callback).fail(failCallback);
+      };
+
+      var loadQRcode = function() {
+        var uuid = getParameterByName("uuid");
+        ajaxProcessor('GET','./getcode',{uuid: uuid},
+          function(data){
+            var sn = data.sn;
+            $("#qrImg").attr('src','http://chart.apis.google.com/chart?cht=qr&chs=300x300&chl='+sn+'|'+uuid+'&chld=H|0');
+            $("#qrImgBtn").attr('href','http://chart.apis.google.com/chart?cht=qr&chs=300x300&chl='+sn+'|'+uuid+'&chld=H|0');
+            $("#qrImg").css('border-radius','10%');
+          },function(){
+            // no data
+          },true);
+      };
+
+      $(document).ready(function(){
+        loadQRcode();
+      });
+
+    </script>
+
+  </body>
+
+</html>

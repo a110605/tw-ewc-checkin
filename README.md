@@ -52,7 +52,7 @@ The Web basic starter contains an opinionated set of files for web serving:
 
 The project contains IBM Cloud specific files that are used to deploy the application as part of an IBM Cloud DevOps flow. The `.bluemix` directory contains files used to define the IBM Cloud toolchain and pipeline for your application. The `manifest.yml` file specifies the name of your application in IBM Cloud, the timeout value during deployment, and which services to bind to.
 
-Service credentials are taken from the VCAP_SERVICES environment variable if running IBM Cloud Cloud Foundry, from individual environment variables per service if running on IBM Cloud Container Service (see ./server/config/mappings.json), or from a config file if running locally, named`./server/config/localdev-config.js`.
+Service credentials are taken from the VCAP_SERVICES environment variable if running IBM Cloud Cloud Foundry, from individual environment variables per service if running on IBM Cloud Container Service (see ./server/config/mappings.json), or from a config file if running locally, named`./server/localdev-config.json`.
 
 
 <a name="run"></a>
@@ -61,8 +61,8 @@ Service credentials are taken from the VCAP_SERVICES environment variable if run
 The IBM Cloud development plugin makes it easy to compile and run your application if you do not have all of the tools installed on your computer yet. Your application will be compiled with Docker containers. To compile and run your app, run:
 
 ```bash
-bx dev build
-bx dev run
+ibmcloud dev build
+ibmcloud dev run
 ```
 
 
@@ -78,7 +78,7 @@ Your application is running at: `http://localhost:3000/` in your browser.
 
 
 ##### Session Store
-You may see this warning when running `bx dev run`:
+You may see this warning when running `ibmcloud dev run`:
 ```
 Warning: connect.session() MemoryStore is not
 designed for a production environment, as it will leak
@@ -93,7 +93,7 @@ When deploying to production, it is best practice to configure sessions to be st
 #### Using IBM Cloud development CLI
 To build and debug your app, run:
 ```bash
-bx dev build --debug
-bx dev debug
+ibmcloud dev build --debug
+ibmcloud dev debug
 ```
 

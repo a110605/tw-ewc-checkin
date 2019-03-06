@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>TW EWC 62nd Checkin System</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template -->
+    <link href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/one-page-wonder.min.css" rel="stylesheet">
+
+    <style>
+
+      .alert-text, .mustMark {
+        color: #ee0979;
+      }
+      .mustMark {
+        font-weight: 800;
+      }
+      .has-error input,
+      .has-error select {
+        border-color: #ee0979;
+      }
+    </style>
+
+  </head>
+
+  <body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="#">TW EWC 62nd Checkin System</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+
+            <li class="nav-item">
+              <a class="nav-link" id="username" style="color: #fff;"> Hi IBMer,</a>
+            </li>
+            
+            <li class="nav-item">
+              <a class="nav-link" href="#"> 登出</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <header class="masthead text-center text-white">
+      <div class="masthead-content">
+        <div class="container">
+          <h1 class="masthead-heading mb-0">2018 Sports Day 五力全開</h1>
+          <h2 class="masthead-subheading mb-0">Checkin Smarter</h2>
+          <a href="#register" id="genqr_btn" class="btn btn-primary btn-xl rounded-pill mt-5">立即報名 2018 Sports Day</a>
+        </div>
+      </div>
+      <div class="bg-circle-1 bg-circle"></div>
+      <div class="bg-circle-2 bg-circle"></div>
+      <div class="bg-circle-3 bg-circle"></div>
+      <div class="bg-circle-4 bg-circle"></div>
+    </header>
+
+    <section id="register">
+      <div class="container">
+        <div class="row">
+              <div class="col-12 align-items-start" style="margin-top: 1.5em;">
+                <h2 class="display-4">現正熱映 Sports Day - 立即報名</h2>
+              </div>
+              
+              <div class="col align-items-start">
+                <form id="registerForm" method="post" class="form-horizontal row" action="">
+
+                  <div class="col-6">
+
+                    <div class="form-group col-sm-8">
+                      <label for="exampleInputPassword1">英文姓名</label>
+                      <input type="text" class="form-control" id="inputName" placeholder="Enter English Name" readonly="readonly">
+                    </div>
+
+                    <div class="form-group col-sm-8">
+                      <label for="exampleInputEmail1">IBM Email</label>
+                      <input type="email" class="form-control" id="inputEmail" aria-describedby="emailHelp" placeholder="Enter email" readonly="readonly">
+                      <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+                    </div>
+
+                    <div class="form-group col-sm-8">
+                      <label for="exampleFormControlSelect1">性別/Gender <span class="mustMark">*</span></label>
+                      <select class="form-control" id="genderSelect1" name="genderSelect1">
+                        <option>請選擇</option>
+                        <option>男(M)</option>
+                        <option>女(F)</option>
+                      </select>
+                    </div>
+
+                    <div class="form-group col-sm-8">
+                      <label for="exampleFormControlSelect1">位置/Position <span class="mustMark">*</span></label>
+                      <select class="form-control" id="locationSelect1" name="locationSelect1">
+                        <option>請選擇</option>
+                        <option>CFC</option>
+                        <option>NKO</option>
+                      </select>
+                    </div>
+
+                    <div class="form-group col-sm-8">
+                      <label for="exampleFormControlSelect1">隊伍/Team <span class="mustMark">*</span></label>
+                      <select class="form-control" id="teamSelect1" name="teamSelect1">
+                        <option>請選擇</option>
+                        <option>龍</option>
+                        <option>虎</option>
+                        <option>豹</option>
+                      </select>
+                    </div>
+
+                    <div class="form-group col-sm-8">
+                      <label for="exampleFormControlSelect1">衣服尺寸/T-shirt Size <span class="mustMark">*</span></label>
+                      <select class="form-control" id="clothesSizeSelect1" name="clothesSizeSelect1">
+                        <option>請選擇</option>
+                        <option>S</option>
+                        <option>M</option>
+                        <option>L</option>
+                        <option>XL</option>
+                      </select>
+                    </div>
+
+                  </div>
+                  <div class="col-6">
+
+                    <div class="form-group col-sm-8">
+                      <label for="exampleInputPassword1">中文姓名/Chinese Name<span class="mustMark">*</span></label>
+                      <input type="text" class="form-control" id="chineseName1" name="chineseName1" placeholder="請輸入中文姓名">
+                    </div>
+
+                    <div class="form-group col-sm-8">
+                      <label for="exampleInputPassword1">分機/Ext</label>
+                      <input type="text" class="form-control" id="extendNo1" name="extendNo1" placeholder="請輸入分機">
+                    </div>
+
+                    <div class="form-group col-sm-8">
+                      <label for="exampleInputPassword1">行動電話/Mobile Phone <span class="mustMark">*</span></label>
+                      <input type="text" class="form-control" id="mobileNo1" name="mobileNo1" placeholder="格式：09XXXXXXXX">
+                    </div>      
+                    
+                    <div class="form-group col-sm-8">
+                      <label>五大競賽</label><br />
+                      
+                      <div class="form-check form-check-inline">
+                          <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                          <label class="form-check-label" for="inlineCheckbox1">籃球</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                          <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+                          <label class="form-check-label" for="inlineCheckbox2">排球</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                          <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3">
+                          <label class="form-check-label" for="inlineCheckbox3">羽球</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                          <input class="form-check-input" type="checkbox" id="inlineCheckbox4" value="option4">
+                          <label class="form-check-label" for="inlineCheckbox4">桌球</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                          <input class="form-check-input" type="checkbox" id="inlineCheckbox5" value="option5">
+                          <label class="form-check-label" for="inlineCheckbox5">熱舞</label>
+                      </div>
+                    </div>
+
+                    <hr />
+
+                    <div class="form-group col-sm-8">
+                      <div class="form-check form-check-inline">
+                          <input class="form-check-input" type="checkbox" name="personalDataCheck1" id="personalDataCheck1" value="Y">
+                          <label class="form-check-label" for="personalDataCheck1">我同意將個人資料提供給 EWC <span class="mustMark">*</span></label>
+                      </div>
+                    </div>
+
+                    <div class="form-group col-sm-8">
+                        <button type="submit" id="regSubmitBtn" class="btn btn-primary">報名</button>
+                        <p id="regSubmitText"></p>
+                    </div>
+                  </div>
+
+                </form>
+              </div>
+
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-lg-6 order-lg-2">
+            <div class="p-5">
+              <img class="img-fluid rounded-circle" src="img/01.jpg" alt="">
+            </div>
+          </div>
+          <div class="col-lg-6 order-lg-1">
+            <div class="p-5">
+              <h2 class="display-4">For those about to rock...</h2>
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod aliquid, mollitia odio veniam sit iste esse assumenda amet aperiam exercitationem, ea animi blanditiis recusandae! Ratione voluptatum molestiae adipisci, beatae obcaecati.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-lg-6">
+            <div class="p-5">
+              <img class="img-fluid rounded-circle" src="img/02.jpg" alt="">
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="p-5">
+              <h2 class="display-4">We salute you!</h2>
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod aliquid, mollitia odio veniam sit iste esse assumenda amet aperiam exercitationem, ea animi blanditiis recusandae! Ratione voluptatum molestiae adipisci, beatae obcaecati.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="rocker">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-lg-6 order-lg-2">
+            <div class="p-5" style="text-align: center;">
+              <a id="qrImgBtn" href="img/03.jpg" download>
+                <img id="qrImg" class="img-fluid" src="img/03.jpg" style="border-radius: 10%;" alt="">
+              </a>
+            </div>
+          </div>
+          <div class="col-lg-6 order-lg-1">
+            <div class="p-5">
+              <h2 class="display-4">立刻將 QR Code 存起來吧！</h2>
+              <p>請將 QR Code 存在手機中或列印出來，在報到處可以加速報到流程，請注意！您仍須攜帶 IBM Badge 查驗。 (當然，這是選擇性的)</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-5 bg-black">
+      <div class="container">
+        <p class="m-0 text-center text-white small">Copyright &copy; TW EWC 2018</p>
+      </div>
+      <!-- /.container -->
+    </footer>
+
+    <!-- Modal -->
+    <div class="modal fade" id="postLoadingModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">報名處理中，請稍等...</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <span id="postLoadingModalText"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="postModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle">報名結果</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <span id="postModalText"></span>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">好的我知道了</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+
+    <script type="text/javascript">
+
+      var user = {};
+
+      var getToken = function(callback) {
+        $.ajax({
+          'url': './getToken',
+          'success': callback,
+          'error': callback
+        });
+      };
+
+      var getProfile = function(token, callback) {
+        $.ajax({
+          'url': '/api/profile?token='+token,
+          'success': callback,
+          'error': callback
+        })
+      };
+
+      var ajaxProcessor = function(method, path, data, callback, failCallback, async) {
+        // POST
+        $.ajax({
+          "method": method,
+          "url": path,
+          "context": document.body,
+          "data": data,
+          "processData": true,
+          "cache": false,
+          "async": async
+        }).done(callback).fail(failCallback);
+      };
+
+      var loadProfile = function() {
+        ajaxProcessor('GET','./form/register/data',{},
+          function(data){
+
+            if(data && data.uuid) {
+
+                user.uuid = data.uuid;
+
+                $("#genderSelect1").val(data.genderSelect1); 
+                $("#locationSelect1").val(data.locationSelect1);
+                $("#teamSelect1").val(data.teamSelect1);
+                $("#clothesSizeSelect1").val(data.clothesSizeSelect1);
+                $("#chineseName1").val(data.chineseName1);
+                $("#extendNo1").val(data.extendNo1);
+                $("#mobileNo1").val(data.mobileNo1);
+                if(data.inlineCheckbox1 == 'true') {
+                  $("#inlineCheckbox1").attr("checked","checked");
+                }
+                if(data.inlineCheckbox2 == 'true') {
+                  $("#inlineCheckbox2").attr("checked","checked");
+                }
+                if(data.inlineCheckbox3 == 'true') {
+                  $("#inlineCheckbox3").attr("checked","checked");
+                }
+                if(data.inlineCheckbox4 == 'true') {
+                  $("#inlineCheckbox4").attr("checked","checked");
+                }
+                if(data.inlineCheckbox5 == 'true') {
+                  $("#inlineCheckbox5").attr("checked","checked");
+                }
+                $("#personalDataCheck1").attr("checked","checked");
+
+                $("#genderSelect1").attr("disabled","disabled"); 
+                $("#locationSelect1").attr("disabled","disabled"); 
+                $("#teamSelect1").attr("disabled","disabled"); 
+                $("#clothesSizeSelect1").attr("disabled","disabled"); 
+                $("#chineseName1").attr("readonly","readonly"); 
+                $("#extendNo1").attr("readonly","readonly"); 
+                $("#mobileNo1").attr("readonly","readonly"); 
+                $("#inlineCheckbox1").attr("disabled","disabled"); 
+                $("#inlineCheckbox2").attr("disabled","disabled"); 
+                $("#inlineCheckbox3").attr("disabled","disabled"); 
+                $("#inlineCheckbox4").attr("disabled","disabled"); 
+                $("#inlineCheckbox5").attr("disabled","disabled"); 
+                $("#personalDataCheck1").attr("disabled","disabled");
+                $("#regSubmitBtn").hide();
+                $("#regSubmitText").html("您已報名完成 <a href=\"#rocker\" id=\"generateQRLink\" class=\"btn btn-primary \">立即產生報到網址</a>");
+                $("#generateQRLink").click(genQR);
+            }
+
+          },function(){
+            // no data
+          },true);
+      };
+
+      var genQR = function(){
+          var sn = user.id.substring(0, 6);
+          $("#qrImg").attr('src','http://chart.apis.google.com/chart?cht=qr&chs=300x300&chl='+sn+"|"+user.uuid+'&chld=H|0');
+          $("#qrImgBtn").attr('href','http://chart.apis.google.com/chart?cht=qr&chs=300x300&chl='+sn+"|"+user.uuid+'&chld=H|0');
+          $("#qrImg").css('border-radius','10%');
+      };
+
+      $(document).ready(function(){
+
+        getToken(function(token){
+          getProfile(token.token, function(data) {
+            user = data.result.user;
+            $('#username').html("Hi " + user.displayName + ",");
+            $('#inputName').val(user.displayName);
+            $('#inputEmail').val(user.email);
+          });
+        });
+        
+        $("#genqr_btn").click(genQR);
+
+        loadProfile();
+
+        $.validator.setDefaults( {
+			    submitHandler: function () {
+
+            var requestRegisterParams = {
+                genderSelect1: $("#genderSelect1").val(), 
+                locationSelect1: $("#locationSelect1").val(),
+                teamSelect1: $("#teamSelect1").val(),
+                clothesSizeSelect1: $("#clothesSizeSelect1").val(),
+                chineseName1: $("#chineseName1").val(),
+                extendNo1: $("#extendNo1").val(),
+                mobileNo1: $("#mobileNo1").val(),
+                inlineCheckbox1: $("#inlineCheckbox1").is(":checked"),
+                inlineCheckbox2: $("#inlineCheckbox2").is(":checked"),
+                inlineCheckbox3: $("#inlineCheckbox3").is(":checked"),
+                inlineCheckbox4: $("#inlineCheckbox4").is(":checked"),
+                inlineCheckbox5: $("#inlineCheckbox5").is(":checked")
+            };
+
+            $('#postLoadingModalText').html("正在紀錄您的報名資料送出，請稍等...");
+            $('#postLoadingModal').modal({ show: true});
+
+            ajaxProcessor('POST','./form/register',requestRegisterParams,
+              function(data){
+                console.log(data);
+                if(data.success) {
+                  $('#postModalText').html("報名成功");
+                  loadProfile();
+                } else {
+                  $('#postModalText').html("報名沒有成功，請再嘗試一次");
+                }
+                setTimeout(function(){$('#postLoadingModal').modal("hide");$('#postModal').modal({ show: true});}, 500);
+              },function(){
+                $('#postModalText').html("報名沒有成功，請再嘗試一次");
+                setTimeout(function(){$('#postLoadingModal').modal("hide");$('#postModal').modal({ show: true});}, 500);
+              },true);
+			    }
+		    } );
+
+        jQuery.validator.addMethod("notEqual", function(value, element, param) {
+          return this.optional(element) || value != param;
+        }, "Please specify a different (non-default) value");
+
+        jQuery.validator.addMethod("phoneStartingWith09", function(phone_number, element) {
+            phone_number = phone_number.replace(/\s+/g, ""); 
+            return this.optional(element) || phone_number.match(/^09\d{8,}$/);
+        }, "Phone number should start with 09");
+
+        $( "#registerForm" ).validate( {
+          rules: {
+            genderSelect1: {
+              required: true,
+              notEqual: "請選擇"
+            },
+            locationSelect1: {
+              required: true,
+              notEqual: "請選擇"
+            },
+            clothesSizeSelect1: {
+              required: true,
+              notEqual: "請選擇"
+            },
+            teamSelect1: {
+              required: true,
+              notEqual: "請選擇"
+            },
+            chineseName1: {
+              required: true,
+              notEqual: "請選擇"
+            },
+            extendNo1: {
+              required: false,
+              rangelength: [4, 4],
+              digits: true
+            },
+            mobileNo1: {
+              required: true,
+              rangelength: [10, 10],
+              digits: true,
+              phoneStartingWith09: true
+            },
+            personalDataCheck1: {
+              required: true
+            }
+          },
+          messages: {
+            genderSelect1: {
+              required: "Please provide a gender",
+              notEqual: "Please provide a gender"
+            },
+            locationSelect1: {
+              required: "Please provide a location",
+              notEqual: "Please provide a location"
+            },
+            clothesSizeSelect1: {
+              required: "Please provide a clothes size",
+              notEqual: "Please provide a clothes size"
+            },
+            teamSelect1: {
+              required: "Please provide a team",
+              notEqual: "Please provide a team"
+            },
+            chineseName1: {
+              required: "Please provide a Chinese name",
+              notEqual: "Please provide a Chinese name"
+            },
+            extendNo1: {
+              required: "Please provide a ext no",
+              rangelength: "Please provide a ext no",
+              digits: "Please provide a ext no"
+            },
+            mobileNo1: {
+              required: "Please provide a mobile",
+              rangelength: "Please provide a mobile",
+              digits: "Please provide a mobile"
+            },
+            personalDataCheck1: {
+              required: "Please accept our policy"
+            }
+          },
+          errorElement: "small",
+          errorPlacement: function ( error, element ) {
+            // Add the `help-block` class to the error element
+            error.addClass( "help-block form-text alert-text" );
+            // Add `has-feedback` class to the parent div.form-group
+            // in order to add icons to inputs
+            element.parents( ".col-sm-5" ).addClass( "has-feedback" );
+
+            if ( element.prop( "type" ) === "checkbox" ) {
+              error.insertAfter( element.parent( "label" ) );
+            } else {
+              error.insertAfter( element );
+            }
+
+            // Add the span element, if doesn't exists, and apply the icon classes to it.
+            if ( !element.next( "span" )[ 0 ] ) {
+              $( "<span class='glyphicon glyphicon-remove form-control-feedback'></span>" ).insertAfter( element );
+            }
+          },
+          success: function ( label, element ) {
+            // Add the span element, if doesn't exists, and apply the icon classes to it.
+            if ( !$( element ).next( "span" )[ 0 ] ) {
+              $( "<span class='glyphicon glyphicon-ok form-control-feedback'></span>" ).insertAfter( $( element ) );
+            }
+          },
+          highlight: function ( element, errorClass, validClass ) {
+            $( element ).parents( ".col-sm-8" ).addClass( "has-error" ).removeClass( "has-success" );
+            $( element ).next( "span" ).addClass( "glyphicon-remove" ).removeClass( "glyphicon-ok" );
+            console.log("test2");
+          },
+          unhighlight: function ( element, errorClass, validClass ) {
+            $( element ).parents( ".col-sm-8" ).addClass( "has-success" ).removeClass( "has-error" );
+            $( element ).next( "span" ).addClass( "glyphicon-ok" ).removeClass( "glyphicon-remove" );
+          }
+			  } );
+
+
+      });
+
+    </script>
+
+  </body>
+
+</html>

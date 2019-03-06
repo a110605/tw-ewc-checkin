@@ -1,14 +1,9 @@
 var express = require('express');
-
-module.exports = function(app) {
-  var router = express.Router();
-
+var router = express.Router();
+module.exports = function() {
   router.get('/', function (req, res, next) {
     res.json({status: 'UP'});
   });
-
-  app.use("/health", router);
+  router.use("/health", router);
+  return router
 }
-
-
-

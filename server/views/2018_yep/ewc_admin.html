@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>IBM EWC 62nd Enroll System - Backend</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template -->
+    <link href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/one-page-wonder.min.css" rel="stylesheet">
+
+    <style>
+
+      .alert-text, .mustMark {
+        color: #ee0979;
+      }
+      .mustMark {
+        font-weight: 800;
+      }
+      .has-error input,
+      .has-error select {
+        border-color: #ee0979;
+      }
+
+      .registerForm th[scope=col] {
+        background: rgb(31,116,189);
+        color: #fff;
+      }
+
+      .registerForm th[scope=row] {
+        background: rgb(223,234,245);
+      }
+
+      .registerForm td,
+      .registerForm th {
+        border: 1px solid #999;
+      } 
+
+      .table.registerForm thead th {
+        border-bottom: 2px solid #999;
+      }
+
+    </style>
+
+  </head>
+
+  <body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="#">IBM EWC 62nd Enroll System</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+
+            <li class="nav-item">
+              <a class="nav-link" id="username" style="color: #fff;"> Hi IBMer</a>
+            </li>
+            
+            <!--
+            <li class="nav-item">
+              <a class="nav-link" href="#"> 登出</a>
+            </li>
+            -->
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!--
+    <header class="masthead text-center text-white">
+      <div class="masthead-content">
+        <div class="container">
+          <h1 class="masthead-heading mb-0">2018 Sports Day 五力全開</h1>
+          <h2 class="masthead-subheading mb-0">Checkin Smarter</h2>
+          <a href="#register" id="genqr_btn" class="btn btn-primary btn-xl rounded-pill mt-5">立即報名 2018 Sports Day</a>
+        </div>
+      </div>
+      <div class="bg-circle-1 bg-circle"></div>
+      <div class="bg-circle-2 bg-circle"></div>
+      <div class="bg-circle-3 bg-circle"></div>
+      <div class="bg-circle-4 bg-circle"></div>
+    </header>
+    -->
+
+  <section id="register" style="margin-top: 100px; margin-bottom: 100px; ">
+    <div class="container">
+
+
+
+      <table class="table table-bordered registerForm">
+              <thead>
+                <tr>
+                  <th scope="col" colspan="2" class="text-center">2018 YEP 查詢報名結果</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">員工證號 (Serial No)：</th>
+                  <td>
+                    <input type="text" name="query_key" id="query_key">
+                  </td>
+                </tr>
+              </tbody>
+            </table>  
+            
+
+      <div class="text-center">
+        <button type="submit" id="regSubmitConfirmBtn" class="btn btn-primary">確定</button>
+      </div>
+
+      <br />
+
+      <div class="alert alert-primary" role="alert" id="success_msg" style="width: 100%">
+              報名完成
+            </div>
+
+      <br />
+
+      <div class="row" id="confirmForm">
+      <div class="col-12">
+      <table class="table table-bordered registerForm">
+              <thead>
+                <tr>
+                  <th scope="col" colspan="4" class="text-center">IBMer 報名資料</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">IBMer報名資料</th>
+                  <th scope="row" colspan="3">
+                    <span id="userTypeRadioOptionsConfirm"></span>
+                  </th>
+                </tr>
+                <tr>
+                  <th scope="row">員工證號 (Serial No)：</th>
+                  <td>
+                    <span id="inputSNConfirm"></span>
+                  </td>
+                  <th scope="row">Email ：</th>
+                  <td>
+                    <span id="inputEmailConfirm"></span>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">英文姓名 (English Name)：</th>
+                  <td>
+                    <span id="inputEnglishNameConfirm"></span>
+                  </td>
+                  <th scope="row">中文姓名 (Chinese Name)：</th>
+                  <td>
+                    <span id="inputChineseName1Confirm"></span>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">部門 (Department)：</th>
+                  <td>
+                    <span id="departmentSelect1Confirm"></span>
+                  </td>
+                  <th scope="row">Location：</th>
+                  <td>
+                    <span id="locationSelect1Confirm"></span>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">手機號碼 (Mobile)：</th>
+                  <td>
+                    <span id="mobileNo1Confirm"></span>
+                  </td>
+                  <th scope="row">是否吃素：</th>
+                  <td>
+                    <span id="vegetarianRadioOptions1Confirm"></span>
+                  </td>
+                </tr>
+
+                <tr>
+                  <th scope="row">是否攜伴：</th>
+                  <td>
+                    <span id="participantSelect1Confirm"></span>
+                  </td>
+                  <th scope="row">親友是否吃素：</th>
+                  <td>
+                    <span id="vegetarianRadioOptions2Confirm"></span>
+                  </td>
+                </tr>
+
+                <tr>
+                  <th scope="row">最後修改者：</th>
+                  <td>
+                    <span id="lastModUserConfirm"></span>
+                  </td>
+                  <th scope="row">修改時間：</th>
+                  <td>
+                    <span id="lastModTsConfirm"></span>
+                  </td>
+                </tr>
+
+              </tbody>
+            </table> 
+
+            <div class="col-12 text-center">
+              <button type="submit" id="editBtn" class="btn btn-primary">修改資料</button>
+              <button type="button" id="histBtn" class="btn btn-primary">查詢歷史紀錄</button>
+            </div>
+
+        </div>
+        </div>
+
+        <div class="row" id="histSection">
+        <div class="col-12">
+
+          <br /><br />
+
+          <table class="table table-bordered registerForm">
+              <thead>
+                <tr>
+                  <th scope="col" colspan="4" class="text-center"><span id="hist_title"></span></th>
+                </tr>
+              </thead>
+              <tbody id="hist_rows">
+                
+              </tbody>
+            </table> 
+
+        </div>
+        </div>
+
+        <div class="row" id="editSection">
+        <div class="col-12">
+            <form id="registerForm" method="post" class="form-horizontal">
+            <table class="table table-bordered registerForm">
+              <thead>
+                <tr>
+                  <th scope="col" colspan="4" class="text-center">報名資料修改</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">員工證號 (Serial No)：</th>
+                  <td>
+                    <input type="text" class="form-control" id="inputSN" name="inputSN" placeholder="Enter SN" readonly="readonly">
+                    <input type="text" class="form-control" id="userTypeRadioOptions" name="userTypeRadioOptions" hidden="hidden">
+                  </td>
+                  <th scope="row">Email ：</th>
+                  <td>
+                    <input type="email" class="form-control" id="inputEmail" name="inputEmail" aria-describedby="emailHelp" placeholder="Enter email">
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">英文姓名 (English Name)：</th>
+                  <td>
+                    <input type="text" class="form-control" id="inputEnglishName" name="inputEnglishName" placeholder="Enter English Name">
+                  </td>
+                  <th scope="row">中文姓名 (Chinese Name)：</th>
+                  <td>
+                    <input type="text" class="form-control" id="inputChineseName1" name="inputChineseName1" placeholder="請輸入中文姓名">
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">部門 (Department)：</th>
+                  <td>
+                    <select class="form-control" id="departmentSelect1" name="departmentSelect1">
+                      <option>請選擇</option>
+                      <option>Analytic</option>
+                      <option>CDL</option>
+                      <option>Cloud</option>
+                      <option>Cognitive Solution</option>
+                      <option>CSL</option>
+                      <option>CTA</option>
+                      <option>Digital Business</option>
+                      <option>ESU (T1-T6)</option>
+                      <option>F&O</option>
+                      <option>GBP</option>
+                      <option>GBS</option>
+                      <option>GTS</option>
+                      <option>HR</option>
+                      <option>IGF</option>
+                      <option>Legal</option>
+                      <option>M&C</option>
+                      <option>Others</option>
+                      <option>System Hardware</option>
+                      <option>System Software</option>
+                      <option>T&O / Finance</option>
+                    </select>
+                  </td>
+                  <th scope="row">Location：</th>
+                  <td>
+                    <select class="form-control" id="locationSelect1" name="locationSelect1">
+                      <option>請選擇</option>
+                      <option>CFC</option>
+                      <option>NKO</option>
+                      <option>Beitou</option>
+                      <option>林口E-Center</option>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">手機號碼 (Mobile)：</th>
+                  <td>
+                    <input type="text" class="form-control" id="mobileNo1" name="mobileNo1" placeholder="格式：09XXXXXXXX">
+                  </td>
+                  <th scope="row">是否吃素：</th>
+                  <td>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="vegetarianRadioOptions1" id="vegetarianRadioOptions1y" value="Y">
+                      <label class="form-check-label" for="vegetarianRadioOptions1y">是</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="vegetarianRadioOptions1"  id="vegetarianRadioOptions1n" value="N" checked="checked">
+                      <label class="form-check-label" for="vegetarianRadioOptions1n">否</label>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">是否攜伴：</th>
+                  <td>
+                    <div class="form-check form-check-inline">
+                      <label class="form-check-label" for="participantSelect1">
+                        <select class="form-control" id="participantSelect1" name="participantSelect1">
+                          <option>請選擇</option>
+                          <option value="不攜伴">不攜伴</option>
+                        </select>
+                      </label>
+                    </div>
+                  </td>
+                  <th scope="row"><span class="friend1-vegetarian-content">親友是否吃素：</span></th>
+                  <td>
+                    <div class="form-check form-check-inline friend1-vegetarian-content">
+                      <input class="form-check-input" type="radio" name="vegetarianRadioOptions2" id="vegetarianRadioOptions2y" value="Y">
+                      <label class="form-check-label" for="vegetarianRadioOptions2y">是</label>
+                    </div>
+                    <div class="form-check form-check-inline friend1-vegetarian-content">
+                      <input class="form-check-input" type="radio" name="vegetarianRadioOptions2" id="vegetarianRadioOptions2n" value="N" checked="checked">
+                      <label class="form-check-label" for="vegetarianRadioOptions2y">否</label>
+                    </div>
+                  </td>
+                </tr>
+
+              </tbody>
+            </table>
+
+            <div class="col-12 text-center">
+              <button type="submit" id="regSubmitBtn" class="btn btn-primary">確認送出</button>
+            </div>
+
+          </form>
+        </div></div>
+
+
+    </div>
+  </section>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="postLoadingModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">正在查詢，請稍等...</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <span id="postLoadingModalText"></span>
+            <i class="fa fa-gear fa-spin" style="font-size:24px"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="py-5 bg-black">
+      <div class="container">
+        <p class="m-0 text-center text-white small">IBM Taiwan EWC 62nd - 如有相關疑問，請聯絡 EWC – Mimmie Chu/Taiwan/Contr/IBM (#3841)</p>
+      </div>
+      <!-- /.container -->
+    </footer>
+
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+
+    <script type="text/javascript">
+
+      var user = {};
+
+      var getToken = function(callback) {
+        $.ajax({
+          'url': './getToken',
+          'success': callback,
+          'error': callback
+        });
+      };
+
+      var getProfile = function(token, callback) {
+        $.ajax({
+          'url': '/api/profile?token='+token,
+          'success': callback,
+          'error': callback
+        })
+      };
+
+      var ajaxProcessor = function(method, path, data, callback, failCallback, async) {
+        // POST
+        $.ajax({
+          "method": method,
+          "url": path,
+          "context": document.body,
+          "data": data,
+          "processData": true,
+          "cache": false,
+          "async": async
+        }).done(callback).fail(failCallback);
+      };
+
+      var username, email, sn;
+
+      $(document).ready(function(){
+
+        getToken(function(token){
+          getProfile(token.token, function(data) {
+            user = data.result.user;
+            $('#username').html("Hi " + user.displayName);
+            $('#inputName').val(user.displayName);
+            $('#inputEmail').val(user.email);
+            username = user.displayName;
+            email = user.email;
+            sn = user.id.substring(0, 6);
+          });
+        });
+
+        $("#confirmForm").hide();
+        $("#editSection").hide();
+        $("#success_msg").hide();
+        $("#histSection").hide();
+
+        $("#editBtn").click(function(){
+          $("#success_msg").html("請進行編輯");
+          $("#confirmForm").hide();
+          $("#histSection").hide();
+          $("#editSection").show();
+        });
+
+        $("#histBtn").click(function(){
+          loadSingleUserEnrollHistInfo();
+        });
+        
+        var currentQueryLastRecord = {};
+
+        var loadSingleUserEnrollInfo = function(postMessage){
+
+          $("#success_msg").hide();
+          $("#editSection").hide();
+          $("#histSection").hide();
+          $('#postLoadingModalText').html("正在查詢歷史紀錄，請稍等...");
+          $('#postLoadingModal').modal({ show: true});
+
+          ajaxProcessor('GET','./form/query_enroll_last_record',{"querySN":$("#query_key").val()},
+            function(data){
+              console.log(data);
+
+              $('#postLoadingModal').modal("hide");
+              
+
+              // 查詢成功
+              if(data.success) {
+
+                // show confirm data
+                var last_hist = data.result;
+                currentQueryLastRecord = last_hist;
+                $("#userTypeRadioOptionsConfirm").html(last_hist.userTypeRadioOptions);
+                $("#inputSNConfirm").html(last_hist.inputSN);
+                $("#inputEmailConfirm").html(last_hist.inputEmail);
+                $("#inputEnglishNameConfirm").html(last_hist.inputEnglishName);
+                $("#inputChineseName1Confirm").html(last_hist.inputChineseName1);
+                $("#departmentSelect1Confirm").html(last_hist.departmentSelect1);
+                $("#locationSelect1Confirm").html(last_hist.locationSelect1);
+                $("#mobileNo1Confirm").html(last_hist.mobileNo1);
+                $("#vegetarianRadioOptions1Confirm").html(last_hist.vegetarianRadioOptions1=="N" ? "否" : "是");
+
+                $("#vegetarianRadioOptions2Confirm").html(last_hist.vegetarianRadioOptions2=="N" ? "否" : "是");
+
+                $("#participantSelect1Confirm").html(last_hist.participantSelect1);
+                var lastModUser = last_hist.lastModUser.split("|");
+                $("#lastModUserConfirm").html(lastModUser[1] + " ("+lastModUser[0]+")");
+                var lastModTs = last_hist.lastModTs.replace(/T/g, " ").replace(/Z/g, " ");
+                $("#lastModTsConfirm").html(lastModTs);
+
+                // filled edit data
+                var employee_type = "", usertype="";
+                var sn = last_hist.inputSN;
+                $("#inputSN").val(sn);
+                var regular_pattern1 = /^\d/i;
+                var regular_pattern2 = /^\ZZ/i;
+                // regular
+                if(regular_pattern1.test(sn) || regular_pattern2.test(sn)) {
+                    usertype = "Regular";
+                } else {
+                    usertype = "Contractor";
+                }
+                // 攜帶伴侶選項
+                var regularOptionsHTML = '<option>請選擇</option><option value="不攜伴">不攜伴</option><option value="1位">1位 (IBMer親友免費)</option>';
+                var contractorOptionsHTML = '<option>請選擇</option><option value="不攜伴">不攜伴</option><option value="1位">1位 (Contractor親友自費800元)</option>';
+                if(usertype == "Regular") {
+                  $("#participantSelect1").html(regularOptionsHTML);
+                } else {
+                  $("#participantSelect1").html(contractorOptionsHTML);
+                }
+                $(".friend1-vegetarian-content").hide();
+
+
+                $("#inputSN").val(last_hist.inputSN);
+                $('#userTypeRadioOptions').val(last_hist.userTypeRadioOptions);
+                $("#userTypeButtons").hide();
+                $("#userTypeWording").html(usertype);
+
+                $("#inputEmail").val(last_hist.inputEmail);
+                $("#inputEnglishName").val(last_hist.inputEnglishName);
+                $("#inputChineseName1").val(last_hist.inputChineseName1);
+                $("#departmentSelect1").val(last_hist.departmentSelect1);
+                $("#locationSelect1").val(last_hist.locationSelect1);
+                $("#mobileNo1").val(last_hist.mobileNo1);
+                $('input[name=vegetarianRadioOptions1][value='+last_hist.vegetarianRadioOptions1+']').prop("checked","checked");
+                $('select[name=participantSelect1] option[value='+last_hist.participantSelect1+']').prop("selected","selected");
+                $('#personalInfoCheckbox1').prop('checked', true);
+
+                $('input[name=vegetarianRadioOptions2][value='+last_hist.vegetarianRadioOptions2+']').prop("checked","checked");
+
+                if(last_hist && last_hist.participantSelect1 == "1位") {
+                  $(".friend1-vegetarian-content").show();
+                } else {
+                  // default display
+                }
+
+                if(postMessage) {
+                  $("#success_msg").html(postMessage);
+                } else {
+                  $("#success_msg").html("查詢完成");
+                }
+                
+                $("#success_msg").show();
+                $("#confirmForm").show();
+
+              // 查詢結果異常
+              } else {
+
+                $("#success_msg").html("查無資料，詳細錯誤訊息為：" + JSON.stringify(data));
+                $("#success_msg").show();
+
+              }
+
+            },function(){
+              console.log("Err");
+              console.log(data);
+            },true);
+        };
+
+        var loadSingleUserEnrollHistInfo = function() {
+          ajaxProcessor('GET','./form/query_enroll_hist',{"querySN":currentQueryLastRecord.inputSN},
+            function(data){
+              if(data.success) {
+                var result = data.result;
+                console.log(data.result);
+                var rowsHTML = "";
+                for(var i=0; i<result.length; i++) {
+                    var currentResultSet = result[i];
+
+                    var lastModUser = (lastModUser) ? currentResultSet.lastModUser.split("|") : "";
+                    var lastModTs = currentResultSet.lastModTs.replace(/T/g, " ").replace(/Z/g, " ");
+
+                    var details = 
+                      "員工類型:" + currentResultSet.userTypeRadioOptions + "<br />" + 
+                      "員工證號:" + currentResultSet.inputSN + "<br />" + 
+                      "電子郵件:" + currentResultSet.inputEmail + "<br />" + 
+                      "英文姓名:" + currentResultSet.inputEnglishName + "<br />" + 
+                      "中文姓名:" + currentResultSet.inputChineseName1 + "<br />" + 
+                      "部門:" + currentResultSet.departmentSelect1 + "<br />" + 
+                      "位置:" + currentResultSet.locationSelect1 + "<br />" + 
+                      "手機號碼:" + currentResultSet.mobileNo1 + "<br />" + 
+                      "本人是否吃素:" + currentResultSet.vegetarianRadioOptions1 + "<br />" + 
+                      "是否攜伴:" + currentResultSet.participantSelect1 + "<br />" + 
+                      "親友是否吃素:" + currentResultSet.vegetarianRadioOptions2;
+
+                    var currentRow = '<tr><th scope="row">' + lastModTs + '</th><td colspan="3">'+details+'</td></tr>';
+                    rowsHTML += currentRow;
+                }
+
+                $("#hist_title").html(currentQueryLastRecord.inputEnglishName + " " + currentQueryLastRecord.inputChineseName1 + " (" + currentQueryLastRecord.inputSN + ") 的歷史紀錄");
+                $("#hist_rows").html(rowsHTML);
+                $("#histSection").show();
+
+              }
+            }
+          );
+        };
+
+        $('#query_key').keypress(function(e){
+          if(e.which == 13) {
+            loadSingleUserEnrollInfo();
+          }
+        });
+
+        $("#regSubmitConfirmBtn").click(function(){loadSingleUserEnrollInfo();});
+
+        var sendModifyUser = function(){
+
+          $('#exampleModalLongTitle').html("正在送出報名資料");
+          $('#postLoadingModalText').html("正在送出報名資料，請稍候");
+          $('#postLoadingModal').modal({ show: true});
+
+          var confirmedRequestRegisterParams = {
+            userTypeRadioOptions: $('#userTypeRadioOptions').val(),
+            inputSN: $("#inputSN").val(), 
+            inputEmail: $("#inputEmail").val(), 
+            inputEnglishName: $("#inputEnglishName").val(),
+            inputChineseName1: $("#inputChineseName1").val(),
+            departmentSelect1: $("#departmentSelect1").val(),
+            locationSelect1: $("#locationSelect1").val(),
+            mobileNo1: $("#mobileNo1").val(),
+            vegetarianRadioOptions1: $('input[name=vegetarianRadioOptions1]:checked', '#registerForm').val(),
+
+            vegetarianRadioOptions2: $('input[name=vegetarianRadioOptions2]:checked', '#registerForm').val(),
+
+            participantSelect1: $("#participantSelect1").val()
+          };
+
+          ajaxProcessor('POST','./form/update_enroll',confirmedRequestRegisterParams,
+            function(data){
+              console.log(data);
+              if(data.success) {
+                $('#postModalText').html("資料更新完成");
+                loadSingleUserEnrollInfo("資料更新完成");
+              } else {
+                $('#postModalText').html("資料更新沒有成功，請再嘗試一次");
+              }
+              setTimeout(
+                function(){
+                  $('#postLoadingModal').modal("hide");
+                  $('#postModal').modal({ show: true});
+                }, 500);
+            },function(){
+              $('#postModalText').html("資料更新沒有成功，請再嘗試一次");
+              setTimeout(
+                function(){
+                  $('#postLoadingModal').modal("hide");
+                  $('#postModal').modal({ show: true});
+                  $("#success_msg").html("報名沒有成功，請再嘗試一次，如仍有問題請聯絡系統管理人員");
+                  $("#success_msg").show();
+                }, 500);
+            },true);
+
+        };
+
+        $.validator.setDefaults( {
+            // valid and submit
+            submitHandler: function(){
+              sendModifyUser();
+            }
+        } );
+
+        jQuery.validator.addMethod("notEqual", function(value, element, param) {
+          return this.optional(element) || value != param;
+        }, "Please specify a different (non-default) value");
+
+        jQuery.validator.addMethod("phoneStartingWith09", function(phone_number, element) {
+            phone_number = phone_number.replace(/\s+/g, ""); 
+            return this.optional(element) || phone_number.match(/^09\d{8,}$/);
+        }, "Phone number should start with 09");
+
+        var validRule = [];
+
+        validRule[1] = {
+            // IBMer
+            inputEmail: {
+              required: true
+            },
+            inputEnglishName: {
+              required: true
+            },
+            inputChineseName1: {
+              required: true,
+              notEqual: "請選擇"
+            },
+            departmentSelect1: {
+              required: true,
+              notEqual: "請選擇"
+            },
+            locationSelect1: {
+              required: true,
+              notEqual: "請選擇"
+            },
+            mobileNo1: {
+              required: true,
+              rangelength: [10, 10],
+              digits: true,
+              phoneStartingWith09: true
+            },
+            participantSelect1: {
+              required: true,
+              notEqual: "請選擇"
+            }
+        };
+
+        var initRule = validRule[1];
+        var currentRule = initRule;
+
+        $( "#registerForm" ).validate( {
+            rules: initRule,
+            messages: {
+              // IBMer
+              inputEmail: {
+                required: "請輸入您的電子郵件"
+              },
+              inputEnglishName: {
+                required: "請輸入您的英文姓名"
+              },
+              departmentSelect1: {
+                required: "請選擇部門",
+                notEqual: "請選擇部門"
+              },
+              locationSelect1: {
+                required: "請選擇辦公室位置",
+                notEqual: "請選擇辦公室位置"
+              },
+              inputChineseName1: {
+                required: "請輸入中文姓名",
+                notEqual: "請輸入中文姓名"
+              },
+              mobileNo1: {
+                required: "請提供行動電話號碼",
+                rangelength: "請提供行動電話號碼",
+                digits: "行動電話號碼格式錯誤"
+              },
+              participantSelect1: {
+                notEqual: "請選擇親友人數"
+              }
+            },
+            errorElement: "small",
+            errorPlacement: function ( error, element ) {
+              // Add the `help-block` class to the error element
+              error.addClass( "help-block form-text alert-text" );
+              // Add `has-feedback` class to the parent div.form-group
+              // in order to add icons to inputs
+              element.parents( "td" ).addClass( "has-feedback" );
+
+              if ( element.prop( "type" ) === "checkbox" ) {
+                error.insertAfter( element.parent( "label" ) );
+              } else {
+                error.insertAfter( element );
+              }
+
+              // Add the span element, if doesn't exists, and apply the icon classes to it.
+              if ( !element.next( "span" )[ 0 ] ) {
+                $( "<span class='glyphicon glyphicon-remove form-control-feedback'></span>" ).insertAfter( element );
+              }
+            },
+            success: function ( label, element ) {
+              // Add the span element, if doesn't exists, and apply the icon classes to it.
+              if ( !$( element ).next( "span" )[ 0 ] ) {
+                $( "<span class='glyphicon glyphicon-ok form-control-feedback'></span>" ).insertAfter( $( element ) );
+              }
+            },
+            highlight: function ( element, errorClass, validClass ) {
+              $( element ).parents( ".col-sm-8" ).addClass( "has-error" ).removeClass( "has-success" );
+              $( element ).next( "span" ).addClass( "glyphicon-remove" ).removeClass( "glyphicon-ok" );
+            },
+            unhighlight: function ( element, errorClass, validClass ) {
+              $( element ).parents( ".col-sm-8" ).addClass( "has-success" ).removeClass( "has-error" );
+              $( element ).next( "span" ).addClass( "glyphicon-ok" ).removeClass( "glyphicon-remove" );
+            }
+        } );
+
+        
+        function addRules(rulesObj){
+            for (var item in rulesObj){
+               $('#'+item).rules('add',rulesObj[item]);  
+            } 
+        }
+
+        function removeRules(rulesObj){
+            for (var item in rulesObj){
+               $('#'+item).rules('remove');  
+            } 
+        }
+        var updatePanel = function(){
+          console.log("updatePanel");
+          // show and hide blocks
+          var selectVal = $("#participantSelect1").val();
+          $("#friend1").hide();
+          $("#friend2").hide();
+          if(selectVal == "不攜伴") {
+            // hide friend blocks
+            $(".friend1-vegetarian-content").hide();
+          } else {
+            $(".friend1-vegetarian-content").show();
+          }
+        };
+
+        var changeParticipant = function() {
+          updatePanel();
+          // updateValidRule();
+        };
+
+        $("#participantSelect1").change(changeParticipant);
+
+      });
+
+    </script>
+
+  </body>
+
+</html>

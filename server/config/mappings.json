@@ -1,0 +1,51 @@
+{
+  "version": 1,
+  "tw-ewc-config": {
+    "searchPatterns": [
+      "user-provided:tw-ewc-config",
+      "file:/server/localdev-config.json"
+    ]
+  },
+  "node_env": {
+    "searchPatterns": [
+      "env:NODE_ENV",
+      "user-provided:tw-ewc-config:$['common'].node_env",
+      "file:/server/localdev-config.json:$['common'].node_env"
+    ]
+  },
+  "node_log_level": {
+    "searchPatterns": [
+      "env:NODE_LOG_LEVEL",
+      "user-provided:tw-ewc-config:$['common'].node_log_level",
+      "file:/server/localdev-config.json:$['common'].node_log_level"
+    ]
+  },
+  "node_checkin_event_idx": {
+    "searchPatterns": [
+      "env:NODE_CHECKIN_EVENT_IDX",
+      "user-provided:tw-ewc-config:$['common'].node_checkin_event_idx",
+      "file:/server/localdev-config.json:$['common'].node_checkin_event_idx"
+    ]
+  },
+  "node_checkin_event_s": {
+    "searchPatterns": [
+      "env:NODE_CHECKIN_EVENT_S",
+      "user-provided:tw-ewc-config:$['common'].node_checkin_event_s",
+      "file:/server/localdev-config.json:$['common'].node_checkin_event_s"
+    ]
+  },
+  "node_checkin_event_e": {
+    "searchPatterns": [
+      "env:NODE_CHECKIN_EVENT_E",
+      "user-provided:tw-ewc-config:$['common'].node_checkin_event_e",
+      "file:/server/localdev-config.json:$['common'].node_checkin_event_e"
+    ]
+  },
+  "node_checkin_enable": {
+    "searchPatterns": [
+      "env:NODE_CHECKIN_ENABLE",
+      "user-provided:tw-ewc-config:$['common'].node_checkin_enable",
+      "file:/server/localdev-config.json:$['common'].node_checkin_enable"
+    ]
+  }
+}
