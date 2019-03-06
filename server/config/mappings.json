@@ -4,7 +4,7 @@
     "searchPatterns": [
       "env:cloudant_credentials:$.cloudant_apikey",
       "file:/server/localdev-config.json:$.cloudant_apikey",
-      "user-provided:tw-ewc-checkin-cloudant-production:apikey",
+      "user-provided:tw-ewc-checkin-cloudant-production:$.apikey",
       "cloudfoundry:$['cloudant'][0].credentials.apikey",
       "env:service_cloudant:$.apikey"
     ]
