@@ -124,10 +124,12 @@
     ]
   },
   "w3id_xml_cert": {
-    "searchPatterns": [
-      "file:/server/localdev-config.json:$.w3id_xml_cert",
-      "user-provided:tw-ewc-config:$.w3id_xml_cert"
-    ]
+    "credentials": {
+      "searchPatterns": [
+        "file:/server/localdev-config.json:$.w3id_xml_cert",
+        "user-provided:tw-ewc-config:w3id_xml_cert"
+      ]
+    }
   },
   "w3id_w3cert": {
     "searchPatterns": [
