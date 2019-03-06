@@ -4,12 +4,12 @@ var jwt = require("jsonwebtoken");
 
 const IBMCloudEnv = require('ibm-cloud-env');
 IBMCloudEnv.init();
-var cloudant_url = IBMCloudEnv.getString('cloudant_url');
-var cloudant_username = IBMCloudEnv.getString('cloudant_username');
-var cloudant_password = IBMCloudEnv.getString('cloudant_password');
-var gmail_id = IBMCloudEnv.getString('gmail_id');
-var gmail_pw = IBMCloudEnv.getString('gmail_pw');
-var sms_url = IBMCloudEnv.getString('sms_url');
+var cloudant_url = IBMCloudEnv.getString('cloudant_url').value;
+var cloudant_username = IBMCloudEnv.getString('cloudant_username').value;
+var cloudant_password = IBMCloudEnv.getString('cloudant_password').value;
+var gmail_id = IBMCloudEnv.getString('gmail_id').value;
+var gmail_pw = IBMCloudEnv.getString('gmail_pw').value;
+var sms_url = IBMCloudEnv.getString('sms_url').value;
 
 // 讀取 Cloudant library
 var Cloudant = require('@cloudant/cloudant');
@@ -196,7 +196,7 @@ module.exports = function(app, config, passport) {
     router.get("/",
         function(req, res) {
 
-            if(IBMCloudEnv.getString('node_checkin_enable') != 'true') {
+            if(IBMCloudEnv.getString('node_checkin_enable').value != 'true') {
                 res.render("thankyou", {});
             }
 
@@ -214,8 +214,8 @@ module.exports = function(app, config, passport) {
                 if(isTaiwanUser && (getUserType(currentSN) == 'regular' || getUserType(currentSN) == 'contractor')) {
                     // normal login regular or CWF contractor
                     var moment = require('moment')
-                    var event_s = moment(IBMCloudEnv.getString('node_checkin_event_s')).format()
-                    var event_e = moment(IBMCloudEnv.getString('node_checkin_event_e')).format()
+                    var event_s = moment(IBMCloudEnv.getString('node_checkin_event_s').value).format()
+                    var event_e = moment(IBMCloudEnv.getString('node_checkin_event_e').value).format()
                     var nowDate = Date.now();
                     if(nowDate >= event_s && nowDate < event_e) {
                         res.render("enroll_form_layout_lock", {title: 'TW EWC Checik-in System', user : req.user});

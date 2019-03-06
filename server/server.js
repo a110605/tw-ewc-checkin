@@ -20,8 +20,10 @@ const log4js = require('log4js');
 const IBMCloudEnv = require('ibm-cloud-env');
 IBMCloudEnv.init();
 
+console.log(IBMCloudEnv.getString('w3id_app_host'))
+
 const logger = log4js.getLogger(appName);
-logger.level = IBMCloudEnv.getString('node_log_level') || 'info'
+logger.level = IBMCloudEnv.getString('node_log_level').value || 'info'
 app.use(log4js.connectLogger(logger, { level: logger.level }));
 
 
@@ -31,10 +33,9 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 // view engine setup
-const event_idx = parseInt(IBMCloudEnv.getString('node_checkin_event_idx'));
-const config = IBMCloudEnv.getDictionary('tw-ewc-config')
-console.log(config)
-const event = config.node_checkin_events[event_idx]
+const event_idx = parseInt(IBMCloudEnv.getString('node_checkin_event_idx').value);
+const events = JSON.parse(IBMCloudEnv.getString('node_checkin_events').value)
+const event = events[event_idx]
 logger.info(path.join(__dirname, 'views', event))
 app.set('views', path.join(__dirname, 'views', event));
 app.set('view engine', 'jade');
@@ -58,7 +59,7 @@ app.use(function(req, res, next) {
 
 // development error handler
 // will print stacktrace
-const environment = IBMCloudEnv.getString('node_env') || 'development';
+const environment = IBMCloudEnv.getString('node_env').value || 'development';
 if (environment === 'development') {
   app.use(function(err, req, res, next) {
     res.status(err.status || 500);
@@ -86,7 +87,7 @@ const server = http.createServer(app);
  */
 
 server.on('error', onError);
-const port = IBMCloudEnv.getString('node_port')
+const port = IBMCloudEnv.getString('node_port').value
 server.listen(port, function(){
   logger.info(`twewcenroll listening on http://localhost:${port}/appmetrics-dash`);
   logger.info(`twewcenroll listening on http://localhost:${port}`);
@@ -95,7 +96,7 @@ server.listen(port, function(){
 /***
  * Enable HTTPS if running locally
  */
-const https_port = IBMCloudEnv.getString('node_https_port')
+const https_port = IBMCloudEnv.getString('node_https_port').value
 if (https_port){
     var https = require('https');
     var fs = require('fs');

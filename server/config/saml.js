@@ -1,8 +1,8 @@
 const IBMCloudEnv = require('ibm-cloud-env');
 IBMCloudEnv.init();
-var appHost = IBMCloudEnv.getString('w3id_app_host')
-var xmlCert = IBMCloudEnv.getString('w3id_xml_cert');
-var w3Cert = IBMCloudEnv.getString('w3id_w3cert');
+var appHost = IBMCloudEnv.getString('w3id_app_host').value
+var xmlCert = IBMCloudEnv.getString('w3id_xml_cert').value;
+var w3Cert = IBMCloudEnv.getString('w3id_w3cert').value;
 
 module.exports = {
     "dev" : {
