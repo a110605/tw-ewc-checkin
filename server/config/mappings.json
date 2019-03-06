@@ -155,11 +155,10 @@
       ]
     }
   },
-  "node_https_port": {
+  "node_local_https_port": {
     "value": {
       "searchPatterns": [
-        "env:NODE_HTTPS_PORT",
-        "file:/server/localdev-config.json:$.node_https_port"
+        "file:/server/localdev-config.json:$.node_local_https_port"
       ]
     }
   },

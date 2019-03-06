@@ -96,22 +96,22 @@ server.listen(port, function(){
 /***
  * Enable HTTPS if running locally
  */
-const https_port = IBMCloudEnv.getString('node_https_port').value
-if (https_port){
-    var https = require('https');
-    var fs = require('fs');
-    var sslOptions = {
-        key: fs.readFileSync(path.join(__dirname, '/server.key')),
-        cert: fs.readFileSync(path.join(__dirname, '/server.cert'))
-    };
-    const servers = https.createServer(sslOptions, app);
-    servers.on('error', onError);
-    servers.listen(https_port,
-      function() {
-        logger.info(`twewcenroll listening on https://localhost:${https_port}/appmetrics-dash`);
-        logger.info(`twewcenroll listening on https://localhost:${https_port}`);
-      }
-    );
+if (IBMCloudEnv.getString('node_local_https_port')){
+  const local_https_port = IBMCloudEnv.getString('node_local_https_port').value
+  var https = require('https');
+  var fs = require('fs');
+  var sslOptions = {
+      key: fs.readFileSync(path.join(__dirname, '/server.key')),
+      cert: fs.readFileSync(path.join(__dirname, '/server.cert'))
+  };
+  const servers = https.createServer(sslOptions, app);
+  servers.on('error', onError);
+  servers.listen(local_https_port,
+    function() {
+      logger.info(`twewcenroll listening on https://localhost:${local_https_port}/appmetrics-dash`);
+      logger.info(`twewcenroll listening on https://localhost:${local_https_port}`);
+    }
+  );
 }
 
 /**
