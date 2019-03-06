@@ -1,218 +1,174 @@
 {
   "version": 1,
   "cloudant_apikey": {
-    "credentials": {
-      "searchPatterns": [
-        "file:/server/localdev-config.json:$.cloudant_apikey",
-        "env:cloudant_credentials:$.cloudant_apikey",
-        "user-provided:tw-ewc-checkin-cloudant-production:apikey",
-        "cloudfoundry:$['cloudant'][0].credentials.apikey",
-        "env:service_cloudant:$.apikey"
-      ]
-    }
+    "searchPatterns": [
+      "env:cloudant_credentials:$.cloudant_apikey",
+      "file:/server/localdev-config.json:$.cloudant_apikey",
+      "user-provided:tw-ewc-checkin-cloudant-production:apikey",
+      "cloudfoundry:$['cloudant'][0].credentials.apikey",
+      "env:service_cloudant:$.apikey"
+    ]
   },
   "cloudant_host": {
-    "credentials": {
-      "searchPatterns": [
-        "env:cloudant_credentials:$.cloudant_host",
-        "file:/server/localdev-config.json:$.cloudant_host",
-        "user-provided:tw-ewc-checkin-cloudant-production:$.host",
-        "cloudfoundry:$['cloudant'][0].credentials.host",
-        "env:service_cloudant:$.host"
-      ]
-    }
+    "searchPatterns": [
+      "env:cloudant_credentials:$.cloudant_host",
+      "file:/server/localdev-config.json:$.cloudant_host",
+      "user-provided:tw-ewc-checkin-cloudant-production:$.host",
+      "cloudfoundry:$['cloudant'][0].credentials.host",
+      "env:service_cloudant:$.host"
+    ]
   },
   "cloudant_iam_apikey_description": {
-    "credentials": {
-      "searchPatterns": [
-        "env:cloudant_credentials:$.cloudant_iam_apikey_description",
-        "file:/server/localdev-config.json:$.cloudant_iam_apikey_description",
-        "user-provided:tw-ewc-checkin-cloudant-production:$.iam_apikey_description",
-        "cloudfoundry:$['cloudant'][0].credentials.iam_apikey_description",
-        "env:service_cloudant:$.iam_apikey_description",
-        "env:cloudant_iam_apikey_description"
-      ]
-    }
+    "searchPatterns": [
+      "env:cloudant_credentials:$.cloudant_iam_apikey_description",
+      "file:/server/localdev-config.json:$.cloudant_iam_apikey_description",
+      "user-provided:tw-ewc-checkin-cloudant-production:$.iam_apikey_description",
+      "cloudfoundry:$['cloudant'][0].credentials.iam_apikey_description",
+      "env:service_cloudant:$.iam_apikey_description",
+      "env:cloudant_iam_apikey_description"
+    ]
   },
   "cloudant_iam_apikey_name": {
-    "credentials": {
-      "searchPatterns": [
-        "env:cloudant_credentials:$.cloudant_iam_apikey_name",
-        "file:/server/localdev-config.json:$.cloudant_iam_apikey_name",
-        "user-provided:tw-ewc-checkin-cloudant-production:$.iam_apikey_name",
-        "cloudfoundry:$['cloudant'][0].credentials.iam_apikey_name",
-        "env:service_cloudant:$.iam_apikey_name"
-      ]
-    }
+    "searchPatterns": [
+      "env:cloudant_credentials:$.cloudant_iam_apikey_name",
+      "file:/server/localdev-config.json:$.cloudant_iam_apikey_name",
+      "user-provided:tw-ewc-checkin-cloudant-production:$.iam_apikey_name",
+      "cloudfoundry:$['cloudant'][0].credentials.iam_apikey_name",
+      "env:service_cloudant:$.iam_apikey_name"
+    ]
   },
   "cloudant_iam_role_crn": {
-    "credentials": {
-      "searchPatterns": [
-        "env:cloudant_credentials:$.cloudant_iam_role_crn",
-        "file:/server/localdev-config.json:$.cloudant_iam_role_crn",
-        "user-provided:tw-ewc-checkin-cloudant-production:$.iam_role_crn",
-        "cloudfoundry:$['cloudant'][0].credentials.iam_role_crn",
-        "env:service_cloudant:$.iam_role_crn"
-      ]
-    }
+    "searchPatterns": [
+      "env:cloudant_credentials:$.cloudant_iam_role_crn",
+      "file:/server/localdev-config.json:$.cloudant_iam_role_crn",
+      "user-provided:tw-ewc-checkin-cloudant-production:$.iam_role_crn",
+      "cloudfoundry:$['cloudant'][0].credentials.iam_role_crn",
+      "env:service_cloudant:$.iam_role_crn"
+    ]
   },
   "cloudant_iam_serviceid_crn": {
-    "credentials": {
-      "searchPatterns": [
-        "env:cloudant_credentials:$.cloudant_iam_serviceid_crn",
-        "file:/server/localdev-config.json:$.cloudant_iam_serviceid_crn",
-        "user-provided:tw-ewc-checkin-cloudant-production:$.iam_serviceid_crn",
-        "cloudfoundry:$['cloudant'][0].credentials.iam_serviceid_crn",
-        "env:service_cloudant:$.iam_serviceid_crn"
-      ]
-    }
+    "searchPatterns": [
+      "env:cloudant_credentials:$.cloudant_iam_serviceid_crn",
+      "file:/server/localdev-config.json:$.cloudant_iam_serviceid_crn",
+      "user-provided:tw-ewc-checkin-cloudant-production:$.iam_serviceid_crn",
+      "cloudfoundry:$['cloudant'][0].credentials.iam_serviceid_crn",
+      "env:service_cloudant:$.iam_serviceid_crn"
+    ]
   },
   "cloudant_password": {
-    "credentials": {
-      "searchPatterns": [
-        "env:cloudant_credentials:$.cloudant_password",
-        "file:/server/localdev-config.json:$.cloudant_password",
-        "user-provided:tw-ewc-checkin-cloudant-production:$.password",
-        "cloudfoundry:$['cloudant'][0].credentials.password",
-        "env:service_cloudant:$.password"
-      ]
-    }
+    "searchPatterns": [
+      "env:cloudant_credentials:$.cloudant_password",
+      "file:/server/localdev-config.json:$.cloudant_password",
+      "user-provided:tw-ewc-checkin-cloudant-production:$.password",
+      "cloudfoundry:$['cloudant'][0].credentials.password",
+      "env:service_cloudant:$.password"
+    ]
   },
   "cloudant_port": {
-    "credentials": {
-      "searchPatterns": [
-        "env:cloudant_credentials:$.cloudant_port",
-        "file:/server/localdev-config.json:$.cloudant_port",
-        "user-provided:tw-ewc-checkin-cloudant-production:$.port",
-        "cloudfoundry:$['cloudant'][0].credentials.port",
-        "env:service_cloudant:$.port"
-      ]
-    }
+    "searchPatterns": [
+      "env:cloudant_credentials:$.cloudant_port",
+      "file:/server/localdev-config.json:$.cloudant_port",
+      "user-provided:tw-ewc-checkin-cloudant-production:$.port",
+      "cloudfoundry:$['cloudant'][0].credentials.port",
+      "env:service_cloudant:$.port"
+    ]
   },
   "cloudant_url": {
-    "credentials": {
-      "searchPatterns": [
-        "env:cloudant_credentials:$.cloudant_url",
-        "file:/server/localdev-config.json:$.cloudant_url",
-        "user-provided:tw-ewc-checkin-cloudant-production:$.url",
-        "cloudfoundry:$['cloudant'][0].credentials.url",
-        "env:service_cloudant:$.url"
-      ]
-    }
+    "searchPatterns": [
+      "env:cloudant_credentials:$.cloudant_url",
+      "file:/server/localdev-config.json:$.cloudant_url",
+      "user-provided:tw-ewc-checkin-cloudant-production:$.url",
+      "cloudfoundry:$['cloudant'][0].credentials.url",
+      "env:service_cloudant:$.url"
+    ]
   },
   "cloudant_username": {
-    "credentials": {
-      "searchPatterns": [
-        "env:cloudant_credentials:$.cloudant_username",
-        "file:/server/localdev-config.json:$.cloudant_username",
-        "user-provided:tw-ewc-checkin-cloudant-production:$.username",
-        "cloudfoundry:$['cloudant'][0].credentials.username",
-        "env:service_cloudant:$.username"
-      ]
-    }
+    "searchPatterns": [
+      "env:cloudant_credentials:$.cloudant_username",
+      "file:/server/localdev-config.json:$.cloudant_username",
+      "user-provided:tw-ewc-checkin-cloudant-production:$.username",
+      "cloudfoundry:$['cloudant'][0].credentials.username",
+      "env:service_cloudant:$.username"
+    ]
   },
   "tw-ewc-config": {
-    "credentials": {
-      "searchPatterns": [
-        "file:/server/localdev-config.json",
-        "user-provided:tw-ewc-config"
-      ]
-    }
+    "searchPatterns": [
+      "file:/server/localdev-config.json",
+      "user-provided:tw-ewc-config"
+    ]
   },
   "w3id_app_host": {
-    "credentials": {
-      "searchPatterns": [
-        "env:VCAP_APPLICATION:$['uris'][0]",
-        "file:/server/localdev-config.json:$.w3id_app_host"
-      ]
-    }
+    "searchPatterns": [
+      "env:VCAP_APPLICATION:$['uris'][0]",
+      "file:/server/localdev-config.json:$.w3id_app_host"
+    ]
   },
   "w3id_xml_cert": {
-    "credentials": {
-      "searchPatterns": [
-        "file:/server/localdev-config.json:$.w3id_xml_cert",
-        "user-provided:tw-ewc-config:$.w3id_xml_cert"
-      ]
-    }
+    "searchPatterns": [
+      "file:/server/localdev-config.json:$.w3id_xml_cert",
+      "user-provided:tw-ewc-config:$.w3id_xml_cert"
+    ]
   },
   "w3id_w3cert": {
-    "credentials": {
-      "searchPatterns": [
-        "file:/server/localdev-config.json:$.w3id_w3cert",
-        "user-provided:tw-ewc-config:$.w3id_w3cert"
-      ]
-    }
+    "searchPatterns": [
+      "file:/server/localdev-config.json:$.w3id_w3cert",
+      "user-provided:tw-ewc-config:$.w3id_w3cert"
+    ]
   },
   "node_env": {
-    "credentials": {
-      "searchPatterns": [
-        "env:NODE_ENV",
-        "file:/server/localdev-config.json:$.node_env",
-        "user-provided:tw-ewc-config:$.node_env"
-      ]
-    }
+    "searchPatterns": [
+      "env:NODE_ENV",
+      "file:/server/localdev-config.json:$.node_env",
+      "user-provided:tw-ewc-config:$.node_env"
+    ]
   },
   "node_port": {
-    "credentials": {
-      "searchPatterns": [
-        "env:NODE_PORT",
-        "file:/server/localdev-config.json:$.node_port",
-        "user-provided:tw-ewc-config:$.node_port"
-      ]
-    }
+    "searchPatterns": [
+      "env:NODE_PORT",
+      "file:/server/localdev-config.json:$.node_port",
+      "user-provided:tw-ewc-config:$.node_port"
+    ]
   },
   "node_https_port": {
-    "credentials": {
-      "searchPatterns": [
-        "env:NODE_HTTPS_PORT",
-        "file:/server/localdev-config.json:$.node_https_port",
-        "user-provided:tw-ewc-config:$.node_https_port"
-      ]
-    }
+    "searchPatterns": [
+      "env:NODE_HTTPS_PORT",
+      "file:/server/localdev-config.json:$.node_https_port",
+      "user-provided:tw-ewc-config:$.node_https_port"
+    ]
   },
   "node_log_level": {
-    "credentials": {
-      "searchPatterns": [
-        "env:NODE_LOG_LEVEL",
-        "file:/server/localdev-config.json:$.node_log_level",
-        "user-provided:tw-ewc-config:$.node_log_level"
-      ]
-    }
+    "searchPatterns": [
+      "env:NODE_LOG_LEVEL",
+      "file:/server/localdev-config.json:$.node_log_level",
+      "user-provided:tw-ewc-config:$.node_log_level"
+    ]
   },
   "node_checkin_event_idx": {
-    "credentials": {
-      "searchPatterns": [
-        "env:NODE_CHECKIN_EVENT_IDX",
-        "file:/server/localdev-config.json:$.node_checkin_event_idx",
-        "user-provided:tw-ewc-config:$.node_checkin_event_idx"
-      ]
-    }
+    "searchPatterns": [
+      "env:NODE_CHECKIN_EVENT_IDX",
+      "file:/server/localdev-config.json:$.node_checkin_event_idx",
+      "user-provided:tw-ewc-config:$.node_checkin_event_idx"
+    ]
   },
   "node_checkin_event_s": {
-    "credentials": {
-      "searchPatterns": [
-        "env:NODE_CHECKIN_EVENT_S",
-        "file:/server/localdev-config.json:$.node_checkin_event_s",
-        "user-provided:tw-ewc-config:$.node_checkin_event_s"
-      ]
-    }
+    "searchPatterns": [
+      "env:NODE_CHECKIN_EVENT_S",
+      "file:/server/localdev-config.json:$.node_checkin_event_s",
+      "user-provided:tw-ewc-config:$.node_checkin_event_s"
+    ]
   },
   "node_checkin_event_e": {
-    "credentials": {
-      "searchPatterns": [
-        "env:NODE_CHECKIN_EVENT_E",
-        "file:/server/localdev-config.json:$.node_checkin_event_e",
-        "user-provided:tw-ewc-config:$.node_checkin_event_e"
-      ]
-    }
+    "searchPatterns": [
+      "env:NODE_CHECKIN_EVENT_E",
+      "file:/server/localdev-config.json:$.node_checkin_event_e",
+      "user-provided:tw-ewc-config:$.node_checkin_event_e"
+    ]
   },
   "node_checkin_enable": {
-    "credentials": {
-      "searchPatterns": [
-        "env:NODE_CHECKIN_ENABLE",
-        "file:/server/localdev-config.json:$.node_checkin_enable",
-        "user-provided:tw-ewc-config:$.node_checkin_enable"
-      ]
-    }
+    "searchPatterns": [
+      "env:NODE_CHECKIN_ENABLE",
+      "file:/server/localdev-config.json:$.node_checkin_enable",
+      "user-provided:tw-ewc-config:$.node_checkin_enable"
+    ]
   }
 }
