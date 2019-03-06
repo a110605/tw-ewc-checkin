@@ -150,8 +150,7 @@
   "node_port": {
     "value": {
       "searchPatterns": [
-        "user-provided:tw-ewc-config:node_port",
-        "env:NODE_PORT",
+        "env:PORT",
         "file:/server/localdev-config.json:$.node_port"
       ]
     }
@@ -159,7 +158,6 @@
   "node_https_port": {
     "value": {
       "searchPatterns": [
-        "user-provided:tw-ewc-config:node_https_port",
         "env:NODE_HTTPS_PORT",
         "file:/server/localdev-config.json:$.node_https_port"
       ]
