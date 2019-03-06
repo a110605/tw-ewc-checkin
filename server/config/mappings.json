@@ -6,7 +6,7 @@
         "file:/server/localdev-config.json:$.cloudant_apikey",
         "env:cloudant_credentials:$.cloudant_apikey",
         "user-provided:tw-ewc-checkin-cloudant-production:$.apikey",
-        "cloudfoundry:$['cloudant'][0].credentials.apikey",
+        "cloudfoundry:tw-ewc-checkin-cloudant-production:$.apikey",
         "env:service_cloudant:$.apikey"
       ]
     }
