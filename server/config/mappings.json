@@ -104,7 +104,7 @@
   "tw-ewc-config": {
     "searchPatterns": [
       "file:/server/localdev-config.json",
-      "user-provided:tw-ewc-config"
+      "user-provided:tw-ewc-config:$.credentials"
     ]
   },
   "w3id_app_host": {
