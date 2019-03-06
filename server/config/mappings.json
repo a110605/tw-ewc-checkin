@@ -91,10 +91,12 @@
     }
   },
   "tw-ewc-config": {
-    "searchPatterns": [
-      "cloudfoundry:tw-ewc-config",
-      "file:/server/localdev-config.json"
-    ]
+    "credentials": {
+      "searchPatterns": [
+        "cloudfoundry:tw-ewc-config",
+        "file:/server/localdev-config.json"
+      ]
+    }
   },
   "w3id_app_host": {
     "searchPatterns": [
