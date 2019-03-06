@@ -15,10 +15,12 @@ RUN cd /app; npm install --production
 
 COPY . /app
 
+ENV NODE_ENV production
 #ENV NODE_ENV development
-#ENV DEBUG=express:*
+ENV PORT 3000
+ENV DEBUG=express:*
 
 EXPOSE 3000
-EXPOSE 443
+#EXPOSE 443
 
 CMD ["npm", "start"]
