@@ -15,7 +15,7 @@
       "searchPatterns": [
         "env:cloudant_credentials:$.cloudant_host",
         "file:/server/localdev-config.json:$.cloudant_host",
-        "user-provided:tw-ewc-checkin-cloudant-production:$.host",
+        "user-provided:tw-ewc-checkin-cloudant-production:host",
         "cloudfoundry:$['cloudant'][0].credentials.host",
         "env:service_cloudant:$.host"
       ]
