@@ -19,7 +19,6 @@ require('./services/index')(app);
 const log4js = require('log4js');
 const IBMCloudEnv = require('ibm-cloud-env');
 IBMCloudEnv.init();
-IBMCloudEnv.setLogLevel(log4js.levels.TRACE);
 
 const logger = log4js.getLogger(appName);
 logger.level = IBMCloudEnv.getString('node_log_level') || 'info'
