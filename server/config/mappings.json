@@ -4,9 +4,18 @@
     "searchPatterns": [
       "env:cloudant_credentials:$.cloudant_apikey",
       "file:/server/localdev-config.json:$.cloudant_apikey",
-      "user-provided:tw-ewc-checkin-cloudant-production:$.credentials.apikey",
+      "user-provided:tw-ewc-checkin-cloudant-production:apikey",
       "cloudfoundry:$['cloudant'][0].credentials.apikey",
       "env:service_cloudant:$.apikey"
+    ]
+  },
+  "cloudant_host": {
+    "searchPatterns": [
+      "env:cloudant_credentials:$.cloudant_host",
+      "file:/server/localdev-config.json:$.cloudant_host",
+      "user-provided:tw-ewc-checkin-cloudant-production:$.host",
+      "cloudfoundry:$['cloudant'][0].credentials.host",
+      "env:service_cloudant:$.host"
     ]
   }
 }
