@@ -93,7 +93,7 @@
   "tw-ewc-config": {
     "credentials": {
       "searchPatterns": [
-        "cloudfoundry:tw-ewc-config",
+        "user-provided:tw-ewc-config",
         "file:/server/localdev-config.json"
       ]
     }

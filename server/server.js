@@ -33,7 +33,6 @@ var bodyParser = require('body-parser');
 // view engine setup
 const event_idx = parseInt(IBMCloudEnv.getString('node_checkin_event_idx'));
 const config = IBMCloudEnv.getDictionary('tw-ewc-config')
-console.log(config)
 const event = config.node_checkin_events[event_idx]
 logger.info(path.join(__dirname, 'views', event))
 app.set('views', path.join(__dirname, 'views', event));
