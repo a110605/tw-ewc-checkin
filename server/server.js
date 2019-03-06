@@ -85,7 +85,7 @@ const server = http.createServer(app);
  */
 
 server.on('error', onError);
-const port = gConfig[environment].node_port
+const port = IBMCloudEnv.getString('node_port')
 server.listen(port, function(){
   logger.info(`twewcenroll listening on http://localhost:${port}/appmetrics-dash`);
   logger.info(`twewcenroll listening on http://localhost:${port}`);

@@ -13,6 +13,13 @@
       "file:/server/localdev-config.json:$['common'].node_env"
     ]
   },
+  "node_port": {
+    "searchPatterns": [
+      "env:PORT",
+      "user-provided:tw-ewc-config:$['common'].node_port",
+      "file:/server/localdev-config.json:$['common'].node_port"
+    ]
+  },
   "node_log_level": {
     "searchPatterns": [
       "env:NODE_LOG_LEVEL",
