@@ -18,7 +18,7 @@ require('./services/index')(app);
 
 const IBMCloudEnv = require('ibm-cloud-env');
 IBMCloudEnv.init();
-console.log(IBMCloudEnv.getString('w3id_app_host'))
+
 const environment = IBMCloudEnv.getString('node_env') || 'development';
 const log4js = require('log4js');
 const logger = log4js.getLogger(appName);
