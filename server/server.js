@@ -20,7 +20,7 @@ const log4js = require('log4js');
 const IBMCloudEnv = require('ibm-cloud-env');
 IBMCloudEnv.init();
 
-const logger = log4js.getLogger(appName);
+global.logger = log4js.getLogger(appName);
 logger.level = IBMCloudEnv.getString('node_log_level').value || 'info'
 app.use(log4js.connectLogger(logger, { level: logger.level }));
 
@@ -43,6 +43,7 @@ app.use(favicon(path.join(__dirname, './../public/img/favicon.ico')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(express.static(process.cwd() + '/public'));
 
 require('./routers/index')(app);
 

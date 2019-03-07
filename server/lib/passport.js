@@ -3,6 +3,7 @@ var samlSignature = require('./samlSignature');
 
 
 module.exports = function (passport, config) {
+    
     passport.serializeUser(function(user, done) {
         done(null, JSON.stringify(user));
     });

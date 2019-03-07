@@ -85,8 +85,8 @@ var relayHandler = function relayHandler(req, res) {
     res.redirect(hashQuery);
 };
 
-module.exports = function(app, config, passport) {
-
+module.exports = function(config, passport) {
+    
     ///////////////////////////////////////////////////////////////////////
     // Logger
     ///////////////////////////////////////////////////////////////////////
@@ -105,7 +105,7 @@ module.exports = function(app, config, passport) {
                 finalPrintContent += printInfo;
             }
             var now = new Date().toJSON();
-            console.log('[' + now + '|' + sessionId + '|' + sessionSn + '] ' + finalPrintContent);
+            logger.info('[' + now + '|' + sessionId + '|' + sessionSn + '] ' + finalPrintContent);
         }
     };
 
@@ -191,11 +191,10 @@ module.exports = function(app, config, passport) {
     // w3id SSO
     ///////////////////////////////////////////////////////////////////////
 
-
-    // Main page requires an authenticated user
+    // Enroll page requires an authenticated user
     router.get("/",
         function(req, res) {
-
+            
             if(IBMCloudEnv.getString('node_checkin_enable').value != 'true') {
                 res.render("thankyou", {});
             }
@@ -285,18 +284,17 @@ module.exports = function(app, config, passport) {
             }
     );
 
+    
     /*
-
     // Example of a resource not requiring authentication
 
     router.get("/open",
-            function(req, res) {
-              res.render("index", {title: 'SSO Demo', user : req.user || {displayName: "Anonymous" , blueGroups: [] } });
-            }
+        function(req, res) {
+            res.render("index", {title: 'SSO Demo', user : req.user || {displayName: "Anonymous" , blueGroups: [] } });
+        }
     );
-
     */
-
+   
     // Start SAML login process
     router.get("/login",
        passport.authenticate(config.passport.strategy, {/*successRedirect : "/", */failureRedirect : "/accessDenied"}),
