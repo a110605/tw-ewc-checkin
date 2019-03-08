@@ -15,8 +15,6 @@ RUN cd /app; npm install --production
 
 COPY . /app
 
-ENV NODE_ENV production
-
 # development
 # ENV NODE_ENV development
 # ENV LOCAL_HTTPS_PORT 443

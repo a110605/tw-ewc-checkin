@@ -170,6 +170,125 @@
       ]
     }
   },
+  "w3id_app_host": {
+    "production": {
+      "searchPatterns": [
+        "env:VCAP_APPLICATION:$['application_uris'][0]"
+      ]
+    },
+    "staging": {
+      "searchPatterns": [
+        "env:VCAP_APPLICATION:$['application_uris'][0]"
+      ]
+    },
+    "development": {
+      "searchPatterns": [
+        "file:/server/localdev-config.json:$.w3id_app_host"
+      ]
+    }
+  },
+  "w3id_xml_cert": {
+    "production": {
+      "searchPatterns": [
+        "user-provided:tw-ewc-config:w3id_xml_cert"
+      ]
+    },
+    "staging": {
+      "searchPatterns": [
+        "user-provided:tw-ewc-config:w3id_xml_cert"
+      ]
+    },
+    "development": {
+      "searchPatterns": [
+        "file:/server/localdev-config.json:$.w3id_xml_cert"
+      ]
+    }
+  },
+  "w3id_xml_cert_header": {
+    "production": {
+      "searchPatterns": [
+        "user-provided:tw-ewc-config:w3id_xml_cert_header"
+      ]
+    },
+    "staging": {
+      "searchPatterns": [
+        "user-provided:tw-ewc-config:w3id_xml_cert_header"
+      ]
+    },
+    "development": {
+      "searchPatterns": [
+        "file:/server/localdev-config.json:$.w3id_xml_cert_header"
+      ]
+    }
+  },
+  "w3id_xml_cert_footer": {
+    "production": {
+      "searchPatterns": [
+        "user-provided:tw-ewc-config:w3id_xml_cert_footer"
+      ]
+    },
+    "staging": {
+      "searchPatterns": [
+        "user-provided:tw-ewc-config:w3id_xml_cert_footer"
+      ]
+    },
+    "development": {
+      "searchPatterns": [
+        "file:/server/localdev-config.json:$.w3id_xml_cert_footer"
+      ]
+    }
+  },
+  "w3id_w3cert": {
+    "production": {
+      "searchPatterns": [
+        "user-provided:tw-ewc-config:w3id_w3cert"
+      ]
+    },
+    "staging": {
+      "searchPatterns": [
+        "user-provided:tw-ewc-config:w3id_w3cert"
+      ]
+    },
+    "development": {
+      "searchPatterns": [
+        "file:/server/localdev-config.json:$.w3id_w3cert"
+      ]
+    }
+  },
+  "w3id_entry_point": {
+    "production": {
+      "searchPatterns": [
+        "user-provided:tw-ewc-config:w3id_entry_point"
+      ]
+    },
+    "staging": {
+      "searchPatterns": [
+        "user-provided:tw-ewc-config:w3id_entry_point"
+      ]
+    },
+    "development": {
+      "searchPatterns": [
+        "file:/server/localdev-config.json:$.w3id_entry_point"
+      ]
+    }
+  },
+  "w3id_logout_url": {
+    "production": {
+      "searchPatterns": [
+        "user-provided:tw-ewc-config:w3id_logout_url"
+      ]
+    },
+    "staging": {
+      "searchPatterns": [
+        "user-provided:tw-ewc-config:w3id_logout_url"
+      ]
+    },
+    "development": {
+      "searchPatterns": [
+        "file:/server/localdev-config.json:$.w3id_logout_url"
+      ]
+    }
+  },
   "gmail_id": {
     "production": {
       "searchPatterns": [
@@ -218,57 +337,6 @@
     "development": {
       "searchPatterns": [
         "file:/server/localdev-config.json:$.sms_url"
-      ]
-    }
-  },
-  "w3id_app_host": {
-    "production": {
-      "searchPatterns": [
-        "env:VCAP_APPLICATION:$['uris'][0]"
-      ]
-    },
-    "staging": {
-      "searchPatterns": [
-        "env:VCAP_APPLICATION:$['uris'][0]"
-      ]
-    },
-    "development": {
-      "searchPatterns": [
-        "file:/server/localdev-config.json:$.w3id_app_host"
-      ]
-    }
-  },
-  "w3id_xml_cert": {
-    "production": {
-      "searchPatterns": [
-        "user-provided:tw-ewc-config:w3id_xml_cert"
-      ]
-    },
-    "staging": {
-      "searchPatterns": [
-        "user-provided:tw-ewc-config:w3id_xml_cert"
-      ]
-    },
-    "development": {
-      "searchPatterns": [
-        "file:/server/localdev-config.json:$.w3id_xml_cert"
-      ]
-    }
-  },
-  "w3id_w3cert": {
-    "production": {
-      "searchPatterns": [
-        "user-provided:tw-ewc-config:w3id_w3cert"
-      ]
-    },
-    "staging": {
-      "searchPatterns": [
-        "user-provided:tw-ewc-config:w3id_w3cert"
-      ]
-    },
-    "development": {
-      "searchPatterns": [
-        "file:/server/localdev-config.json:$.w3id_w3cert"
       ]
     }
   },

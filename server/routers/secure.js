@@ -83,7 +83,7 @@ var qrFormat = 1;
 var relayHandler = function relayHandler(req, res) {
     var relayState = req.query && req.query.RelayState || req.body && req.body.RelayState;
     var hashQuery = relayState && relayState.match(/^\#/) && ("/app"+relayState) || relayState  || "/";
-    res.redirect(hashQuery);
+    res.redirect(req.baseUrl + hashQuery);
 };
 
 module.exports = function(config, passport) {
@@ -230,7 +230,7 @@ module.exports = function(config, passport) {
                 }
 
             } else {
-                res.redirect('/login');
+                res.redirect(req.baseUrl + '/login');
             }
         }
     );
@@ -333,7 +333,7 @@ module.exports = function(config, passport) {
                     res.render("not_found_error", {title: 'TW EWC Enroll System', user : req.user});
                 }
             } else {
-                res.redirect('/login');
+                res.redirect(req.baseUrl + '/login');
             }
         }
     );
