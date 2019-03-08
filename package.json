@@ -35,7 +35,7 @@
     "express-session": "^1.15.6",
     "gmail-send": "^1.2.14",
     "ibm-cloud-env": "^0",
-    "jade": "~1.11.0",
+    "pug": "~2.0.3",
     "jsonwebtoken": "~5.4.1",
     "log4js": "^3.0.5",
     "moment": "^2.24.0",

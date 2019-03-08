@@ -36,7 +36,7 @@ const events = JSON.parse(IBMCloudEnv.getDictionary('node_checkin_events')[envir
 const event = events[event_idx]
 logger.info(path.join(__dirname, 'views', event))
 app.set('views', path.join(__dirname, 'views', event));
-app.set('view engine', 'jade');
+app.set('view engine', 'pug');
 
 // uncomment after placing your favicon in /public
 app.use(favicon(path.join(__dirname, './../public/img/favicon.ico')));
