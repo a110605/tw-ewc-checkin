@@ -190,12 +190,12 @@
   "w3id_xml_cert": {
     "production": {
       "searchPatterns": [
-        "user-provided:tw-ewc-config:w3id_xml_cert"
+        "user-provided:tw-ewc-checkin-cloudant-production:w3id_xml_cert"
       ]
     },
     "staging": {
       "searchPatterns": [
-        "user-provided:tw-ewc-config:w3id_xml_cert"
+        "user-provided:tw-ewc-checkin-cloudant-staging:w3id_xml_cert"
       ]
     },
     "development": {
@@ -207,12 +207,12 @@
   "w3id_xml_cert_header": {
     "production": {
       "searchPatterns": [
-        "user-provided:tw-ewc-config:w3id_xml_cert_header"
+        "user-provided:tw-ewc-checkin-cloudant-production:w3id_xml_cert_header"
       ]
     },
     "staging": {
       "searchPatterns": [
-        "user-provided:tw-ewc-config:w3id_xml_cert_header"
+        "user-provided:tw-ewc-checkin-cloudant-staging:w3id_xml_cert_header"
       ]
     },
     "development": {
@@ -224,12 +224,12 @@
   "w3id_xml_cert_footer": {
     "production": {
       "searchPatterns": [
-        "user-provided:tw-ewc-config:w3id_xml_cert_footer"
+        "user-provided:tw-ewc-checkin-cloudant-production:w3id_xml_cert_footer"
       ]
     },
     "staging": {
       "searchPatterns": [
-        "user-provided:tw-ewc-config:w3id_xml_cert_footer"
+        "user-provided:tw-ewc-checkin-cloudant-staging:w3id_xml_cert_footer"
       ]
     },
     "development": {
@@ -241,12 +241,12 @@
   "w3id_w3cert": {
     "production": {
       "searchPatterns": [
-        "user-provided:tw-ewc-config:w3id_w3cert"
+        "user-provided:tw-ewc-checkin-cloudant-production:w3id_w3cert"
       ]
     },
     "staging": {
       "searchPatterns": [
-        "user-provided:tw-ewc-config:w3id_w3cert"
+        "user-provided:tw-ewc-checkin-cloudant-staging:w3id_w3cert"
       ]
     },
     "development": {
@@ -258,12 +258,12 @@
   "w3id_entry_point": {
     "production": {
       "searchPatterns": [
-        "user-provided:tw-ewc-config:w3id_entry_point"
+        "user-provided:tw-ewc-checkin-cloudant-production:w3id_entry_point"
       ]
     },
     "staging": {
       "searchPatterns": [
-        "user-provided:tw-ewc-config:w3id_entry_point"
+        "user-provided:tw-ewc-checkin-cloudant-staging:w3id_entry_point"
       ]
     },
     "development": {
@@ -275,12 +275,12 @@
   "w3id_logout_url": {
     "production": {
       "searchPatterns": [
-        "user-provided:tw-ewc-config:w3id_logout_url"
+        "user-provided:tw-ewc-checkin-cloudant-production:w3id_logout_url"
       ]
     },
     "staging": {
       "searchPatterns": [
-        "user-provided:tw-ewc-config:w3id_logout_url"
+        "user-provided:tw-ewc-checkin-cloudant-staging:w3id_logout_url"
       ]
     },
     "development": {
@@ -292,12 +292,12 @@
   "gmail_id": {
     "production": {
       "searchPatterns": [
-        "user-provided:tw-ewc-config:gmail_id"
+        "user-provided:tw-ewc-checkin-cloudant-production:gmail_id"
       ]
     },
     "staging": {
       "searchPatterns": [
-        "user-provided:tw-ewc-config:gmail_id"
+        "user-provided:tw-ewc-checkin-cloudant-staging:gmail_id"
       ]
     },
     "development": {
@@ -309,12 +309,12 @@
   "gmail_pw": {
     "production": {
       "searchPatterns": [
-        "user-provided:tw-ewc-config:gmail_pw"
+        "user-provided:tw-ewc-checkin-cloudant-production:gmail_pw"
       ]
     },
     "staging": {
       "searchPatterns": [
-        "user-provided:tw-ewc-config:gmail_pw"
+        "user-provided:tw-ewc-checkin-cloudant-staging:gmail_pw"
       ]
     },
     "development": {
@@ -326,12 +326,12 @@
   "sms_url": {
     "production": {
       "searchPatterns": [
-        "user-provided:tw-ewc-config:sms_url"
+        "user-provided:tw-ewc-checkin-cloudant-production:sms_url"
       ]
     },
     "staging": {
       "searchPatterns": [
-        "user-provided:tw-ewc-config:sms_url"
+        "user-provided:tw-ewc-checkin-cloudant-staging:sms_url"
       ]
     },
     "development": {
@@ -343,12 +343,12 @@
   "node_log_level": {
     "production": {
       "searchPatterns": [
-        "user-provided:tw-ewc-config:node_log_level"
+        "user-provided:tw-ewc-checkin-cloudant-production:node_log_level"
       ]
     },
     "staging": {
       "searchPatterns": [
-        "user-provided:tw-ewc-config:node_log_level"
+        "user-provided:tw-ewc-checkin-cloudant-staging:node_log_level"
       ]
     },
     "development": {
@@ -360,12 +360,12 @@
   "node_checkin_events": {
     "production": {
       "searchPatterns": [
-        "user-provided:tw-ewc-config:node_checkin_events"
+        "user-provided:tw-ewc-checkin-cloudant-production:node_checkin_events"
       ]
     },
     "staging": {
       "searchPatterns": [
-        "user-provided:tw-ewc-config:node_checkin_events"
+        "user-provided:tw-ewc-checkin-cloudant-staging:node_checkin_events"
       ]
     },
     "development": {
@@ -377,12 +377,12 @@
   "node_checkin_event_idx": {
     "production": {
       "searchPatterns": [
-        "user-provided:tw-ewc-config:node_checkin_event_idx"
+        "user-provided:tw-ewc-checkin-cloudant-production:node_checkin_event_idx"
       ]
     },
     "staging": {
       "searchPatterns": [
-        "user-provided:tw-ewc-config:node_checkin_event_idx"
+        "user-provided:tw-ewc-checkin-cloudant-staging:node_checkin_event_idx"
       ]
     },
     "development": {
@@ -394,12 +394,12 @@
   "node_checkin_event_s": {
     "production": {
       "searchPatterns": [
-        "user-provided:tw-ewc-config:node_checkin_event_s"
+        "user-provided:tw-ewc-checkin-cloudant-production:node_checkin_event_s"
       ]
     },
     "staging": {
       "searchPatterns": [
-        "user-provided:tw-ewc-config:node_checkin_event_s"
+        "user-provided:tw-ewc-checkin-cloudant-staging:node_checkin_event_s"
       ]
     },
     "development": {
@@ -411,12 +411,12 @@
   "node_checkin_event_e": {
     "production": {
       "searchPatterns": [
-        "user-provided:tw-ewc-config:node_checkin_event_e"
+        "user-provided:tw-ewc-checkin-cloudant-production:node_checkin_event_e"
       ]
     },
     "staging": {
       "searchPatterns": [
-        "user-provided:tw-ewc-config:node_checkin_event_e"
+        "user-provided:tw-ewc-checkin-cloudant-staging:node_checkin_event_e"
       ]
     },
     "development": {
@@ -428,12 +428,12 @@
   "node_checkin_enable": {
     "production": {
       "searchPatterns": [
-        "user-provided:tw-ewc-config:node_checkin_enable"
+        "user-provided:tw-ewc-checkin-cloudant-production:node_checkin_enable"
       ]
     },
     "staging": {
       "searchPatterns": [
-        "user-provided:tw-ewc-config:node_checkin_enable"
+        "user-provided:tw-ewc-checkin-cloudant-staging:node_checkin_enable"
       ]
     },
     "development": {

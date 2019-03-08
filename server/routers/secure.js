@@ -195,8 +195,12 @@ module.exports = function(config, passport) {
     // Enroll page requires an authenticated user
     router.get("/",
         function(req, res) {
+
+            const event_idx = parseInt(IBMCloudEnv.getDictionary('node_checkin_event_idx')[environment]);
+            const events = JSON.parse(IBMCloudEnv.getDictionary('node_checkin_events')[environment])
+            const event = events[event_idx]
             
-            if(IBMCloudEnv.getDictionary('node_checkin_enable')[environment] != 'true') {
+            if(event.enable != 'true') {
                 res.render("thankyou", {});
             }
 
@@ -214,8 +218,8 @@ module.exports = function(config, passport) {
                 if(isTaiwanUser && (getUserType(currentSN) == 'regular' || getUserType(currentSN) == 'contractor')) {
                     // normal login regular or CWF contractor
                     var moment = require('moment')
-                    var event_s = moment(IBMCloudEnv.getDictionary('node_checkin_event_s')[environment]).format()
-                    var event_e = moment(IBMCloudEnv.getDictionary('node_checkin_event_e')[environment]).format()
+                    var event_s = moment(event.start).format()
+                    var event_e = moment(event.end).format()
                     var nowDate = Date.now();
                     if(nowDate >= event_s && nowDate < event_e) {
                         res.render("enroll_form_layout_lock", {title: 'TW EWC Checik-in System', user : req.user});

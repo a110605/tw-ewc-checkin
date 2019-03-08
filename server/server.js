@@ -34,8 +34,8 @@ var bodyParser = require('body-parser');
 const event_idx = parseInt(IBMCloudEnv.getDictionary('node_checkin_event_idx')[environment]);
 const events = JSON.parse(IBMCloudEnv.getDictionary('node_checkin_events')[environment])
 const event = events[event_idx]
-logger.info(path.join(__dirname, 'views', event))
-app.set('views', path.join(__dirname, 'views', event));
+logger.info(path.join(__dirname, 'views', event.name))
+app.set('views', path.join(__dirname, 'views', event.name));
 app.set('view engine', 'pug');
 
 // uncomment after placing your favicon in /public
