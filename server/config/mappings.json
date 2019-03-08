@@ -390,56 +390,5 @@
         "file:/server/localdev-config.json:$.node_checkin_event_idx"
       ]
     }
-  },
-  "node_checkin_event_s": {
-    "production": {
-      "searchPatterns": [
-        "user-provided:tw-ewc-checkin-cloudant-production:node_checkin_event_s"
-      ]
-    },
-    "staging": {
-      "searchPatterns": [
-        "user-provided:tw-ewc-checkin-cloudant-staging:node_checkin_event_s"
-      ]
-    },
-    "development": {
-      "searchPatterns": [
-        "file:/server/localdev-config.json:$.node_checkin_event_s"
-      ]
-    }
-  },
-  "node_checkin_event_e": {
-    "production": {
-      "searchPatterns": [
-        "user-provided:tw-ewc-checkin-cloudant-production:node_checkin_event_e"
-      ]
-    },
-    "staging": {
-      "searchPatterns": [
-        "user-provided:tw-ewc-checkin-cloudant-staging:node_checkin_event_e"
-      ]
-    },
-    "development": {
-      "searchPatterns": [
-        "file:/server/localdev-config.json:$.node_checkin_event_e"
-      ]
-    }
-  },
-  "node_checkin_enable": {
-    "production": {
-      "searchPatterns": [
-        "user-provided:tw-ewc-checkin-cloudant-production:node_checkin_enable"
-      ]
-    },
-    "staging": {
-      "searchPatterns": [
-        "user-provided:tw-ewc-checkin-cloudant-staging:node_checkin_enable"
-      ]
-    },
-    "development": {
-      "searchPatterns": [
-        "file:/server/localdev-config.json:$.node_checkin_enable"
-      ]
-    }
   }
 }
