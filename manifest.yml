@@ -7,6 +7,7 @@ applications:
   memory: 512MB
   name: twewccheckin
   timeout: 180
-services:
-   - tw-ewc-config
-   - tw-ewc-checkin-cloudant-production
+  services:
+    - tw-ewc-config
+    - tw-ewc-checkin-cloudant-production
+    - tw-ewc-checkin-cloudant-staging

@@ -1,217 +1,375 @@
 {
   "version": 2,
   "cloudant_apikey": {
-    "value": {
+    "production": {
       "searchPatterns": [
-        "user-provided:tw-ewc-checkin-cloudant-production:apikey",
-        "env:cloudant_credentials:$.cloudant_apikey",
+        "user-provided:tw-ewc-checkin-cloudant-production:apikey"
+      ]
+    },
+    "staging": {
+      "searchPatterns": [
+        "user-provided:tw-ewc-checkin-cloudant-staging:apikey"
+      ]
+    },
+    "development": {
+      "searchPatterns": [
         "file:/server/localdev-config.json:$.cloudant_apikey"
       ]
     }
   },
   "cloudant_host": {
-    "value": {
+    "production": {
       "searchPatterns": [
-        "user-provided:tw-ewc-checkin-cloudant-production:host",
-        "env:cloudant_credentials:$.cloudant_host",
+        "user-provided:tw-ewc-checkin-cloudant-production:host"
+      ]
+    },
+    "staging": {
+      "searchPatterns": [
+        "user-provided:tw-ewc-checkin-cloudant-staging:host"
+      ]
+    },
+    "development": {
+      "searchPatterns": [
         "file:/server/localdev-config.json:$.cloudant_host"
       ]
     }
   },
   "cloudant_iam_apikey_description": {
-    "value": {
+    "production": {
       "searchPatterns": [
-        "user-provided:tw-ewc-checkin-cloudant-production:iam_apikey_description",
-        "env:cloudant_credentials:$.cloudant_iam_apikey_description",
+        "user-provided:tw-ewc-checkin-cloudant-production:iam_apikey_description"
+      ]
+    },
+    "staging": {
+      "searchPatterns": [
+        "user-provided:tw-ewc-checkin-cloudant-staging:iam_apikey_description"
+      ]
+    },
+    "development": {
+      "searchPatterns": [
         "file:/server/localdev-config.json:$.cloudant_iam_apikey_description"
       ]
     }
   },
   "cloudant_iam_apikey_name": {
-    "value": {
+    "production": {
       "searchPatterns": [
-        "user-provided:tw-ewc-checkin-cloudant-production:iam_apikey_name",
-        "env:cloudant_credentials:$.cloudant_iam_apikey_name",
+        "user-provided:tw-ewc-checkin-cloudant-production:iam_apikey_name"
+      ]
+    },
+    "staging": {
+      "searchPatterns": [
+        "user-provided:tw-ewc-checkin-cloudant-staging:iam_apikey_name"
+      ]
+    },
+    "development": {
+      "searchPatterns": [
         "file:/server/localdev-config.json:$.cloudant_iam_apikey_name"
       ]
     }
   },
   "cloudant_iam_role_crn": {
-    "value": {
+    "production": {
       "searchPatterns": [
-        "user-provided:tw-ewc-checkin-cloudant-production:iam_role_crn",
-        "env:cloudant_credentials:$.cloudant_iam_role_crn",
+        "user-provided:tw-ewc-checkin-cloudant-production:iam_role_crn"
+      ]
+    },
+    "staging": {
+      "searchPatterns": [
+        "user-provided:tw-ewc-checkin-cloudant-staging:iam_role_crn"
+      ]
+    },
+    "development": {
+      "searchPatterns": [
         "file:/server/localdev-config.json:$.cloudant_iam_role_crn"
       ]
     }
   },
   "cloudant_iam_serviceid_crn": {
-    "value": {
+    "production": {
       "searchPatterns": [
-        "user-provided:tw-ewc-checkin-cloudant-production:iam_serviceid_crn",
-        "env:cloudant_credentials:$.cloudant_iam_serviceid_crn",
+        "user-provided:tw-ewc-checkin-cloudant-production:iam_serviceid_crn"
+      ]
+    },
+    "staging": {
+      "searchPatterns": [
+        "user-provided:tw-ewc-checkin-cloudant-staging:iam_serviceid_crn"
+      ]
+    },
+    "development": {
+      "searchPatterns": [
         "file:/server/localdev-config.json:$.cloudant_iam_serviceid_crn"
       ]
     }
   },
   "cloudant_password": {
-    "value": {
+    "production": {
       "searchPatterns": [
-        "user-provided:tw-ewc-checkin-cloudant-production:password",
-        "env:cloudant_credentials:$.cloudant_password",
+        "user-provided:tw-ewc-checkin-cloudant-production:password"
+      ]
+    },
+    "staging": {
+      "searchPatterns": [
+        "user-provided:tw-ewc-checkin-cloudant-staging:password"
+      ]
+    },
+    "development": {
+      "searchPatterns": [
         "file:/server/localdev-config.json:$.cloudant_password"
       ]
     }
   },
   "cloudant_port": {
-    "value": {
+    "production": {
       "searchPatterns": [
-        "user-provided:tw-ewc-checkin-cloudant-production:port",
-        "env:cloudant_credentials:$.cloudant_port",
+        "user-provided:tw-ewc-checkin-cloudant-production:port"
+      ]
+    },
+    "staging": {
+      "searchPatterns": [
+        "user-provided:tw-ewc-checkin-cloudant-staging:port"
+      ]
+    },
+    "development": {
+      "searchPatterns": [
         "file:/server/localdev-config.json:$.cloudant_port"
       ]
     }
   },
   "cloudant_url": {
-    "value": {
+    "production": {
       "searchPatterns": [
-        "user-provided:tw-ewc-checkin-cloudant-production:url",
-        "env:cloudant_credentials:$.cloudant_url",
+        "user-provided:tw-ewc-checkin-cloudant-production:url"
+      ]
+    },
+    "staging": {
+      "searchPatterns": [
+        "user-provided:tw-ewc-checkin-cloudant-staging:url"
+      ]
+    },
+    "development": {
+      "searchPatterns": [
         "file:/server/localdev-config.json:$.cloudant_url"
       ]
     }
   },
   "cloudant_username": {
-    "value": {
+    "production": {
       "searchPatterns": [
-        "user-provided:tw-ewc-checkin-cloudant-production:username",
-        "env:cloudant_credentials:$.cloudant_username",
+        "user-provided:tw-ewc-checkin-cloudant-production:username"
+      ]
+    },
+    "staging": {
+      "searchPatterns": [
+        "user-provided:tw-ewc-checkin-cloudant-staging:username"
+      ]
+    },
+    "development": {
+      "searchPatterns": [
         "file:/server/localdev-config.json:$.cloudant_username"
       ]
     }
   },
   "gmail_id": {
-    "value": {
+    "production": {
       "searchPatterns": [
-        "user-provided:tw-ewc-config:gmail_id",
+        "user-provided:tw-ewc-config:gmail_id"
+      ]
+    },
+    "staging": {
+      "searchPatterns": [
+        "user-provided:tw-ewc-config:gmail_id"
+      ]
+    },
+    "development": {
+      "searchPatterns": [
         "file:/server/localdev-config.json:$.gmail_id"
       ]
     }
   },
   "gmail_pw": {
-    "value": {
+    "production": {
       "searchPatterns": [
-        "user-provided:tw-ewc-config:gmail_pw",
+        "user-provided:tw-ewc-config:gmail_pw"
+      ]
+    },
+    "staging": {
+      "searchPatterns": [
+        "user-provided:tw-ewc-config:gmail_pw"
+      ]
+    },
+    "development": {
+      "searchPatterns": [
         "file:/server/localdev-config.json:$.gmail_pw"
       ]
     }
   },
   "sms_url": {
-    "value": {
+    "production": {
       "searchPatterns": [
-        "user-provided:tw-ewc-config:sms_url",
+        "user-provided:tw-ewc-config:sms_url"
+      ]
+    },
+    "staging": {
+      "searchPatterns": [
+        "user-provided:tw-ewc-config:sms_url"
+      ]
+    },
+    "development": {
+      "searchPatterns": [
         "file:/server/localdev-config.json:$.sms_url"
       ]
     }
   },
   "w3id_app_host": {
-    "value": {
+    "production": {
       "searchPatterns": [
-        "env:VCAP_APPLICATION:$['uris'][0]",
+        "env:VCAP_APPLICATION:$['uris'][0]"
+      ]
+    },
+    "staging": {
+      "searchPatterns": [
+        "env:VCAP_APPLICATION:$['uris'][0]"
+      ]
+    },
+    "development": {
+      "searchPatterns": [
         "file:/server/localdev-config.json:$.w3id_app_host"
       ]
     }
   },
   "w3id_xml_cert": {
-    "value": {
+    "production": {
       "searchPatterns": [
-        "user-provided:tw-ewc-config:w3id_xml_cert",
+        "user-provided:tw-ewc-config:w3id_xml_cert"
+      ]
+    },
+    "staging": {
+      "searchPatterns": [
+        "user-provided:tw-ewc-config:w3id_xml_cert"
+      ]
+    },
+    "development": {
+      "searchPatterns": [
         "file:/server/localdev-config.json:$.w3id_xml_cert"
       ]
     }
   },
   "w3id_w3cert": {
-    "value": {
+    "production": {
       "searchPatterns": [
-        "user-provided:tw-ewc-config:w3id_w3cert",
+        "user-provided:tw-ewc-config:w3id_w3cert"
+      ]
+    },
+    "staging": {
+      "searchPatterns": [
+        "user-provided:tw-ewc-config:w3id_w3cert"
+      ]
+    },
+    "development": {
+      "searchPatterns": [
         "file:/server/localdev-config.json:$.w3id_w3cert"
       ]
     }
   },
-  "node_env": {
-    "value": {
-      "searchPatterns": [
-        "user-provided:tw-ewc-config:node_env",
-        "env:NODE_ENV",
-        "file:/server/localdev-config.json:$.node_env"
-      ]
-    }
-  },
-  "node_port": {
-    "value": {
-      "searchPatterns": [
-        "env:PORT",
-        "file:/server/localdev-config.json:$.node_port"
-      ]
-    }
-  },
-  "node_local_https_port": {
-    "value": {
-      "searchPatterns": [
-        "env:NODE_LOCAL_HTTPS_PORT",
-        "file:/server/localdev-config.json:$.node_local_https_port"
-      ]
-    }
-  },
   "node_log_level": {
-    "value": {
+    "production": {
       "searchPatterns": [
-        "user-provided:tw-ewc-config:node_log_level",
-        "env:NODE_LOG_LEVEL",
+        "user-provided:tw-ewc-config:node_log_level"
+      ]
+    },
+    "staging": {
+      "searchPatterns": [
+        "user-provided:tw-ewc-config:node_log_level"
+      ]
+    },
+    "development": {
+      "searchPatterns": [
         "file:/server/localdev-config.json:$.node_log_level"
       ]
     }
   },
   "node_checkin_events": {
-    "value": {
+    "production": {
       "searchPatterns": [
-        "user-provided:tw-ewc-config:node_checkin_events",
+        "user-provided:tw-ewc-config:node_checkin_events"
+      ]
+    },
+    "staging": {
+      "searchPatterns": [
+        "user-provided:tw-ewc-config:node_checkin_events"
+      ]
+    },
+    "development": {
+      "searchPatterns": [
         "file:/server/localdev-config.json:$.node_checkin_events"
       ]
     }
   },
   "node_checkin_event_idx": {
-    "value": {
+    "production": {
       "searchPatterns": [
-        "user-provided:tw-ewc-config:node_checkin_event_idx",
-        "env:NODE_CHECKIN_EVENT_IDX",
+        "user-provided:tw-ewc-config:node_checkin_event_idx"
+      ]
+    },
+    "staging": {
+      "searchPatterns": [
+        "user-provided:tw-ewc-config:node_checkin_event_idx"
+      ]
+    },
+    "development": {
+      "searchPatterns": [
         "file:/server/localdev-config.json:$.node_checkin_event_idx"
       ]
     }
   },
   "node_checkin_event_s": {
-    "value": {
+    "production": {
       "searchPatterns": [
-        "user-provided:tw-ewc-config:node_checkin_event_s",
-        "env:NODE_CHECKIN_EVENT_S",
+        "user-provided:tw-ewc-config:node_checkin_event_s"
+      ]
+    },
+    "staging": {
+      "searchPatterns": [
+        "user-provided:tw-ewc-config:node_checkin_event_s"
+      ]
+    },
+    "development": {
+      "searchPatterns": [
         "file:/server/localdev-config.json:$.node_checkin_event_s"
       ]
     }
   },
   "node_checkin_event_e": {
-    "value": {
+    "production": {
       "searchPatterns": [
-        "user-provided:tw-ewc-config:node_checkin_event_e",
-        "env:NODE_CHECKIN_EVENT_E",
+        "user-provided:tw-ewc-config:node_checkin_event_e"
+      ]
+    },
+    "staging": {
+      "searchPatterns": [
+        "user-provided:tw-ewc-config:node_checkin_event_e"
+      ]
+    },
+    "development": {
+      "searchPatterns": [
         "file:/server/localdev-config.json:$.node_checkin_event_e"
       ]
     }
   },
   "node_checkin_enable": {
-    "value": {
+    "production": {
       "searchPatterns": [
-        "user-provided:tw-ewc-config:node_checkin_enable",
-        "env:NODE_CHECKIN_ENABLE",
+        "user-provided:tw-ewc-config:node_checkin_enable"
+      ]
+    },
+    "staging": {
+      "searchPatterns": [
+        "user-provided:tw-ewc-config:node_checkin_enable"
+      ]
+    },
+    "development": {
+      "searchPatterns": [
         "file:/server/localdev-config.json:$.node_checkin_enable"
       ]
     }

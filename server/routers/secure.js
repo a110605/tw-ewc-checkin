@@ -4,12 +4,13 @@ var jwt = require("jsonwebtoken");
 
 const IBMCloudEnv = require('ibm-cloud-env');
 IBMCloudEnv.init();
-var cloudant_url = IBMCloudEnv.getString('cloudant_url').value;
-var cloudant_username = IBMCloudEnv.getString('cloudant_username').value;
-var cloudant_password = IBMCloudEnv.getString('cloudant_password').value;
-var gmail_id = IBMCloudEnv.getString('gmail_id').value;
-var gmail_pw = IBMCloudEnv.getString('gmail_pw').value;
-var sms_url = IBMCloudEnv.getString('sms_url').value;
+const environment = process.env.NODE_ENV || 'development'
+var cloudant_url = IBMCloudEnv.getDictionary('cloudant_url')[environment];
+var cloudant_username = IBMCloudEnv.getDictionary('cloudant_username')[environment];
+var cloudant_password = IBMCloudEnv.getDictionary('cloudant_password')[environment];
+var gmail_id = IBMCloudEnv.getDictionary('gmail_id')[environment];
+var gmail_pw = IBMCloudEnv.getDictionary('gmail_pw')[environment];
+var sms_url = IBMCloudEnv.getDictionary('sms_url')[environment];
 
 // 讀取 Cloudant library
 var Cloudant = require('@cloudant/cloudant');
@@ -195,7 +196,7 @@ module.exports = function(config, passport) {
     router.get("/",
         function(req, res) {
             
-            if(IBMCloudEnv.getString('node_checkin_enable').value != 'true') {
+            if(IBMCloudEnv.getDictionary('node_checkin_enable')[environment] != 'true') {
                 res.render("thankyou", {});
             }
 
@@ -213,8 +214,8 @@ module.exports = function(config, passport) {
                 if(isTaiwanUser && (getUserType(currentSN) == 'regular' || getUserType(currentSN) == 'contractor')) {
                     // normal login regular or CWF contractor
                     var moment = require('moment')
-                    var event_s = moment(IBMCloudEnv.getString('node_checkin_event_s').value).format()
-                    var event_e = moment(IBMCloudEnv.getString('node_checkin_event_e').value).format()
+                    var event_s = moment(IBMCloudEnv.getDictionary('node_checkin_event_s')[environment]).format()
+                    var event_e = moment(IBMCloudEnv.getDictionary('node_checkin_event_e')[environment]).format()
                     var nowDate = Date.now();
                     if(nowDate >= event_s && nowDate < event_e) {
                         res.render("enroll_form_layout_lock", {title: 'TW EWC Checik-in System', user : req.user});
@@ -294,7 +295,7 @@ module.exports = function(config, passport) {
         }
     );
     */
-   
+
     // Start SAML login process
     router.get("/login",
        passport.authenticate(config.passport.strategy, {/*successRedirect : "/", */failureRedirect : "/accessDenied"}),
