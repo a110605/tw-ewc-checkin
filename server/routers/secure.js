@@ -325,14 +325,14 @@ module.exports = function(config, passport) {
     // Enroll System Endpoints
     ///////////////////////////////////////////////////////////////////////
 
-    router.get("/ewc_admin",
+    router.get("/admin",
         function(req, res) {
             if (req.user) {
             	customlogger.info('LOG002 landing to admin portal ', req.user.uid);
                 // user type check
                 var currentSN = req.user.id.substring(0, 6);
                 if(adminList.indexOf(currentSN) > -1) {
-                    res.render("ewc_admin", {title: 'TW EWC Enroll System', user : req.user});
+                    res.render("enroll_admin", {title: 'TW EWC Enroll System', user : req.user});
                 } else {
                     res.render("not_found_error", {title: 'TW EWC Enroll System', user : req.user});
                 }
