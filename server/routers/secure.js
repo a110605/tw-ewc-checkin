@@ -218,8 +218,8 @@ module.exports = function(config, passport) {
                 if(isTaiwanUser && (getUserType(currentSN) == 'regular' || getUserType(currentSN) == 'contractor')) {
                     // normal login regular or CWF contractor
                     var moment = require('moment')
-                    var event_s = moment(event.start).format()
-                    var event_e = moment(event.end).format()
+                    var event_s = moment(event.enroll_start).format()
+                    var event_e = moment(event.enroll_end).format()
                     var nowDate = Date.now();
                     if(nowDate >= event_s && nowDate < event_e) {
                         res.render("enroll_form_layout_lock", {title: 'TW EWC Checik-in System', user : req.user});
