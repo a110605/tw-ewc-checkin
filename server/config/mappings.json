@@ -3,12 +3,12 @@
   "cloudant_apikey": {
     "production": {
       "searchPatterns": [
-        "user-provided:tw-ewc-checkin-cloudant-production:apikey"
+        "user-provided:tw-ewc-checkin-cloudant-production:cloudant_apikey"
       ]
     },
     "staging": {
       "searchPatterns": [
-        "user-provided:tw-ewc-checkin-cloudant-staging:apikey"
+        "user-provided:tw-ewc-checkin-cloudant-staging:cloudant_apikey"
       ]
     },
     "development": {
@@ -20,12 +20,12 @@
   "cloudant_host": {
     "production": {
       "searchPatterns": [
-        "user-provided:tw-ewc-checkin-cloudant-production:host"
+        "user-provided:tw-ewc-checkin-cloudant-production:cloudant_host"
       ]
     },
     "staging": {
       "searchPatterns": [
-        "user-provided:tw-ewc-checkin-cloudant-staging:host"
+        "user-provided:tw-ewc-checkin-cloudant-staging:cloudant_host"
       ]
     },
     "development": {
@@ -37,12 +37,12 @@
   "cloudant_iam_apikey_description": {
     "production": {
       "searchPatterns": [
-        "user-provided:tw-ewc-checkin-cloudant-production:iam_apikey_description"
+        "user-provided:tw-ewc-checkin-cloudant-production:cloudant_iam_apikey_description"
       ]
     },
     "staging": {
       "searchPatterns": [
-        "user-provided:tw-ewc-checkin-cloudant-staging:iam_apikey_description"
+        "user-provided:tw-ewc-checkin-cloudant-staging:cloudant_iam_apikey_description"
       ]
     },
     "development": {
@@ -54,12 +54,12 @@
   "cloudant_iam_apikey_name": {
     "production": {
       "searchPatterns": [
-        "user-provided:tw-ewc-checkin-cloudant-production:iam_apikey_name"
+        "user-provided:tw-ewc-checkin-cloudant-production:cloudant_iam_apikey_name"
       ]
     },
     "staging": {
       "searchPatterns": [
-        "user-provided:tw-ewc-checkin-cloudant-staging:iam_apikey_name"
+        "user-provided:tw-ewc-checkin-cloudant-staging:cloudant_iam_apikey_name"
       ]
     },
     "development": {
@@ -71,12 +71,12 @@
   "cloudant_iam_role_crn": {
     "production": {
       "searchPatterns": [
-        "user-provided:tw-ewc-checkin-cloudant-production:iam_role_crn"
+        "user-provided:tw-ewc-checkin-cloudant-production:cloudant_iam_role_crn"
       ]
     },
     "staging": {
       "searchPatterns": [
-        "user-provided:tw-ewc-checkin-cloudant-staging:iam_role_crn"
+        "user-provided:tw-ewc-checkin-cloudant-staging:cloudant_iam_role_crn"
       ]
     },
     "development": {
@@ -88,12 +88,12 @@
   "cloudant_iam_serviceid_crn": {
     "production": {
       "searchPatterns": [
-        "user-provided:tw-ewc-checkin-cloudant-production:iam_serviceid_crn"
+        "user-provided:tw-ewc-checkin-cloudant-production:cloudant_iam_serviceid_crn"
       ]
     },
     "staging": {
       "searchPatterns": [
-        "user-provided:tw-ewc-checkin-cloudant-staging:iam_serviceid_crn"
+        "user-provided:tw-ewc-checkin-cloudant-staging:cloudant_iam_serviceid_crn"
       ]
     },
     "development": {
@@ -105,12 +105,12 @@
   "cloudant_password": {
     "production": {
       "searchPatterns": [
-        "user-provided:tw-ewc-checkin-cloudant-production:password"
+        "user-provided:tw-ewc-checkin-cloudant-production:cloudant_password"
       ]
     },
     "staging": {
       "searchPatterns": [
-        "user-provided:tw-ewc-checkin-cloudant-staging:password"
+        "user-provided:tw-ewc-checkin-cloudant-staging:cloudant_password"
       ]
     },
     "development": {
@@ -122,12 +122,12 @@
   "cloudant_port": {
     "production": {
       "searchPatterns": [
-        "user-provided:tw-ewc-checkin-cloudant-production:port"
+        "user-provided:tw-ewc-checkin-cloudant-production:cloudant_port"
       ]
     },
     "staging": {
       "searchPatterns": [
-        "user-provided:tw-ewc-checkin-cloudant-staging:port"
+        "user-provided:tw-ewc-checkin-cloudant-staging:cloudant_port"
       ]
     },
     "development": {
@@ -139,12 +139,12 @@
   "cloudant_url": {
     "production": {
       "searchPatterns": [
-        "user-provided:tw-ewc-checkin-cloudant-production:url"
+        "user-provided:tw-ewc-checkin-cloudant-production:cloudant_url"
       ]
     },
     "staging": {
       "searchPatterns": [
-        "user-provided:tw-ewc-checkin-cloudant-staging:url"
+        "user-provided:tw-ewc-checkin-cloudant-staging:cloudant_url"
       ]
     },
     "development": {
@@ -156,12 +156,12 @@
   "cloudant_username": {
     "production": {
       "searchPatterns": [
-        "user-provided:tw-ewc-checkin-cloudant-production:username"
+        "user-provided:tw-ewc-checkin-cloudant-production:cloudant_username"
       ]
     },
     "staging": {
       "searchPatterns": [
-        "user-provided:tw-ewc-checkin-cloudant-staging:username"
+        "user-provided:tw-ewc-checkin-cloudant-staging:cloudant_username"
       ]
     },
     "development": {
