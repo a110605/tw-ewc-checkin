@@ -3,8 +3,8 @@ applications:
   command: npm start
   domain: mybluemix.net
   host: tw-ewc-checkin
-  instances: 8
-  memory: 128MB
+  instances: 1
+  memory: 512MB
   name: twewccheckin
   timeout: 180
   services:
