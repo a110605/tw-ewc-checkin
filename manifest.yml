@@ -4,7 +4,7 @@ applications:
   domain: mybluemix.net
   host: tw-ewc-checkin
   instances: 8
-  memory: 512MB
+  memory: 128MB
   name: twewccheckin
   timeout: 180
   services:
