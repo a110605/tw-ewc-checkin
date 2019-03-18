@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>TW EWC 63rd Checkin System</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template -->
+    <link href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/one-page-wonder.min.css" rel="stylesheet">
+
+    <style>
+
+      .alert-text, .mustMark {
+        color: #ee0979;
+      }
+      .mustMark {
+        font-weight: 800;
+      }
+      .has-error input,
+      .has-error select {
+        border-color: #ee0979;
+      }
+    </style>
+
+  </head>
+
+  <body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="#">TW EWC 63rd Checkin System</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+
+            <li class="nav-item">
+              <a class="nav-link" id="username" style="color: #fff;"> Hi IBMer</a>
+            </li>
+            <!--
+            <li class="nav-item">
+              <a class="nav-link" href="./logout"> 登出</a>
+            </li>
+            -->
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <header class="masthead text-center text-white">
+      <div class="masthead-content">
+        <div class="container">
+          <h1 class="masthead-heading mb-0">EWC 快速報到 QR Code</h1>
+          <h2 class="masthead-subheading mb-0">Checkin Smarter</h2>
+          <a class="btn btn-primary btn-xl rounded-pill mt-5 js-scroll-trigger">目前沒有活動喔！</a>
+          <!--
+          <a href="#register" id="genqr_btn" class="btn btn-primary btn-xl rounded-pill mt-5 js-scroll-trigger">產生運動會報到專用 QR Code</a>
+          -->
+        </div>
+      </div>
+      <div class="bg-circle-1 bg-circle"></div>
+      <div class="bg-circle-2 bg-circle"></div>
+      <div class="bg-circle-3 bg-circle"></div>
+      <div class="bg-circle-4 bg-circle"></div>
+    </header>
+
+    <!--
+    <section id="register">
+
+        <div class="row">
+              <div class="col-12-lg" style="margin-top: 1.5em;">
+                <div class="p-5">
+                  <h2 class="display-4">請期待下個活動吧！ EWC 有你/妳的參加，更熱鬧！</h2>
+                </div>
+              </div>
+        </div>
+
+    </section>
+    -->
+
+    <!-- Footer -->
+    <footer class="py-5 bg-black">
+      <div class="container">
+        <p class="m-0 text-center text-white small">IBM Taiwan EWC 63rd - 如有相關疑問，請聯絡 EWC – Mimmie Chu/Taiwan/Contr/IBM (#3841)</p>
+        <p class="m-0 text-center small" style="color: #aaa;">Design Copyright &copy; 2019 Blackrock Digital LLC</p>
+      </div>
+      <!-- /.container -->
+    </footer>
+
+    <!-- Modal -->
+    <div class="modal fade" id="postLoadingModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">正在傳送，請稍等...</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <span id="postLoadingModalText"></span>
+            <i class="fa fa-gear fa-spin" style="font-size:24px"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="postModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle">傳送結果</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <span id="postModalText"></span>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" data-dismiss="modal">好的我知道了</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="./qrcode.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom JavaScript for this theme -->
+    <script src="js/scrolling-nav.js"></script>
+
+    <script type="text/javascript">
+
+      var user = {};
+
+      var getToken = function(callback) {
+        $.ajax({
+          'url': './getToken',
+          'success': callback,
+          'error': callback
+        });
+      };
+
+      var getProfile = function(token, callback) {
+        $.ajax({
+          'url': '/api/profile?token='+token,
+          'success': callback,
+          'error': callback
+        })
+      };
+
+      var ajaxProcessor = function(method, path, data, callback, failCallback, async) {
+        // POST
+        $.ajax({
+          "method": method,
+          "url": path,
+          "context": document.body,
+          "data": data,
+          "processData": true,
+          "cache": false,
+          "async": async
+        }).done(callback).fail(failCallback);
+      };
+
+      var loadProfile = function() {
+        ajaxProcessor('POST','./form/provisionUUID',{},function(data){
+            if(data && data.uuid) {
+                user.uuid = data.uuid;
+                genQR();
+            }
+          },function(data){
+            // no data
+            // console.log();
+          },true);
+      };
+
+      var renderBarCode = function(val) {
+        document.getElementById("qrcode").innerHTML = '';
+        var qrcode = new QRCode(document.getElementById("qrcode"), {
+          width : 280,
+          height : 280
+        });
+        qrcode.makeCode(val);
+      };
+
+      var genQR = function(){
+          var sn = user.id.substring(0, 6);
+          var qrContrnt = sn+"|"+user.uuid;
+          if(user.uuid == undefined) {
+            qrContrnt = sn;
+          }
+          var imageLink = 'http://chart.apis.google.com/chart?cht=qr&chs=300x300&chl='+qrContrnt+'&chld=H|0';
+
+          renderBarCode(qrContrnt);
+          
+          // $("#qrImg").attr('src',imageLink);
+          // $("#qrImgBtn").attr('href',imageLink);
+          // $("#qrImgBtnLink").attr('href',imageLink);
+          // $("#qrImgBtnLink").attr('download',imageLink);
+          // $("#qrImg").css('border-radius','10%');
+          
+          $("#qrImgBtnLink").attr('href',$("#qrcode > img").attr("src"));
+
+      };
+
+      $("#qrImgBtn").click(function(){
+        $("#qrImgBtn").attr('href',$("#qrcode > img").attr("src"));
+        $("#qrImgBtn").attr('download','ewc_2019_sports_day_' + user.sn + '.png');
+      });
+
+      $("#qrImgBtnLink").click(function(){
+        $("#qrImgBtnLink").attr('href',$("#qrcode > img").attr("src"));
+        $("#qrImgBtnLink").attr('download','ewc_2019_sports_day_' + user.sn + '.png');
+      });
+
+      $(document).ready(function(){
+
+        getToken(function(token){
+          getProfile(token.token, function(data) {
+            user = data.result.user;
+            $('#username').html("Hi " + user.displayName);
+            $('#inputName').val(user.displayName);
+            $('#inputEmail').val(user.email);
+
+            $("#genqr_btn").click(genQR);
+            $("#sendSubmitBtn").click(genQR);
+            loadProfile();
+
+          });
+        });
+
+        $('#sendEmailCheck1'). click(function(){
+          if($(this). prop("checked") == true) {
+            $("#sendSubmitBtn").removeAttr("disabled");
+          } else if($(this). prop("checked") == false) {
+            $("#sendSubmitBtn").attr("disabled","disabled");
+          };
+        });
+
+        $.validator.setDefaults( {
+			    submitHandler: function () {
+
+            var requestQRParams = {
+              sendEmailCheck1: $("#sendEmailCheck1").is(":checked"),
+              sendSMSCheck1: $("#sendSMSCheck1").is(":checked")
+            };
+
+            $('#postLoadingModalText').html("正在寄送您的 QR Code，請稍等...");
+            $('#postLoadingModal').modal({ show: true});
+
+            ajaxProcessor('POST','./form/sendQRcode',requestQRParams,
+              function(data){
+                console.log(data);
+                if(data.success) {
+                  $('#postModalText').html("寄送成功");
+                  loadProfile();
+                } else {
+                  $('#postModalText').html("寄送沒有成功，請再嘗試一次，或直接截圖保存");
+                }
+                setTimeout(function(){$('#postLoadingModal').modal("hide");$('#postModal').modal({ show: true});}, 500);
+              },function(){
+                $('#postModalText').html("寄送沒有成功，請再嘗試一次，或直接截圖保存");
+                setTimeout(function(){$('#postLoadingModal').modal("hide");$('#postModal').modal({ show: true});}, 500);
+              },true);
+			    }
+		    } );
+
+        jQuery.validator.addMethod("notEqual", function(value, element, param) {
+          return this.optional(element) || value != param;
+        }, "Please specify a different (non-default) value");
+
+        jQuery.validator.addMethod("phoneStartingWith09", function(phone_number, element) {
+            phone_number = phone_number.replace(/\s+/g, ""); 
+            return this.optional(element) || phone_number.match(/^09\d{8,}$/);
+        }, "Phone number should start with 09");
+
+        $( "#sendQRForm" ).validate( {
+          rules: {
+            sendEmailCheck1: {
+              required: true
+            }
+          },
+          messages: {
+            personalDataCheck1: {
+              required: "請至少選擇一種寄送方式"
+            }
+          },
+          errorElement: "small",
+          errorPlacement: function ( error, element ) {
+            // Add the `help-block` class to the error element
+            error.addClass( "help-block form-text alert-text" );
+            // Add `has-feedback` class to the parent div.form-group
+            // in order to add icons to inputs
+            element.parents( ".col-sm-5" ).addClass( "has-feedback" );
+
+            if ( element.prop( "type" ) === "checkbox" ) {
+              error.insertAfter( element.parent( "label" ) );
+            } else {
+              error.insertAfter( element );
+            }
+
+            // Add the span element, if doesn't exists, and apply the icon classes to it.
+            if ( !element.next( "span" )[ 0 ] ) {
+              $( "<span class='glyphicon glyphicon-remove form-control-feedback'></span>" ).insertAfter( element );
+            }
+          },
+          success: function ( label, element ) {
+            // Add the span element, if doesn't exists, and apply the icon classes to it.
+            if ( !$( element ).next( "span" )[ 0 ] ) {
+              $( "<span class='glyphicon glyphicon-ok form-control-feedback'></span>" ).insertAfter( $( element ) );
+            }
+          },
+          highlight: function ( element, errorClass, validClass ) {
+            $( element ).parents( ".col-validform-8" ).addClass( "has-error" ).removeClass( "has-success" );
+            $( element ).next( "span" ).addClass( "glyphicon-remove" ).removeClass( "glyphicon-ok" );
+            console.log("test2");
+          },
+          unhighlight: function ( element, errorClass, validClass ) {
+            $( element ).parents( ".col-validformsm-8" ).addClass( "has-success" ).removeClass( "has-error" );
+            $( element ).next( "span" ).addClass( "glyphicon-ok" ).removeClass( "glyphicon-remove" );
+          }
+			  } );
+
+
+      });
+
+    </script>
+
+  </body>
+
+</html>

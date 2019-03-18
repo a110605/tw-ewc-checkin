@@ -1,0 +1,33 @@
+extends layout
+
+block content
+  h1= title
+  p Hello, #{user.displayName}
+  p Test API
+  p 
+    button#getToken Get Token
+  p 
+    input#token(size=120)
+  p 
+    button#callAPI Call API
+  p 
+    textarea#response(cols=120, rows=5)
+  p User groups:
+  ul
+    each group in user.blueGroups
+      li= group
+  script.
+    $(document).ready(function(){
+    	$('#getToken').click(function(){
+    		$.get('/getToken', function(data){
+    			$('#token').val(data.token);
+    			$('#response').val(JSON.stringify(data));
+    		})
+    	})
+    	$('#callAPI').click(function(){
+          $.ajax({url: '/api/profile?token='+$('#token').val(),
+            success: function(data){ $('#response').val(JSON.stringify(data)); },
+            error: function(data) { $('#response').val("ERROR: " + JSON.stringify(data.responseJSON));  }
+          })
+        })
+    })

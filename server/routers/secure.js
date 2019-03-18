@@ -5,6 +5,7 @@ var jwt = require("jsonwebtoken");
 const IBMCloudEnv = require('ibm-cloud-env');
 IBMCloudEnv.init();
 const environment = process.env.NODE_ENV || 'development'
+
 var cloudant_url = IBMCloudEnv.getDictionary('cloudant_url')[environment];
 var cloudant_username = IBMCloudEnv.getDictionary('cloudant_username')[environment];
 var cloudant_password = IBMCloudEnv.getDictionary('cloudant_password')[environment];
@@ -86,7 +87,7 @@ var relayHandler = function relayHandler(req, res) {
     res.redirect(req.baseUrl + hashQuery);
 };
 
-module.exports = function(config, passport) {
+module.exports = function(app, config, passport) {
     
     ///////////////////////////////////////////////////////////////////////
     // Logger
@@ -195,10 +196,6 @@ module.exports = function(config, passport) {
     // Enroll page requires an authenticated user
     router.get("/",
         function(req, res) {
-
-            const event_idx = parseInt(IBMCloudEnv.getDictionary('node_checkin_event_idx')[environment]);
-            const events = JSON.parse(IBMCloudEnv.getDictionary('node_checkin_events')[environment])
-            const event = events[event_idx]
             
             if(event.enable != 'true') {
                 res.render("thankyou", {});
@@ -218,15 +215,19 @@ module.exports = function(config, passport) {
                 if(isTaiwanUser && (getUserType(currentSN) == 'regular' || getUserType(currentSN) == 'contractor')) {
                     // normal login regular or CWF contractor
                     var moment = require('moment')
-                    var event_s = moment(event.enroll_start).format()
-                    var event_e = moment(event.enroll_end).format()
-                    var nowDate = Date.now();
-                    if(nowDate >= event_s && nowDate < event_e) {
-                        res.render("enroll_form_layout_lock", {title: 'TW EWC Checik-in System', user : req.user});
+                    var date = moment(event.date).format()
+                    var enroll_s = moment(event.enroll_start).format()
+                    var enroll_e = moment(event.enroll_end).format()
+                    var nowDate = moment(Date.now()).format();
+                    if(nowDate > date) {
+                        res.render("thankyou", {type: event.type});
                     } else {
-                        res.render("enroll_form_layout", {title: 'TW EWC Checik-in System', user : req.user});
+                        if(nowDate >= enroll_s && nowDate < enroll_e) {                      
+                            res.render(`enroll_form_layout_rwd.${event.type}.pug`, {title: 'TW EWC Checik-in System', user : req.user});
+                        } else {
+                            res.render(`enroll_form_layout_rwd_lock.${event.type}.pug`, {title: 'TW EWC Checik-in System', user : req.user});
+                        }
                     }
-
                 // Foreign (IA-in: International Assignment inbound) or vendor
                 } else {
                 	customlogger.info("ERR003 user type error ", req.user.uid);
@@ -332,7 +333,7 @@ module.exports = function(config, passport) {
                 // user type check
                 var currentSN = req.user.id.substring(0, 6);
                 if(adminList.indexOf(currentSN) > -1) {
-                    res.render("enroll_admin", {title: 'TW EWC Enroll System', user : req.user});
+                    res.render(`enroll_admin.${event.type}.pug`, {title: 'TW EWC Enroll System', user : req.user});
                 } else {
                     res.render("not_found_error", {title: 'TW EWC Enroll System', user : req.user});
                 }
@@ -355,9 +356,7 @@ module.exports = function(config, passport) {
             if(err == null || err == "1001") {
 
                 var uuid = generateUUID();
-
-                var enrollInfo = {
-                    // 報名資料
+                var commonInfos = {
                     userTypeRadioOptions: securityValid(inputForm.userTypeRadioOptions),
                     inputSN: securityValid(inputForm.inputSN),
                     inputEmail: securityValid(inputForm.inputEmail),
@@ -366,14 +365,39 @@ module.exports = function(config, passport) {
                     departmentSelect1: securityValid(inputForm.departmentSelect1),
                     locationSelect1: securityValid(inputForm.locationSelect1),
                     mobileNo1: securityValid(inputForm.mobileNo1),
-                    vegetarianRadioOptions1: securityValid(inputForm.vegetarianRadioOptions1),
-                    participantSelect1: securityValid(inputForm.participantSelect1),
-                    vegetarianRadioOptions2: securityValid(inputForm.vegetarianRadioOptions2),
-                    // metadata
+                }
+                var specificInfos = {
+                    "0": {
+                        inputID: securityValid(inputForm.inputID),
+                        birthDay: securityValid(inputForm.birthDay),
+                        inputParticipant: securityValid(inputForm.inputParticipant),
+                        participantID1: securityValid(inputForm.participantID1),
+                        inputParticipantChineseName1: securityValid(inputForm.inputParticipantChineseName1),
+                        participantBirthDay1: securityValid(inputForm.participantBirthDay1),
+                        participantID2: securityValid(inputForm.participantID2),
+                        inputParticipantChineseName2: securityValid(inputForm.inputParticipantChineseName2),
+                        participantBirthDay2: securityValid(inputForm.participantBirthDay2),
+                        participantID3: securityValid(inputForm.participantID3),
+                        inputParticipantChineseName3: securityValid(inputForm.inputParticipantChineseName3),
+                        participantBirthDay3: securityValid(inputForm.participantBirthDay3),
+                        shuttleSelect1: securityValid(inputForm.shuttleSelect1),
+                    },
+                    "1": {
+                    },
+                    "2": {
+                        vegetarianRadioOptions1: securityValid(inputForm.vegetarianRadioOptions1),
+                        participantSelect1: securityValid(inputForm.participantSelect1),
+                        vegetarianRadioOptions2: securityValid(inputForm.vegetarianRadioOptions2),  
+                    } 
+                }
+                var metadataInfos = {
                     lastModTs: currentTs(),
                     lastModUser: securityValid(inputForm.currentUser)
-                };;
+                }
 
+                var enrollInfo = commonInfos;
+                enrollInfo = enrollInfo.concat(specificInfos[event.type])
+                enrollInfo = enrollInfo.concat(metadataInfos)
 
                 if(data._id) {
                     enrollInfo._id = data._id;
@@ -396,12 +420,12 @@ module.exports = function(config, passport) {
                         // success
                         if(err == null) {
                             // insert into history
-
-                            var enrollInfoHist = {
+                            var histInfoHists = {
                                 hist_id: enrollInfoResponse.id,
                                 hist_rev: enrollInfoResponse.rev,
                                 hist_timestamp: currentTs(),
-                                // enrollInfo
+                            };
+                            var commonInfoHists = {
                                 userTypeRadioOptions: enrollInfo.userTypeRadioOptions,
                                 inputSN: enrollInfo.inputSN,
                                 inputEmail: enrollInfo.inputEmail,
@@ -410,13 +434,41 @@ module.exports = function(config, passport) {
                                 departmentSelect1: enrollInfo.departmentSelect1,
                                 locationSelect1: enrollInfo.locationSelect1,
                                 mobileNo1: enrollInfo.mobileNo1,
-                                vegetarianRadioOptions1: enrollInfo.vegetarianRadioOptions1,
-                                participantSelect1: enrollInfo.participantSelect1,
-                                vegetarianRadioOptions2: enrollInfo.vegetarianRadioOptions2,
+                            };
+                            var specificInfoHists = {
+                                "0" : {
+                                    inputID: enrollInfo.inputID,
+                                    birthDay: enrollInfo.birthDay,
+                                    participantID1: enrollInfo.participantID1,
+                                    inputParticipantChineseName1: enrollInfo.inputParticipantChineseName1,
+                                    participantBirthDay1: enrollInfo.participantBirthDay1,
+                                    participantID2: enrollInfo.participantID2,
+                                    inputParticipantChineseName2: enrollInfo.inputParticipantChineseName2,
+                                    participantBirthDay2: enrollInfo.participantBirthDay2,
+                                    participantID3: enrollInfo.participantID3,
+                                    inputParticipantChineseName3: inputForm.inputParticipantChineseName3,
+                                    participantBirthDay3: enrollInfo.participantBirthDay3,
+                                    shuttleSelect1: enrollInfo.shuttleSelect1
+                                },
+                                "1": {
+
+                                },
+                                "2": {
+                                    vegetarianRadioOptions1: enrollInfo.vegetarianRadioOptions1,
+                                    participantSelect1: enrollInfo.participantSelect1,
+                                    vegetarianRadioOptions2: enrollInfo.vegetarianRadioOptions2,                                   
+                                }
+
+                            }
+                            var metadataInfoHists = {
                                 lastModTs: enrollInfo.lastModTs,
                                 lastModUser: enrollInfo.lastModUser
-                            };
-
+                            }
+                            
+                            var enrollInfoHist = histInfoHists;
+                            enrollInfoHist = enrollInfoHist.concat(commonInfoHists);
+                            enrollInfoHist = enrollInfoHist.concat(specificInfoHists[event.type]);
+                            enrollInfoHist = enrollInfoHist.concat(metadataInfoHists);
                             customlogger.info('enroll_hist_db.insert');
                             enroll_hist_db.insert(
                                 enrollInfoHist,
@@ -453,6 +505,53 @@ module.exports = function(config, passport) {
 
 
     };
+    var common_fields = [
+        "_id",
+        "_rev",
+        "userTypeRadioOptions",
+        "inputSN",
+        "inputEmail",
+        "inputEnglishName",
+        "inputChineseName1",
+        "departmentSelect1",
+        "locationSelect1",
+        "mobileNo1",
+    ]
+    var specific_fields = {
+        // Family Day
+        "0": [
+            "inputID",
+            "birthDay",
+            "participantID1",
+            "inputParticipantChineseName1",
+            "participantBirthDay1",
+            "participantID2",
+            "inputParticipantChineseName2",
+            "participantBirthDay2",
+            "participantID3",
+            "inputParticipantChineseName3",
+            "participantBirthDay3",
+            "shuttleSelect1",
+        ],
+        // Sports Day
+        "1": [
+        ],
+        // YEP
+        "2": [
+            "vegetarianRadioOptions1",
+            "vegetarianRadioOptions2",
+            "participantSelect1",
+        ]
+    };
+    var metadata_fields = [
+        "lastModTs",
+        "lastModUser"
+    ]
+    var hist_fields = [
+        "hist_id",
+        "hist_rev",
+        "hist_timestamp"
+    ]
 
     /*
         從 DB 讀取使用者的紀錄
@@ -469,27 +568,14 @@ module.exports = function(config, passport) {
             callback("error", {uuid: null});
             return;
         }
-
+        
         customlogger.info('enroll_db.find');
+        var fields = common_fields
+        fields = fields.concat(specific_fields[event.type])
+        fields = fields.concat(metadata_fields)
         enroll_db.find({
             selector,
-            "fields": [
-                "_id",
-                "_rev",
-                "userTypeRadioOptions",
-                "inputSN",
-                "inputEmail",
-                "inputEnglishName",
-                "inputChineseName1",
-                "departmentSelect1",
-                "locationSelect1",
-                "mobileNo1",
-                "vegetarianRadioOptions1",
-                "vegetarianRadioOptions2",
-                "participantSelect1",
-                "lastModTs",
-                "lastModUser"
-            ]
+            "fields": fields
         }, function(err, data) {
             customlogger.info('Error:', err);
             customlogger.info('Data:', data);
@@ -526,33 +612,18 @@ module.exports = function(config, passport) {
             callback("error", null);
             return;
         } else {
-            if(requestSN == "ewc62nd") {
+            if(requestSN == "ewc63rd") {
                 selector = {};
             }
         }
-
+        var fields = common_fields
+        fields = fields.concat(specific_fields[event.type])
+        fields = fields.concat(metadata_fields)
+        fields = fields.concat(hist_fields)
         enroll_hist_db.find({
             selector,
-            "fields": [
-                "_id",
-                "_rev",
-                "userTypeRadioOptions",
-                "inputSN",
-                "inputEmail",
-                "inputEnglishName",
-                "inputChineseName1",
-                "departmentSelect1",
-                "locationSelect1",
-                "mobileNo1",
-                "vegetarianRadioOptions1",
-                "vegetarianRadioOptions2",
-                "participantSelect1",
-                "lastModTs",
-                "lastModUser",
-                "hist_id",
-                "hist_rev",
-                "hist_timestamp"
-            ], "sort": [
+            "fields": fields
+            , "sort": [
               {
                  "hist_timestamp": "desc"
               }
@@ -579,58 +650,59 @@ module.exports = function(config, passport) {
     };
 
     // 寄送報名資訊更新 Email
-    var sendSuccessEnrollEmail = function(enrollInfo, emailReceiver, callback) {
+    var sendSuccessEnrollEmail = function(type, enrollInfo, emailReceiver, callback) {
 
         // 組合整份 Email 的內容
-        var emailSubject = "2018 IBM Year End Party 報名資訊更新通知";
-        var emailContent = "Dear " + enrollInfo.inputEnglishName + ", <br /><br />感謝您報名今年的YEP，以下為您的報名資訊：<br /><br />";
+        var emailSubject = event.name + " 報名資訊更新通知";
+        var emailContent = "Dear " + enrollInfo.inputEnglishName + ", <br /><br />感謝您的報名 " + event.name + "，以下為您的報名資訊：<br /><br />";
 
         // 判斷使用者類型，以便顯示親友費用
         var usertype = getUserType(enrollInfo.inputSN);
         var mobileNo1 = enrollInfo.mobileNo1;
 
-
-        // 餐點
-        var vegetarianRadioOptions1 = "葷食";
-        var vegetarianRadioOptions2 = "葷食";
-        if(enrollInfo.vegetarianRadioOptions1 == "Y") {
-            vegetarianRadioOptions1 = "素食";
-        }
-        if(enrollInfo.vegetarianRadioOptions2 == "Y") {
-            vegetarianRadioOptions2 = "素食";
-        }
-
-        if(usertype=='regular') {
-            emailContent += "員工本人： " + vegetarianRadioOptions1 + " <br />";
-        } else {
-            emailContent += "員工本人： " + vegetarianRadioOptions1 + " <br />";
-        }
-
-        if(enrollInfo.participantSelect1 == "不攜伴") {
-            if(usertype=='regular') {
-                emailContent += "親友人數： 不攜伴 <br />";
-            } else {
-                // contractor 無法攜伴
+        if(type == 2) {
+            // 餐點
+            var vegetarianRadioOptions1 = "葷食";
+            var vegetarianRadioOptions2 = "葷食";
+            if(enrollInfo.vegetarianRadioOptions1 == "Y") {
+                vegetarianRadioOptions1 = "素食";
             }
-        } else {
-            if(usertype=='regular') {
-                emailContent += "親友人數： 1位 " + vegetarianRadioOptions2 + " - IBMer親友免費 <br />";
-            } else {
-                // contractor 無法攜伴
-                // emailContent += "親友人數： 1位 " + vegetarianRadioOptions2 + " - Contractor親友自費800元 <br />";
+            if(enrollInfo.vegetarianRadioOptions2 == "Y") {
+                vegetarianRadioOptions2 = "素食";
             }
+
+            if(usertype=='regular') {
+                emailContent += "員工本人： " + vegetarianRadioOptions1 + " <br />";
+            } else {
+                emailContent += "員工本人： " + vegetarianRadioOptions1 + " <br />";
+            }
+
+            if(enrollInfo.participantSelect1 == "不攜伴") {
+                if(usertype=='regular') {
+                    emailContent += "親友人數： 不攜伴 <br />";
+                } else {
+                    // contractor 無法攜伴
+                }
+            } else {
+                if(usertype=='regular') {
+                    emailContent += "親友人數： 1位 " + vegetarianRadioOptions2 + " - IBMer親友免費 <br />";
+                } else {
+                    // contractor 無法攜伴
+                    // emailContent += "親友人數： 1位 " + vegetarianRadioOptions2 + " - Contractor親友自費800元 <br />";
+                }
+            }
+
+
+            var mobileNo1Display = "(" + mobileNo1.substring(0, 4) + "-" + mobileNo1.substring(4, 7) + "-" + mobileNo1.substring(7, 10) + ")";
+
+            // 其他重要訊息
+            emailContent += "<br />";
+            emailContent += "EWC將根據上述報名資訊，於活動前一個工作天12/20 (四)，發送電子入場券至您的手機門號 "+mobileNo1Display+"<br />";
+            emailContent += "<p style=\"border-top: 1px solid #b2c2ca; padding-top: 1em;\">請注意，報名期間為 11月20日 (二) 中午12點 至 12月7日 (五) 下午5點30分止，若需更新任何報名資訊，請於上述期間自行至報名系統進行修改，若您沒有報名此活動或有活動相關問題，請與EWC – Mimmie Chu/Taiwan/Contr/IBM (#3841) 聯絡。</p>";
+
+            // apply style
+            emailContent = '<div style="border: 2px solid #b2c2ca; padding: 1em; margin: .5em; border-radius: .7em; background: #fcfeff;">' + emailContent + '</div>';
         }
-
-
-        var mobileNo1Display = "(" + mobileNo1.substring(0, 4) + "-" + mobileNo1.substring(4, 7) + "-" + mobileNo1.substring(7, 10) + ")";
-
-        // 其他重要訊息
-        emailContent += "<br />";
-        emailContent += "EWC將根據上述報名資訊，於活動前一個工作天12/20 (四)，發送電子入場券至您的手機門號 "+mobileNo1Display+"<br />";
-        emailContent += "<p style=\"border-top: 1px solid #b2c2ca; padding-top: 1em;\">請注意，報名期間為 11月20日 (二) 中午12點 至 12月7日 (五) 下午5點30分止，若需更新任何報名資訊，請於上述期間自行至報名系統進行修改，若您沒有報名此活動或有活動相關問題，請與EWC – Mimmie Chu/Taiwan/Contr/IBM (#3841) 聯絡。</p>";
-
-        // apply style
-        emailContent = '<div style="border: 2px solid #b2c2ca; padding: 1em; margin: .5em; border-radius: .7em; background: #fcfeff;">' + emailContent + '</div>';
 
         sendMailAgentHTML(emailReceiver, emailSubject, emailContent, function(err, res){
             customlogger.info("callback from sendMailAgentHTML");
@@ -663,12 +735,13 @@ module.exports = function(config, passport) {
                 // success insert to database
                 if(err == null) {
 
-                    sendSuccessEnrollEmail(data, data.inputEmail, function(regErr, regRes){
+                    sendSuccessEnrollEmail(event.type, data, data.inputEmail, function(regErr, regRes){
                         customlogger.info("success to callback /form/enroll");
                         if(regErr == null) {
                         	customlogger.info("LOG003 success enroll ", req.user.uid);
                         } else {
-                        	customlogger.info("LOG004 success enroll, but send mail fail ", req.user.uid);
+                            customlogger.info("LOG004 success enroll, but send mail fail ", req.user.uid);
+                            logger.debug(regErr)
                         }
                         res.json({"success": true, "result": data});
                         res.status(200);
@@ -690,7 +763,7 @@ module.exports = function(config, passport) {
     });
 
     // 註冊 user profile
-    router.post('/form/update_enroll_bak',function(req, res){
+    router.post('/form/update_enroll',function(req, res){
         customlogger.info('/form/update_enroll');
         customlogger.info('req=', req.body);
 

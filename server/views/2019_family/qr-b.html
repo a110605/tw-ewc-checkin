@@ -1,0 +1,81 @@
+
+            </div>
+          </div>
+          <div class="col-lg-6 order-lg-1">
+            <div class="p-5">
+              <h2 class="display-4" id="qrcodeHeader">立刻將 QR Code 存起來吧！</h2>
+              <p id="descriptContrnt">請將 QR Code 存在手機中或列印出來，在報到處可以加速報到流程，請注意！您仍須攜帶 IBM Badge 查驗。 (當然，這是選擇性的)</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-5 bg-black" >
+        <div class="container">
+            <p class="m-0 text-center text-white small">IBM Taiwan EWC 63rd - 如有相關疑問，請聯絡 EWC – Mimmie Chu/Taiwan/Contr/IBM (#3841)</p>
+            <p class="m-0 text-center small" style="color: #aaa;">Design Copyright &copy; 2019 Blackrock Digital LLC</p>
+          </div>
+      <!-- /.container -->
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+
+    <script type="text/javascript">
+
+      // 取得參數 QueryString
+      var getParameterByName = function(name, url) {
+        if (!url) url = window.location.href;
+        name = name.replace(/[\[\]]/g, '\\$&');
+        var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, ' '));
+      }
+
+      var ajaxProcessor = function(method, path, data, callback, failCallback, async) {
+        // POST
+        $.ajax({
+          "method": method,
+          "url": path,
+          "context": document.body,
+          "data": data,
+          "processData": true,
+          "cache": false,
+          "async": async
+        }).done(callback).fail(failCallback);
+      };
+
+      var loadQRcode = function() {
+        var uuid = getParameterByName("uuid");
+        ajaxProcessor('GET','./getcode',{uuid: uuid},
+          function(data){
+            var sn = data.sn;
+            if(sn == undefined) {
+              $("#qrcodeHeader").html("抱歉，找不到您的報到序號");
+              $("#descriptContrnt").html("請確認您已產生過 QR Code，如還有問題請與 EWC 人員聯絡");
+              $("#qrImg").css('display','none');
+              return;
+            }
+            $("#qrImg").attr('src','http://chart.apis.google.com/chart?cht=qr&chs=300x300&chl='+sn+'|'+uuid+'&chld=H|0');
+            $("#qrImgBtn").attr('href','http://chart.apis.google.com/chart?cht=qr&chs=300x300&chl='+sn+'|'+uuid+'&chld=H|0');
+            $("#qrImg").css('border-radius','10%');
+          },function(){
+            // no data
+          },true);
+      };
+
+      $(document).ready(function(){
+        loadQRcode();
+      });
+
+    </script>
+
+  </body>
+
+</html>

@@ -50,11 +50,22 @@ module.exports = function (app) {
    *  Configure secure routers
    */
 
-  enroll.use('/', require('./secure')(samlConfig, passport));
+  enroll.use('/', require('./secure')(app, samlConfig, passport));
   enroll.set('views', app.get('views'));
   enroll.set('view engine', app.get('view engine'));
   enroll.use(express.static(process.cwd() + '/public'));
   app.use('/enroll', enroll);
+
+  const pug = require('pug')
+  const path = require('path')
+  const file = path.join(app.get('views'), `enroll_qr_layout.${event.type}.pug`)
+  const fn = pug.compileFile(file);
+  var qr = express.Router();
+  qr.get("/", function(req, res) {
+      //res.render('enroll_qr_layout', { title: 'Express' });
+      res.send(fn({}))
+  });
+  app.use('/qr', qr);
 
   var health = express.Router();
   health.get('/', function (req, res, next) {
