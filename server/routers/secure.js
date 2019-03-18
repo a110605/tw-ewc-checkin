@@ -380,7 +380,7 @@ module.exports = function(app, config, passport) {
                         participantID3: securityValid(inputForm.participantID3),
                         inputParticipantChineseName3: securityValid(inputForm.inputParticipantChineseName3),
                         participantBirthDay3: securityValid(inputForm.participantBirthDay3),
-                        shuttleSelect1: securityValid(inputForm.shuttleSelect1),
+                        inputShuttle: securityValid(inputForm.inputShuttle),
                     },
                     "1": {
                     },
@@ -448,7 +448,7 @@ module.exports = function(app, config, passport) {
                                     participantID3: enrollInfo.participantID3,
                                     inputParticipantChineseName3: inputForm.inputParticipantChineseName3,
                                     participantBirthDay3: enrollInfo.participantBirthDay3,
-                                    shuttleSelect1: enrollInfo.shuttleSelect1
+                                    inputShuttle: enrollInfo.inputShuttle
                                 },
                                 "1": {
 
@@ -531,7 +531,7 @@ module.exports = function(app, config, passport) {
             "participantID3",
             "inputParticipantChineseName3",
             "participantBirthDay3",
-            "shuttleSelect1",
+            "inputShuttle",
         ],
         // Sports Day
         "1": [
