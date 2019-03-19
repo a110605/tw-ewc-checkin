@@ -1,7 +1,7 @@
 $(document).ready(function () {
 
-    $("#regularParticipantWording").hide();
-    $("#contractorParticipantWording").hide();
+    $(".regularParticipantWording").hide();
+    $(".contractorParticipantWording").hide();
     $("#inputParticipant").val(0)
     $("#inputShuttle").val(0)
 
@@ -63,7 +63,153 @@ $(document).ready(function () {
             }
         }
     }
-    $('#birthDay').bootstrapBirthday(birthDayFormat);
+    function brithDayWigetTemplate(label) {
+        return {
+            widget: {
+                wrapper: {
+                    tag: 'div',
+                    class: 'input-group'
+                },
+                wrapperYear: {
+                    use: true,
+                    tag: 'span',
+                    class: 'input-group-addon'
+                },
+                wrapperMonth: {
+                    use: true,
+                    tag: 'span',
+                    class: 'input-group-addon'
+                },
+                wrapperDay: {
+                    use: true,
+                    tag: 'span',
+                    class: 'input-group-addon'
+                },
+                selectYear: {
+                    name: label + 'Year',
+                    class: 'form-control input-sm'
+                },
+                selectMonth: {
+                    name: label + 'Month',
+                    class: 'form-control input-sm'
+                },
+                selectDay: {
+                    name: label + 'Day',
+                    class: 'form-control input-sm'
+                }
+            }
+        }
+    }
+
+    $('#birthDay').bootstrapBirthday($.extend(true, birthDayFormat, brithDayWigetTemplate("birthDay")));
+
+    function participantTemplate(label) {
+        return `<div class="participantGroup participantInfo${label}">
+        <div class="row row-flex" id="participantInfo${label}">
+        <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">
+          <div>親友${label}(中文姓名/身份證字號/生日)</div>
+        </div>
+        <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
+          <input type="text" class="form-control" id="inputParticipantChineseName${label}"
+            name="inputParticipantChineseName${label}" placeholder="請輸入親友${label}中文姓名">
+        </div>
+        <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
+          <input type="text" class="form-control" id="inputParticipantID${label}" placeholder="請輸入親友${label}身份證字號">
+        </div>
+        <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
+          <input type="text" class="form-control" id="participantBirthDay${label}" placeholder="請選擇">
+        </div>
+        </div>
+      </div>`;
+    }
+    
+    class Participant {
+        constructor(type) {
+            this.id = "inputParticipant";
+            this.wordking = (type == "Regular" ? "regularParticipantWording" : "contractorParticipantWording");
+            this.price = 500;
+            this.fee = "participantFee"
+            this.onChange = function (result) {
+                var inputParticipant = $("#" + this.id)
+                if(result && result.inputParticipant) {
+                    inputParticipant.val(result.inputParticipant)
+                }
+                var inputParticipantVal = inputParticipant.val()
+                if (inputParticipantVal > 0) {
+                    $("." + this.wordking).show();
+                }
+                else {
+                    $("." + this.wordking).hide();
+                }
+                if(type == "Regular" && inputParticipantVal > 3) {
+                    $("." + this.fee).text((inputParticipantVal - 3)*this.price)
+                    $("#" + this.fee).val((inputParticipantVal - 3)*this.price)
+                } else if (this.type == "Contractor") {
+                    $("." + this.fee).text((inputParticipantVal + 1)*this.price)
+                    $("#" + this.fee).val((inputParticipantVal + 1)*this.price)
+                } else {
+                    $("." + this.fee).text(0)
+                    $("#" + this.fee).val(0)
+                }
+                const maxAttr = inputParticipant.attr("max");
+                for (var i = 1; i <= maxAttr; i++) {
+                    if (i <= inputParticipantVal) {
+                        //no existing
+                        if ($(".participantInfo" + i).length == 0) {
+                            if (i == 1) {
+                                $(".participantNumber").after(participantTemplate(i))
+                            } else {
+                                $(".participantInfo" + (i - 1)).after(participantTemplate(i))
+                            }
+                            var options = $.extend(true, birthDayFormat, brithDayWigetTemplate("participantBirthDay" + i))
+                            $('#participantBirthDay' + i).bootstrapBirthday(options);
+                        } else {
+                            $(".participantInfo" + i).show();
+                        }
+                        if(result) {
+                            $("#inputParticipantChineseName" + i).val(result['inputParticipantChineseName'+i])
+                            $("#inputParticipantID" + i).val(result['inputParticipantID'+i])
+                            $("select[name='participantBirthDay" + i + "Year']").val(result['participantBirthDay'+i+'Year']);
+                            $("select[name='participantBirthDay" + i + "Month']").val(result['participantBirthDay'+i+'Month']);
+                            $("select[name='participantBirthDay" + i + "Day']").val(result['participantBirthDay'+i+'Day']);
+                        }
+                    } else if (i > inputParticipantVal) {
+                        if ($(".participantInfo" + i).length != 0) {
+                            $(".participantInfo" + i).hide();
+                        }
+                    }
+                    if (inputParticipantVal == 0) {
+                        $(".participantInfo" + i).hide();
+                    }
+                }
+                $("#inputShuttle").attr("max", parseInt(inputParticipantVal) + 1)
+            };
+        }
+    }
+    class Shuttle {
+        constructor(type) {
+            this.id = "inputShuttle";
+            this.wordking = (type == "Regular" ? "regularShuttleWording" : "regularShuttleWording");
+            this.price = (type == "Regular" ? 150 : 300);
+            this.fare = "shuttleFare"
+            this.onChange = function (result) {
+                var inputShuttle = $("#" + this.id)
+                if(result && result.inputShuttle) {
+                    inputShuttle.val(result.inputShuttle)
+                }
+                var inputShuttleVal = inputShuttle.val()
+                if (inputShuttleVal > 0) {
+                    $("." + this.wordking).show();
+                    $("." + this.fare).text(inputShuttleVal*this.price)
+                    $("#" + this.fare).val(inputShuttleVal*this.price)
+                } else {
+                    $("." + this.wordking).hide();
+                    $("." + this.fare).text(0)
+                    $("#" + this.fare).val(0)
+                }
+            };
+        }
+    }
 
     var loadProfile = function () {
 
@@ -91,12 +237,13 @@ $(document).ready(function () {
                         $("#departmentSelect1").val(result.departmentSelect1);
                         $("#locationSelect1").val(result.locationSelect1);
                         $("#mobileNo1").val(result.mobileNo1);
-                        $('input[name=vegetarianRadioOptions1][value=' + result.vegetarianRadioOptions1 + ']').prop("checked", "checked");
-                        $('select[name=participantSelect1] option[value=' + result.participantSelect1 + ']').prop("selected", "selected");
+
+                        var participant = new Participant(usertype);
+                        participant.onChange(result)
+                        var shuttle = new Shuttle(usertype);
+                        shuttle.onChange(result)
+
                         $('#personalInfoCheckbox1').prop('checked', true);
-
-                        $('input[name=vegetarianRadioOptions2][value=' + result.vegetarianRadioOptions2 + ']').prop("checked", "checked");
-
                         $("#backToEventBtn").show();
 
                     }
@@ -171,19 +318,17 @@ $(document).ready(function () {
             $("#inputEnglishName").val(username);
 
             // 攜帶伴侶選項
-            var regularOptionsHTML = '<option>請選擇</option><option value="不攜伴">不攜伴</option><option value="1">1</option><option value="2">2</option><option value="3">3</option>';
-            var contractorOptionsHTML = regularOptionsHTML;
-            //var contractorOptionsHTML = '<option value="不攜伴">Contractor 限本人參加自費500元</option>';
+            // var regularOptionsHTML = '<option>請選擇</option><option value="不攜伴">不攜伴</option><option value="1">1</option><option value="2">2</option><option value="3">3</option>';
+            // var contractorOptionsHTML = regularOptionsHTML;
+            // //var contractorOptionsHTML = '<option value="不攜伴">Contractor 限本人參加自費500元</option>';
 
-            if (usertype == "Regular") {
-                $("#participantSelect1").html(regularOptionsHTML);
-                $(".regularParticipantWording").show();
-            } else {
-                $("#participantSelect1").html(contractorOptionsHTML);
-                $(".contractorParticipantWording").show();
-            }
-
-            $(".friend1-vegetarian-content").hide();
+            // if (usertype == "Regular") {
+            //     $("#participantSelect1").html(regularOptionsHTML);
+            //     $(".regularParticipantWording").show();
+            // } else {
+            //     $("#participantSelect1").html(contractorOptionsHTML);
+            //     $(".contractorParticipantWording").show();
+            // }
 
             loadProfile();
 
@@ -444,76 +589,13 @@ $(document).ready(function () {
             $('#' + item).rules('remove');
         }
     }
-
-    function participantTemplate(number) {
-        return `<div class="participantGroup participantInfo${number}">
-        <div class="row row-flex" id="participantInfo${number}">
-        <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">
-          <div>親友${number}(中文姓名/身份證字號/生日)</div>
-        </div>
-        <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
-          <input type="text" class="form-control" id="inputParticipantChineseName${number}"
-            name="inputParticipantChineseName${number}" placeholder="請輸入親友${number}中文姓名">
-        </div>
-        <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
-          <input type="text" class="form-control" id="participantID${number}" placeholder="請輸入親友${number}身份證字號">
-        </div>
-        <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
-          <input type="text" class="form-control" id="participantBirthDay${number}" placeholder="請選擇">
-        </div>
-        </div>
-      </div>`;
-    }
-
     var updatePanel = function () {
         //console.log("updatePanel");
         // show and hide blocks
-        var inputParticipantVal = $("#inputParticipant").val();
-        var inputShuttleVal = $("#inputShuttle").val();
-        const max = $("#inputParticipant").attr("max");
-        for (var i = 1; i <= max; i++) {
-            if (i <= inputParticipantVal) {
-                //no existing
-                if ($(".participantInfo" + i).length == 0) {
-                    if (i == 1) {
-                        $(".participantNumber").after(participantTemplate(i))
-                    } else {
-                        $(".participantInfo" + (i - 1)).after(participantTemplate(i))
-                    }
-                    $('#participantBirthDay' + i).bootstrapBirthday(birthDayFormat);
-                } else {
-                    $(".participantInfo" + i).show();
-                }
-            } else if (i > inputParticipantVal) {
-                if ($(".participantInfo" + i).length != 0) {
-                    $(".participantInfo" + i).hide();
-                }
-            }
-            if (inputParticipantVal == 0) {
-                $(".participantInfo" + i).hide();
-            }
-        }
-        if(usertype == "Regular") {
-            if(inputParticipantVal > 3) {
-                $(".participantFee").text((inputParticipantVal - 3)*500)
-                $("#participantFee").val((inputParticipantVal - 3)*500)
-            } else {
-                $(".participantFee").text(0)
-                $("#participantFee").val(0)
-            }
-            if(inputShuttleVal > 3) {
-                $(".shuttleFee").text((inputShuttleVal - 3)*150)
-                $("#shuttleFee").val((inputShuttleVal - 3)*150)
-            } else {
-                $(".shuttleFee").text(0)
-                $("#shuttleFee").val(0)
-            }
-        } else if (usertype == "Contractor") {
-            $(".participantFee").text((inputParticipantVal + 1)*500)
-            $("#participantFee").val((inputParticipantVal + 1)*500)
-            $(".shuttleFee").text((inputShuttleVal + 1)*300)
-            $("#shuttleFee").val((inputShuttleVal + 1)*300)
-        }
+        var participant = new Participant(usertype);
+        participant.onChange()
+        var shuttle = new Shuttle(usertype);
+        shuttle.onChange()
     };
 
     var changeParticipant = function () {
