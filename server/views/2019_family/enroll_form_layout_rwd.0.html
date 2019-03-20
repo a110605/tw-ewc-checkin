@@ -387,7 +387,7 @@
                   <div>身份證字號 <span class="d-lg-none"><br /></span>(ID)：</div>
                 </div>
                 <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
-                  <input type="text" class="form-control" id="inputID" placeholder="請輸入身份證字號">
+                  <div><input type="text" class="form-control" name="inputID" id="inputID" placeholder="請輸入身份證字號"></div>
                 </div>
                 <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">
                   <div>生日 <span class="d-lg-none"><br /></span>(Birth Day)：</div>
@@ -395,7 +395,6 @@
                 <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
                   <input type="text" class="form-control" name="birthDay" id="birthDay" placeholder="請選擇">
                 </div>
-
               </div>
               <div class="row row-flex participantNumber">
                 <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">攜伴人數 <span class="d-lg-none"><br /></span>(Friends #)：</div>
@@ -403,7 +402,7 @@
                   <div>
                     <div class="form-check form-check-inline">
                       <label class="form-check-label" for="inputParticipant">
-                        <input type="number" min="0" max="10" class="form-control" id="inputParticipant" value="0" placeholder="請輸入攜伴人數">
+                        <input type="number" min="0" max="10" class="form-control" name="inputParticipant" id="inputParticipant" value="0" placeholder="請輸入攜伴人數">
                       </label>
                     </div>
                   </div>
@@ -411,7 +410,7 @@
                 <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">參加費用 <span class="d-lg-none"><br /></span>(Fee of Participation)：</div>
                 <div class="col-6 col-md-3 align-middle bg-normal col-v-centered ">
                   NT$<b><div class="participantFee">0</div></b>元
-                  <input class=".sr-only" id="participantFee" type="hidden" value="0">
+                  <input class=".sr-only" name="participantFee" id="participantFee" type="hidden" value="0">
                 </div>
               </div>
               <div class="row row-flex">
@@ -420,7 +419,7 @@
                   <div>
                     <div class="form-check form-check-inline">
                       <label class="form-check-label" for="inputShuttle">
-                        <input type="number" min="0" max="11" class="form-control" id="inputShuttle" value="0" placeholder="請輸入搭車人數">
+                        <input type="number" min="0" max="11" class="form-control" name="inputShuttle" id="inputShuttle" value="0" placeholder="請輸入搭車人數">
                       </label>
                     </div>
                   </div>
@@ -428,7 +427,7 @@
                 <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">搭車費用 <span class="d-lg-none"><br /></span>(Fare)：</div>
                 <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
                     NT$<b><div class="shuttleFare">0</div></b>元
-                    <input class=".sr-only" id="shuttleFare" type="hidden" value="0">
+                    <input class=".sr-only" name="shuttleFare" id="shuttleFare" type="hidden" value="0">
                 </div>
               </div>                            
               <div class="row row-flex regularParticipantWording">
@@ -537,22 +536,45 @@
             <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
               <span id="mobileNo1Confirm"></span>
             </div>
-            <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">本人是否吃素：</div>
-            <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
-              <span id="vegetarianRadioOptions1Confirm"></span>
-            </div>
+            <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered"></div>
+            <div class="col-6 col-md-3 align-middle bg-normal col-v-centered"></div>
           </div>
           <div class="row row-flex">
-            <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">攜伴人數：</div>
-            <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
-              <span id="participantSelect1Confirm"></span>
+              <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">
+                  <div>身份證字號 <span class="d-lg-none"><br /></span>(ID)：</div>
+              </div>
+              <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
+                <span id="inputIDConfirm"></span>
+              </div>
+              <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">
+                <div>生日：</div>
+              </div>
+              <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
+                  西元<span id="birthDayYearConfirm"></span>年
+                  <span id="birthDayMonthConfirm"></span>月
+                  <span id="birthDayDayConfirm"></span>日
+              </div>
+          </div>          
+          <div class="row row-flex">
+              <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">攜伴人數 <span class="d-lg-none"><br /></span>(Friends #)：</div>
+              <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
+                    <span id="inputParticipantConfirm"></span>
+              </div>
+              <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">參加費用 <span class="d-lg-none"><br /></span>(Fee of Participation)：</div>
+              <div class="col-6 col-md-3 align-middle bg-normal col-v-centered ">
+                NT$<b></b><span id="participantFeeConfirm"></b></span>元
+              </div>
             </div>
-            <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered"><span
-                class="friend1-vegetarian-content">親友是否吃素：</span></div>
-            <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
-              <span id="vegetarianRadioOptions2Confirm" class="friend1-vegetarian-content"></span>
-            </div>
-          </div>
+            <div class="row row-flex">
+              <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">搭車人數 <span class="d-lg-none"><br /></span>(Passengers #)：</div>
+              <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
+                  <span id="inputShuttleConfirm"></span>
+              </div>
+              <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">搭車費用 <span class="d-lg-none"><br /></span>(Fare)：</div>
+              <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
+                  NT$<b></b><span id="shuttleFareConfirm"></b></span>元
+              </div>
+          </div>   
           <div class="row row-flex regularParticipantWording">
             <div class="col-12 col-md-12 align-middle bg-normal-title col-v-centered">IBMer若需額外攜帶超過10位親友(第4位以上,
               每位500元),

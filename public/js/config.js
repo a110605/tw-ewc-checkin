@@ -1,5 +1,4 @@
 $(document).ready(function () {
-
     $(".regularParticipantWording").hide();
     $(".contractorParticipantWording").hide();
     $("#inputParticipant").val(0)
@@ -20,7 +19,7 @@ $(document).ready(function () {
 
     var getProfile = function (token, callback) {
         $.ajax({
-            'url': '/api/profile?token=' + token,
+            'url': './api/profile?token=' + token,
             'success': callback,
             'error': callback
         })
@@ -104,85 +103,99 @@ $(document).ready(function () {
     $('#birthDay').bootstrapBirthday($.extend(true, birthDayFormat, brithDayWigetTemplate("birthDay")));
 
     function participantTemplate(label) {
-        return `<div class="participantGroup participantInfo${label}">
+        return `<div class="participantGroup${label}">
         <div class="row row-flex" id="participantInfo${label}">
         <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">
-          <div>親友${label}(中文姓名/身份證字號/生日)</div>
+            <div>親友${label}(中文姓名/身份證字號/生日)</div>
         </div>
         <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
-          <input type="text" class="form-control" id="inputParticipantChineseName${label}"
-            name="inputParticipantChineseName${label}" placeholder="請輸入親友${label}中文姓名">
+            <div>
+                <input type="text" class="form-control" id="inputParticipantChineseName${label}" name="inputParticipantChineseName${label}" placeholder="請輸入親友${label}中文姓名">
+            </div>
         </div>
         <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
-          <input type="text" class="form-control" id="inputParticipantID${label}" placeholder="請輸入親友${label}身份證字號">
+            <div>
+                <input type="text" class="form-control" name="inputParticipantID${label}" id="inputParticipantID${label}" placeholder="請輸入親友${label}身份證字號">
+            </div>
         </div>
         <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
-          <input type="text" class="form-control" id="participantBirthDay${label}" placeholder="請選擇">
+          <input type="text" class="form-control" name="participantBirthDay${label}" id="participantBirthDay${label}" placeholder="請輸入">
         </div>
         </div>
       </div>`;
     }
-    
+
     class Participant {
         constructor(type) {
             this.id = "inputParticipant";
             this.wordking = (type == "Regular" ? "regularParticipantWording" : "contractorParticipantWording");
             this.price = 500;
-            this.fee = "participantFee"
-            this.onChange = function (result) {
-                var inputParticipant = $("#" + this.id)
-                if(result && result.inputParticipant) {
-                    inputParticipant.val(result.inputParticipant)
-                }
-                var inputParticipantVal = inputParticipant.val()
+            this.fee = "participantFee";
+            this.doWording = function (inputParticipantVal) {
                 if (inputParticipantVal > 0) {
                     $("." + this.wordking).show();
                 }
                 else {
                     $("." + this.wordking).hide();
                 }
-                if(type == "Regular" && inputParticipantVal > 3) {
-                    $("." + this.fee).text((inputParticipantVal - 3)*this.price)
-                    $("#" + this.fee).val((inputParticipantVal - 3)*this.price)
+            }
+            this.doFee = function (inputParticipantVal) {
+                if (type == "Regular" && inputParticipantVal > 3) {
+                    $("." + this.fee).text((inputParticipantVal - 3) * this.price)
+                    $("#" + this.fee).val((inputParticipantVal - 3) * this.price)
                 } else if (this.type == "Contractor") {
-                    $("." + this.fee).text((inputParticipantVal + 1)*this.price)
-                    $("#" + this.fee).val((inputParticipantVal + 1)*this.price)
+                    $("." + this.fee).text((inputParticipantVal + 1) * this.price)
+                    $("#" + this.fee).val((inputParticipantVal + 1) * this.price)
                 } else {
                     $("." + this.fee).text(0)
                     $("#" + this.fee).val(0)
                 }
-                const maxAttr = inputParticipant.attr("max");
+            }
+            this.doInputList = function (inputParticipantVal, result) {
+                const maxAttr = $("#" + this.id).attr("max");
                 for (var i = 1; i <= maxAttr; i++) {
                     if (i <= inputParticipantVal) {
                         //no existing
-                        if ($(".participantInfo" + i).length == 0) {
+                        if ($(".participantGroup" + i).length == 0) {
                             if (i == 1) {
                                 $(".participantNumber").after(participantTemplate(i))
                             } else {
-                                $(".participantInfo" + (i - 1)).after(participantTemplate(i))
+                                $(".participantGroup" + (i - 1)).after(participantTemplate(i))
                             }
                             var options = $.extend(true, birthDayFormat, brithDayWigetTemplate("participantBirthDay" + i))
                             $('#participantBirthDay' + i).bootstrapBirthday(options);
                         } else {
-                            $(".participantInfo" + i).show();
+                            $(".participantGroup" + i).show();
                         }
-                        if(result) {
-                            $("#inputParticipantChineseName" + i).val(result['inputParticipantChineseName'+i])
-                            $("#inputParticipantID" + i).val(result['inputParticipantID'+i])
-                            $("select[name='participantBirthDay" + i + "Year']").val(result['participantBirthDay'+i+'Year']);
-                            $("select[name='participantBirthDay" + i + "Month']").val(result['participantBirthDay'+i+'Month']);
-                            $("select[name='participantBirthDay" + i + "Day']").val(result['participantBirthDay'+i+'Day']);
+                        if (result) {
+                            $("#inputParticipantChineseName" + i).val(result['inputParticipantChineseName' + i])
+                            $("#inputParticipantID" + i).val(result['inputParticipantID' + i])
+                            $("select[name='participantBirthDay" + i + "Year']").val(result['participantBirthDay' + i + 'Year']);
+                            $("select[name='participantBirthDay" + i + "Month']").val(result['participantBirthDay' + i + 'Month']);
+                            $("select[name='participantBirthDay" + i + "Day']").val(result['participantBirthDay' + i + 'Day']);
                         }
                     } else if (i > inputParticipantVal) {
-                        if ($(".participantInfo" + i).length != 0) {
-                            $(".participantInfo" + i).hide();
+                        if ($(".participantGroup" + i).length != 0) {
+                            $(".participantGroup" + i).hide();
                         }
                     }
                     if (inputParticipantVal == 0) {
                         $(".participantInfo" + i).hide();
                     }
                 }
+            }
+            this.doShuttle = function (inputParticipantVal) {
                 $("#inputShuttle").attr("max", parseInt(inputParticipantVal) + 1)
+            }
+            this.onChange = function (result) {
+                if (result && result.inputParticipant) {
+                    $("#" + this.id).val(result.inputParticipant)
+                }
+                var inputParticipantVal = $("#" + this.id).val()
+                this.doWording(inputParticipantVal)
+                this.doFee(inputParticipantVal)
+                this.doInputList(inputParticipantVal, result)
+                this.doShuttle(inputParticipantVal)
             };
         }
     }
@@ -193,15 +206,14 @@ $(document).ready(function () {
             this.price = (type == "Regular" ? 150 : 300);
             this.fare = "shuttleFare"
             this.onChange = function (result) {
-                var inputShuttle = $("#" + this.id)
-                if(result && result.inputShuttle) {
-                    inputShuttle.val(result.inputShuttle)
+                if (result && result.inputShuttle) {
+                    $("#" + this.id).val(result.inputShuttle)
                 }
-                var inputShuttleVal = inputShuttle.val()
+                var inputShuttleVal = $("#" + this.id).val()
                 if (inputShuttleVal > 0) {
                     $("." + this.wordking).show();
-                    $("." + this.fare).text(inputShuttleVal*this.price)
-                    $("#" + this.fare).val(inputShuttleVal*this.price)
+                    $("." + this.fare).text(inputShuttleVal * this.price)
+                    $("#" + this.fare).val(inputShuttleVal * this.price)
                 } else {
                     $("." + this.wordking).hide();
                     $("." + this.fare).text(0)
@@ -237,6 +249,10 @@ $(document).ready(function () {
                         $("#departmentSelect1").val(result.departmentSelect1);
                         $("#locationSelect1").val(result.locationSelect1);
                         $("#mobileNo1").val(result.mobileNo1);
+                        $("#inputID").val(result.inputID);
+                        $("#birthDayYear").val(result.birthDayYear);
+                        $("#birthDayMonth").val(result.birthDayMonth);
+                        $("#birthDayDay").val(result.birthDayDay);
 
                         var participant = new Participant(usertype);
                         participant.onChange(result)
@@ -246,12 +262,6 @@ $(document).ready(function () {
                         $('#personalInfoCheckbox1').prop('checked', true);
                         $("#backToEventBtn").show();
 
-                    }
-
-                    if (result && result.participantSelect1 == "1") {
-                        $(".friend1-vegetarian-content").show();
-                    } else {
-                        // default display
                     }
 
                     var lastModTs = (result.lastModTs) ? " " + result.lastModTs.replace(/T/g, " ").replace(/Z/g, " ").substring(0, 19) + " " : "";
@@ -311,24 +321,11 @@ $(document).ready(function () {
             } else {
                 usertype = "Contractor";
             }
-            // $('input[name=userTypeRadioOptions][value='+usertype+']').prop("checked","checked");
+
             $("#userTypeButtons").hide();
             $("#userTypeWording").html(usertype);
             $("#inputEmail").val(email);
             $("#inputEnglishName").val(username);
-
-            // 攜帶伴侶選項
-            // var regularOptionsHTML = '<option>請選擇</option><option value="不攜伴">不攜伴</option><option value="1">1</option><option value="2">2</option><option value="3">3</option>';
-            // var contractorOptionsHTML = regularOptionsHTML;
-            // //var contractorOptionsHTML = '<option value="不攜伴">Contractor 限本人參加自費500元</option>';
-
-            // if (usertype == "Regular") {
-            //     $("#participantSelect1").html(regularOptionsHTML);
-            //     $(".regularParticipantWording").show();
-            // } else {
-            //     $("#participantSelect1").html(contractorOptionsHTML);
-            //     $(".contractorParticipantWording").show();
-            // }
 
             loadProfile();
 
@@ -349,11 +346,14 @@ $(document).ready(function () {
             departmentSelect1: $("#departmentSelect1").val(),
             locationSelect1: $("#locationSelect1").val(),
             mobileNo1: $("#mobileNo1").val(),
-            vegetarianRadioOptions1: $('input[name=vegetarianRadioOptions1]:checked', '#registerForm').val(),
-            participantSelect1: $("#participantSelect1").val(),
-
-            vegetarianRadioOptions2: $('input[name=vegetarianRadioOptions2]:checked', '#registerForm').val(),
-
+            inputID: $("#inputID").val(),
+            birthDayYear: $("#birthDayYear").val(),
+            birthDayMonth: $("#birthDayMonth").val(),
+            birthDayDay: $("#birthDayDay").val(),
+            inputParticipant: $("#inputParticipant").val(),
+            participantFee: $("#participantFee").val(),
+            inputShuttle: $("#inputParticipant").val(),
+            shuttleFare: $("#shuttleFare").val()
         };
 
         $("#userTypeRadioOptionsConfirm").html(usertype);
@@ -364,28 +364,16 @@ $(document).ready(function () {
         $("#departmentSelect1Confirm").html(requestRegisterParams.departmentSelect1);
         $("#locationSelect1Confirm").html(requestRegisterParams.locationSelect1);
         $("#mobileNo1Confirm").html(requestRegisterParams.mobileNo1);
-        $("#vegetarianRadioOptions1Confirm").html(requestRegisterParams.vegetarianRadioOptions1 == "Y" ? "是" : "否");
-        // 親友
-        var participant = requestRegisterParams.participantSelect1;
-
-        if (participant == "不攜伴") {
-
-        } else {
-            if (usertype == "Regular") {
-                participant += " (IBMer親友免費)";
-            } else if (usertype == "Contractor") {
-                participant += " (Contractor本人及親友自費500元)";
-                // participant += " (Contractor僅限本人參加)";
-            }
-        }
-
-        $("#participantSelect1Confirm").html(participant);
-        $("#vegetarianRadioOptions2Confirm").html(requestRegisterParams.vegetarianRadioOptions2 == "Y" ? "是" : "否");
+        $("#inputIDConfirm").html(requestRegisterParams.inputID);
+        $("#birthDayYearConfirm").html(requestRegisterParams.birthDayYear);
+        $("#birthDayMonthConfirm").html(requestRegisterParams.birthDayMonth);
+        $("#birthDayDayConfirm").html(requestRegisterParams.birthDayDay);
+        $("#inputParticipantConfirm").html(requestRegisterParams.inputParticipant);
+        $("#participantFeeConfirm").html(requestRegisterParams.participantFee);
+        $("#inputShuttleConfirm").html(requestRegisterParams.inputShuttle);
+        $("#shuttleFareConfirm").html(requestRegisterParams.shuttleFare);
 
 
-
-
-        //console.log(requestRegisterParams);
         $("#enrollSection").hide();
 
         $('#exampleModalLongTitle').html("正在準備預覽資料");
@@ -433,11 +421,14 @@ $(document).ready(function () {
             departmentSelect1: $("#departmentSelect1").val(),
             locationSelect1: $("#locationSelect1").val(),
             mobileNo1: $("#mobileNo1").val(),
-            vegetarianRadioOptions1: $('input[name=vegetarianRadioOptions1]:checked', '#registerForm').val(),
-
-            vegetarianRadioOptions2: $('input[name=vegetarianRadioOptions2]:checked', '#registerForm').val(),
-
-            participantSelect1: $("#participantSelect1").val()
+            inputID: $("#inputID").val(),
+            birthDayYear: $("#birthDayYear").val(),
+            birthDayMonth: $("#birthDayMonth").val(),
+            birthDayDay: $("#birthDayDay").val(),
+            inputParticipant: $("#inputParticipant").val(),
+            participantFee: $("#participantFee").val(),
+            inputShuttle: $("#inputParticipant").val(),
+            shuttleFare: $("#shuttleFare").val()
         };
 
         ajaxProcessor('POST', './form/enroll', confirmedRequestRegisterParams,
@@ -465,6 +456,47 @@ $(document).ready(function () {
         phone_number = phone_number.replace(/\s+/g, "");
         return this.optional(element) || phone_number.match(/^09\d{8,}$/);
     }, "Phone number should start with 09");
+
+    jQuery.validator.addMethod("ROC_Citizen_ID_regex", function (citizenid, element) {
+        citizenid = citizenid.replace(/\s+/g, "");
+        return (
+            this.optional(element) ||
+            /^[A-Z]{1}[1-2]{1}[0-9]{8}$/.test(citizenid)
+        );
+    }, "Format wrong of input R.O.C Citizen ID");
+
+    jQuery.validator.addMethod("ROC_Citizen_ID_arithmetic", function (citizenid, element) {
+
+        var local_table = [10, 11, 12, 13, 14, 15, 16, 17, 34, 18, 19, 20, 21,
+            22, 35, 23, 24, 25, 26, 27, 28, 29, 32, 30, 31, 33];
+        /* A, B, C, D, E, F, G, H, I, J, K, L, M,
+           N, O, P, Q, R, S, T, U, V, W, X, Y, Z */
+
+        var local_digit = local_table[citizenid.charCodeAt(0) - 'A'.charCodeAt(0)];
+
+        var checksum = 0;
+
+        checksum += Math.floor(local_digit / 10);
+        checksum += (local_digit % 10) * 9;
+
+        /* i: index; p: permission value */
+        /* this loop sums from [1] to [8] */
+        /* permission value decreases */
+
+        for (var i = 1, p = 8; i <= 8; i++ , p--) {
+            checksum += parseInt(citizenid.charAt(i)) * p;
+        }
+
+        checksum += parseInt(citizenid.charAt(9));    /* add the last number */
+
+        return (
+            this.optional(element) || !(checksum % 10)
+        );
+    }, "Input R.O.C Citizen ID is fake");
+
+    jQuery.validator.addMethod("hasInput", function (value, element, param) {
+        return $("#inputParticipant").val() > param;
+    }, "Please input value");
 
     var validRule = [];
 
@@ -496,19 +528,56 @@ $(document).ready(function () {
             digits: true,
             phoneStartingWith09: true
         },
-        participantSelect1: {
+        inputID: {
             required: true,
-            notEqual: "請選擇"
+            ROC_Citizen_ID_regex: true,
+            ROC_Citizen_ID_arithmetic: true
         },
-        personalInfoCheckbox1: {
-            required: true
+        birthDayYear: {
+            required: true,
+            notEqual: 0
+        },
+        birthDayMonth: {
+            required: true,
+            notEqual: 0
+        },
+        birthDayDay: {
+            required: true,
+            notEqual: 0
         }
     };
+
+    var participantRule = function() {
+        var tmp = {}
+        for (var i = 1; i <= $("#inputParticipant").val(); i++) {
+            `inputParticipantChineseName${i}: {
+                hasInput: 1
+            },
+            inputParticipantID1: {
+                hasInput: 1,
+                ROC_Citizen_ID_regex: true,
+                ROC_Citizen_ID_arithmetic: true
+            },
+            participantBirthDay1Year: {
+                hasInput: 1,
+                notEqual: 0
+            },
+            participantBirthDay1Month: {
+                hasInput: 1,
+                notEqual: 0
+            },
+            participantBirthDay1Day: {
+                hasInput: 1,
+                notEqual: 0
+            }`
+        }
+    }
 
     var initRule = validRule[1];
     var currentRule = initRule;
 
     $("#registerForm").validate({
+        // debug: true,
         rules: initRule,
         messages: {
             // IBMer
@@ -523,7 +592,6 @@ $(document).ready(function () {
                 notEqual: "請選擇部門"
             },
             locationSelect1: {
-                required: "請選擇辦公室位置",
                 notEqual: "請選擇辦公室位置"
             },
             inputChineseName1: {
@@ -535,11 +603,42 @@ $(document).ready(function () {
                 rangelength: "請提供行動電話號碼",
                 digits: "行動電話號碼格式錯誤"
             },
-            participantSelect1: {
-                notEqual: "請選擇親友人數"
+            inputID: {
+                required: "請輸入身份證字號",
+                ROC_Citizen_ID_regex: "身份證字號格式錯誤",
+                ROC_Citizen_ID_arithmetic: "身份證字號似乎偽造"
             },
-            personalInfoCheckbox1: {
-                required: "您必須同意我們利用您的資料才能線上報名"
+            birthDayYear: {
+                required: "請選擇西元年",
+                notEqual: "請選擇西元年"
+            },
+            birthDayMonth: {
+                required: "請選擇月",
+                notEqual: "請選擇月"
+            },
+            birthDayDay: {
+                required: "請選擇日",
+                notEqual: "請選擇日"
+            },
+            inputParticipantChineseName1: {
+                hasInput: "請輸入中文姓名"
+            },
+            inputParticipantID1: {
+                hasInput: "請輸入身份證字號",
+                ROC_Citizen_ID_regex: "身份證字號格式錯誤",
+                ROC_Citizen_ID_arithmetic: "身份證字號似乎偽造"
+            },
+            participantBirthDay1Year: {
+                hasInput: "請選擇西元年",
+                notEqual: "請選擇西元年"
+            },
+            participantBirthDay1Month: {
+                hasInput: "請選擇月",
+                notEqual: "請選擇月"
+            },
+            participantBirthDay1Day: {
+                hasInput: "請選擇日",
+                notEqual: "請選擇日"
             }
         },
         errorElement: "small",
@@ -589,22 +688,15 @@ $(document).ready(function () {
             $('#' + item).rules('remove');
         }
     }
-    var updatePanel = function () {
-        //console.log("updatePanel");
-        // show and hide blocks
+
+    $("#inputParticipant").change(function () {
         var participant = new Participant(usertype);
         participant.onChange()
+    });
+    $("#inputShuttle").change(function () {
         var shuttle = new Shuttle(usertype);
-        shuttle.onChange()
-    };
-
-    var changeParticipant = function () {
-        updatePanel();
-        // updateValidRule();
-    };
-
-    $("#inputParticipant").change(changeParticipant);
-    $("#inputShuttle").change(changeParticipant);
+        shuttle.onChange();
+    });
 
 
 

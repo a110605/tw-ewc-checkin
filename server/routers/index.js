@@ -16,17 +16,17 @@ module.exports = function (app) {
   //VCAP_APPLICATION contains useful information about a deployed application.
   var appInfo = JSON.parse(process.env.VCAP_APPLICATION || "{}");
 
-  // Set up session framework
-  /*
-   * =====================================================================
-   *  Mount API handlers before session to improve performance
-   */
-  app.use('/api', require('./api')(samlConfig));
   /*
    * =====================================================================
    *  Setup session support
    */
   var enroll = express()
+  // Set up session framework
+  /*
+   * =====================================================================
+   *  Mount API handlers before session to improve performance
+   */
+  enroll.use('/api', require('./api')(samlConfig));
   enroll.use(session({
     secret: samlConfig.passport.sessionSecret || 'SAML support for BlueMix',
     cookie: { path: '/enroll', httpOnly: true, secure: !!samlConfig.passport.saml, maxAge: null },
