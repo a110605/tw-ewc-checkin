@@ -2,7 +2,10 @@ $(document).ready(function () {
     $(".regularParticipantWording").hide();
     $(".contractorParticipantWording").hide();
     $("#inputParticipant").val(0)
+    $("#participantFee").val(0)
     $("#inputShuttle").val(0)
+    $("#inputShuttle").attr("max", 1)
+    $("#shuttleFare").val(0)
 
     $("#loading").hide();
 
@@ -46,15 +49,15 @@ $(document).ready(function () {
             day: "日",
             months: {
                 short: [
-                    "01",
-                    "02",
-                    "03",
-                    "04",
-                    "05",
-                    "06",
-                    "07",
-                    "08",
-                    "09",
+                    "1",
+                    "2",
+                    "3",
+                    "4",
+                    "5",
+                    "6",
+                    "7",
+                    "8",
+                    "9",
                     "10",
                     "11",
                     "12"
@@ -106,23 +109,47 @@ $(document).ready(function () {
         return `<div class="participantGroup${label}">
         <div class="row row-flex" id="participantInfo${label}">
         <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">
-            <div>親友${label}(中文姓名/身份證字號/生日)</div>
+            <div>親友${label} (Friend ${label})：</div>
         </div>
         <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
             <div>
+                <span class="badge badge-secondary">中文姓名 (Chinese Name)</span>
                 <input type="text" class="form-control" id="inputParticipantChineseName${label}" name="inputParticipantChineseName${label}" placeholder="請輸入親友${label}中文姓名">
             </div>
         </div>
-        <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
+        <div class="col-6 col-md-3 align-middle bg-no-left col-v-centered">
             <div>
+                <span class="badge badge-secondary">身份證字號 (ID)</span>
                 <input type="text" class="form-control" name="inputParticipantID${label}" id="inputParticipantID${label}" placeholder="請輸入親友${label}身份證字號">
             </div>
         </div>
-        <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
-          <input type="text" class="form-control" name="participantBirthDay${label}" id="participantBirthDay${label}" placeholder="請輸入">
-        </div>
+        <div class="col-6 col-md-3 align-middle bg-no-left col-v-centered">
+            <div>
+            <span class="badge badge-secondary">生日 (Birth Day)</span>
+            <input type="text" class="form-control" name="participantBirthDay${label}" id="participantBirthDay${label}" placeholder="請輸入">
+            </div>
         </div>
       </div>`;
+    }
+    function participantConfirmTemplate(label) {
+        return `<div class="participantGroupConfirm${label}">
+            <div class="row row-flex" id="participantInfoConfirm${label}">
+            <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">
+                <div>親友${label} (Friend ${label})：</div>
+            </div>
+            <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
+            <span class="badge badge-secondary">中文姓名 (Chinese Name)</span>：<span id="inputParticipantChineseNameConfirm${label}"></span>
+            </div>
+            <div class="col-6 col-md-3 align-middle bg-no-left col-v-centered">
+            <span class="badge badge-secondary">身份證字號 (ID)</span>：<span id="inputParticipantIDConfirm${label}"></span>
+            </div>
+            <div class="col-6 col-md-3 align-middle bg-no-left col-v-centered">
+            <span class="badge badge-secondary">生日 (Birth Day)</span>：
+                西元<span id="participantBirthDayConfirm${label}Year"></span>年
+                <span id="participantBirthDayConfirm${label}Month"></span>月
+                <span id="participantBirthDayConfirm${label}Day"></span>日
+            </div>
+        </div>`;
     }
 
     class Participant {
@@ -131,6 +158,7 @@ $(document).ready(function () {
             this.wordking = (type == "Regular" ? "regularParticipantWording" : "contractorParticipantWording");
             this.price = 500;
             this.fee = "participantFee";
+            this.feeWording = "participantFeeWording";
             this.doWording = function (inputParticipantVal) {
                 if (inputParticipantVal > 0) {
                     $("." + this.wordking).show();
@@ -141,13 +169,13 @@ $(document).ready(function () {
             }
             this.doFee = function (inputParticipantVal) {
                 if (type == "Regular" && inputParticipantVal > 3) {
-                    $("." + this.fee).text((inputParticipantVal - 3) * this.price)
+                    $("#" + this.feeWording).text((inputParticipantVal - 3) * this.price)
                     $("#" + this.fee).val((inputParticipantVal - 3) * this.price)
                 } else if (this.type == "Contractor") {
-                    $("." + this.fee).text((inputParticipantVal + 1) * this.price)
+                    $("#" + this.feeWording).text((inputParticipantVal + 1) * this.price)
                     $("#" + this.fee).val((inputParticipantVal + 1) * this.price)
                 } else {
-                    $("." + this.fee).text(0)
+                    $("#" + this.feeWording).text(0)
                     $("#" + this.fee).val(0)
                 }
             }
@@ -164,9 +192,7 @@ $(document).ready(function () {
                             }
                             var options = $.extend(true, birthDayFormat, brithDayWigetTemplate("participantBirthDay" + i))
                             $('#participantBirthDay' + i).bootstrapBirthday(options);
-                        } else {
-                            $(".participantGroup" + i).show();
-                        }
+                        } 
                         if (result) {
                             $("#inputParticipantChineseName" + i).val(result['inputParticipantChineseName' + i])
                             $("#inputParticipantID" + i).val(result['inputParticipantID' + i])
@@ -174,13 +200,36 @@ $(document).ready(function () {
                             $("select[name='participantBirthDay" + i + "Month']").val(result['participantBirthDay' + i + 'Month']);
                             $("select[name='participantBirthDay" + i + "Day']").val(result['participantBirthDay' + i + 'Day']);
                         }
-                    } else if (i > inputParticipantVal) {
+                    } else if (inputParticipantVal == 0 || i > inputParticipantVal) {
                         if ($(".participantGroup" + i).length != 0) {
-                            $(".participantGroup" + i).hide();
+                            $(".participantGroup" + i).remove();
                         }
                     }
-                    if (inputParticipantVal == 0) {
-                        $(".participantInfo" + i).hide();
+                }
+            }
+            this.doInputConfirmList = function (inputParticipantVal, result) {
+                const maxAttr = $("#" + this.id).attr("max");
+                for (var i = 1; i <= maxAttr; i++) {
+                    if (i <= inputParticipantVal) {
+                        //no existing
+                        if ($(".participantGroupConfirm" + i).length == 0) {
+                            if (i == 1) {
+                                $(".participantNumberConfirm").after(participantConfirmTemplate(i))
+                            } else {
+                                $(".participantGroupConfirm" + (i - 1)).after(participantConfirmTemplate(i))
+                            }
+                        } 
+                        if (result) {
+                            $("#inputParticipantChineseNameConfirm" + i).text(result['inputParticipantChineseName' + i])
+                            $("#inputParticipantIDConfirm" + i).text(result['inputParticipantID' + i])
+                            $("#participantBirthDayConfirm" + i + "Year").text(result['participantBirthDay' + i + 'Year']);
+                            $("#participantBirthDayConfirm" + i + "Month").text(result['participantBirthDay' + i + 'Month']);
+                            $("#participantBirthDayConfirm" + i + "Day").text(result['participantBirthDay' + i + 'Day']);
+                        }
+                    } else if (inputParticipantVal == 0 || i > inputParticipantVal) {
+                        if ($(".participantGroupConfirm" + i).length != 0) {
+                            $(".participantGroupConfirm" + i).remove();
+                        }
                     }
                 }
             }
@@ -205,18 +254,19 @@ $(document).ready(function () {
             this.wordking = (type == "Regular" ? "regularShuttleWording" : "regularShuttleWording");
             this.price = (type == "Regular" ? 150 : 300);
             this.fare = "shuttleFare"
+            this.fareWording = "shuttleFareWording"
             this.onChange = function (result) {
-                if (result && result.inputShuttle) {
-                    $("#" + this.id).val(result.inputShuttle)
+                if (result) {
+                    $("#" + this.id).val(result)
                 }
                 var inputShuttleVal = $("#" + this.id).val()
                 if (inputShuttleVal > 0) {
                     $("." + this.wordking).show();
-                    $("." + this.fare).text(inputShuttleVal * this.price)
+                    $("#" + this.fareWording).text(inputShuttleVal * this.price)
                     $("#" + this.fare).val(inputShuttleVal * this.price)
                 } else {
                     $("." + this.wordking).hide();
-                    $("." + this.fare).text(0)
+                    $("#" + this.fareWording).text(0)
                     $("#" + this.fare).val(0)
                 }
             };
@@ -250,14 +300,16 @@ $(document).ready(function () {
                         $("#locationSelect1").val(result.locationSelect1);
                         $("#mobileNo1").val(result.mobileNo1);
                         $("#inputID").val(result.inputID);
-                        $("#birthDayYear").val(result.birthDayYear);
-                        $("#birthDayMonth").val(result.birthDayMonth);
-                        $("#birthDayDay").val(result.birthDayDay);
+                        $("select[name='birthDayYear']").val(result.birthDayYear);
+                        $("select[name='birthDayMonth']").val(result.birthDayMonth);
+                        $("select[name='birthDayDay']").val(result.birthDayDay);
+                        $("#inputParticipant").val(result.inputParticipant);
+                        $("#participantFee").val(result.participantFee);
 
                         var participant = new Participant(usertype);
-                        participant.onChange(result)
+                        participant.onChange(result.participants)
                         var shuttle = new Shuttle(usertype);
-                        shuttle.onChange(result)
+                        shuttle.onChange(result.inputShuttle)
 
                         $('#personalInfoCheckbox1').prop('checked', true);
                         $("#backToEventBtn").show();
@@ -311,7 +363,6 @@ $(document).ready(function () {
             sn = user.id.substring(0, 6);
 
             // init form
-            var employee_type = "";
             $("#inputSN").val(sn);
             var regular_pattern1 = /^\d/i;
             var regular_pattern2 = /^\ZZ/i;
@@ -347,15 +398,22 @@ $(document).ready(function () {
             locationSelect1: $("#locationSelect1").val(),
             mobileNo1: $("#mobileNo1").val(),
             inputID: $("#inputID").val(),
-            birthDayYear: $("#birthDayYear").val(),
-            birthDayMonth: $("#birthDayMonth").val(),
-            birthDayDay: $("#birthDayDay").val(),
+            birthDayYear: $("select[name='birthDayYear']").val(),
+            birthDayMonth: $("select[name='birthDayMonth']").val(),
+            birthDayDay: $("select[name='birthDayDay']").val(),
             inputParticipant: $("#inputParticipant").val(),
             participantFee: $("#participantFee").val(),
-            inputShuttle: $("#inputParticipant").val(),
+            inputShuttle: $("#inputShuttle").val(),
             shuttleFare: $("#shuttleFare").val()
         };
 
+        for (var i = 1; i <= requestRegisterParams.inputParticipant; i++) {
+            requestRegisterParams['inputParticipantChineseName'+i] = $("#inputParticipantChineseName" + i).val()
+            requestRegisterParams['inputParticipantID'+i] = $("#inputParticipantID" + i).val()
+            requestRegisterParams['participantBirthDay'+i+ 'Year'] = $("select[name='participantBirthDay" + i + "Year']").val()
+            requestRegisterParams['participantBirthDay'+i+ 'Month'] = $("select[name='participantBirthDay" + i + "Month']").val()
+            requestRegisterParams['participantBirthDay'+i+ 'Day'] = $("select[name='participantBirthDay" + i + "Day']").val()
+        }
         $("#userTypeRadioOptionsConfirm").html(usertype);
         $("#inputSNConfirm").html(requestRegisterParams.inputSN);
         $("#inputEmailConfirm").html(requestRegisterParams.inputEmail);
@@ -365,13 +423,15 @@ $(document).ready(function () {
         $("#locationSelect1Confirm").html(requestRegisterParams.locationSelect1);
         $("#mobileNo1Confirm").html(requestRegisterParams.mobileNo1);
         $("#inputIDConfirm").html(requestRegisterParams.inputID);
-        $("#birthDayYearConfirm").html(requestRegisterParams.birthDayYear);
-        $("#birthDayMonthConfirm").html(requestRegisterParams.birthDayMonth);
-        $("#birthDayDayConfirm").html(requestRegisterParams.birthDayDay);
+        $("#birthDayConfirmYear").html(requestRegisterParams.birthDayYear);
+        $("#birthDayConfirmMonth").html(requestRegisterParams.birthDayMonth);
+        $("#birthDayConfirmDay").html(requestRegisterParams.birthDayDay);
         $("#inputParticipantConfirm").html(requestRegisterParams.inputParticipant);
         $("#participantFeeConfirm").html(requestRegisterParams.participantFee);
         $("#inputShuttleConfirm").html(requestRegisterParams.inputShuttle);
         $("#shuttleFareConfirm").html(requestRegisterParams.shuttleFare);
+        var participant = new Participant(usertype);
+        participant.doInputConfirmList(requestRegisterParams.inputParticipant, requestRegisterParams);
 
 
         $("#enrollSection").hide();
@@ -422,14 +482,22 @@ $(document).ready(function () {
             locationSelect1: $("#locationSelect1").val(),
             mobileNo1: $("#mobileNo1").val(),
             inputID: $("#inputID").val(),
-            birthDayYear: $("#birthDayYear").val(),
-            birthDayMonth: $("#birthDayMonth").val(),
-            birthDayDay: $("#birthDayDay").val(),
+            birthDayYear: $("select[name='birthDayYear']").val(),
+            birthDayMonth: $("select[name='birthDayMonth']").val(),
+            birthDayDay: $("select[name='birthDayDay']").val(),
             inputParticipant: $("#inputParticipant").val(),
             participantFee: $("#participantFee").val(),
-            inputShuttle: $("#inputParticipant").val(),
+            inputShuttle: $("#inputShuttle").val(),
             shuttleFare: $("#shuttleFare").val()
         };
+
+        for (var i = 1; i <= confirmedRequestRegisterParams.inputParticipant; i++) {
+            confirmedRequestRegisterParams['inputParticipantChineseName'+i] = $("#inputParticipantChineseName" + i).val()
+            confirmedRequestRegisterParams['inputParticipantID'+i] = $("#inputParticipantID" + i).val()
+            confirmedRequestRegisterParams['participantBirthDay'+i+ 'Year'] = $("select[name='participantBirthDay" + i + "Year']").val()
+            confirmedRequestRegisterParams['participantBirthDay'+i+ 'Month'] = $("select[name='participantBirthDay" + i + "Month']").val()
+            confirmedRequestRegisterParams['participantBirthDay'+i+ 'Day'] = $("select[name='participantBirthDay" + i + "Day']").val()
+        }
 
         ajaxProcessor('POST', './form/enroll', confirmedRequestRegisterParams,
             function (data) {
@@ -494,12 +562,8 @@ $(document).ready(function () {
         );
     }, "Input R.O.C Citizen ID is fake");
 
-    jQuery.validator.addMethod("hasInput", function (value, element, param) {
-        return $("#inputParticipant").val() > param;
-    }, "Please input value");
-
     var validRule = [];
-
+    var validMsg = [];
     validRule[1] = {
         // IBMer
         /*
@@ -544,103 +608,109 @@ $(document).ready(function () {
         birthDayDay: {
             required: true,
             notEqual: 0
+        },
+        personalInfoCheckbox1: {
+            required: true
         }
     };
-
-    var participantRule = function() {
-        var tmp = {}
-        for (var i = 1; i <= $("#inputParticipant").val(); i++) {
-            `inputParticipantChineseName${i}: {
-                hasInput: 1
-            },
-            inputParticipantID1: {
-                hasInput: 1,
-                ROC_Citizen_ID_regex: true,
-                ROC_Citizen_ID_arithmetic: true
-            },
-            participantBirthDay1Year: {
-                hasInput: 1,
-                notEqual: 0
-            },
-            participantBirthDay1Month: {
-                hasInput: 1,
-                notEqual: 0
-            },
-            participantBirthDay1Day: {
-                hasInput: 1,
-                notEqual: 0
-            }`
+    validMsg[1] = {
+        // IBMer
+        inputEmail: {
+            required: "請輸入您的電子郵件"
+        },
+        inputEnglishName: {
+            required: "請輸入您的英文姓名"
+        },
+        departmentSelect1: {
+            required: "請選擇部門",
+            notEqual: "請選擇部門"
+        },
+        locationSelect1: {
+            notEqual: "請選擇辦公室位置"
+        },
+        inputChineseName1: {
+            required: "請輸入中文姓名",
+            notEqual: "請輸入中文姓名"
+        },
+        mobileNo1: {
+            required: "請提供行動電話號碼",
+            rangelength: "請提供行動電話號碼",
+            digits: "行動電話號碼格式錯誤"
+        },
+        inputID: {
+            required: "請輸入身份證字號",
+            ROC_Citizen_ID_regex: "身份證字號格式錯誤",
+            ROC_Citizen_ID_arithmetic: "身份證字號似乎偽造"
+        },
+        birthDayYear: {
+            required: "請選擇西元年",
+            notEqual: "請選擇西元年"
+        },
+        birthDayMonth: {
+            required: "請選擇月",
+            notEqual: "請選擇月"
+        },
+        birthDayDay: {
+            required: "請選擇日",
+            notEqual: "請選擇日"
+        },
+        personalInfoCheckbox1: {
+        required: "您必須同意我們利用您的資料才能線上報名"
         }
     }
 
+    for (var i = 1; i <= $("#inputParticipant").attr('max'); i++) {
+        validRule[1]['inputParticipantChineseName' + i] = {
+            required: true
+        };
+        validRule[1]['inputParticipantID' + i] = {
+            required: true,
+            ROC_Citizen_ID_regex: true,
+            ROC_Citizen_ID_arithmetic: true
+        };
+        validRule[1]['participantBirthDay' + i + 'Year'] = {
+            required: true,
+            notEqual: 0
+        };
+        validRule[1]['participantBirthDay' + i + 'Month'] = {
+            required: true,
+            notEqual: 0
+        };
+        validRule[1]['participantBirthDay' + i + 'Day'] = {
+            required: true,
+            notEqual: 0
+        };
+        
+        validMsg[1]['inputParticipantChineseName' + i] = {
+            required: "請輸入親友" + i + "中文姓名"
+        };
+        validMsg[1]['inputParticipantID' + i] = {
+            required: "請輸入親友" + i + "身份證字號",
+            ROC_Citizen_ID_regex: "親友" + i + "身份證字號格式錯誤",
+            ROC_Citizen_ID_arithmetic: "親友" + i + "身份證字號似乎偽造"
+        };
+        validMsg[1]['participantBirthDay' + i + 'Year'] = {
+            required: "請選擇西元年",
+            notEqual: "請選擇西元年"
+        };
+        validMsg[1]['participantBirthDay' + i + 'Month'] = {
+            required: "請選擇月",
+            notEqual: "請選擇月"
+        };
+        validMsg[1]['participantBirthDay' + i + 'Day'] = {
+            required: "請選擇日",
+            notEqual: "請選擇日"
+        };
+    }
+  
     var initRule = validRule[1];
+    var initMsg = validMsg[1];
     var currentRule = initRule;
 
     $("#registerForm").validate({
         // debug: true,
         rules: initRule,
-        messages: {
-            // IBMer
-            inputEmail: {
-                required: "請輸入您的電子郵件"
-            },
-            inputEnglishName: {
-                required: "請輸入您的英文姓名"
-            },
-            departmentSelect1: {
-                required: "請選擇部門",
-                notEqual: "請選擇部門"
-            },
-            locationSelect1: {
-                notEqual: "請選擇辦公室位置"
-            },
-            inputChineseName1: {
-                required: "請輸入中文姓名",
-                notEqual: "請輸入中文姓名"
-            },
-            mobileNo1: {
-                required: "請提供行動電話號碼",
-                rangelength: "請提供行動電話號碼",
-                digits: "行動電話號碼格式錯誤"
-            },
-            inputID: {
-                required: "請輸入身份證字號",
-                ROC_Citizen_ID_regex: "身份證字號格式錯誤",
-                ROC_Citizen_ID_arithmetic: "身份證字號似乎偽造"
-            },
-            birthDayYear: {
-                required: "請選擇西元年",
-                notEqual: "請選擇西元年"
-            },
-            birthDayMonth: {
-                required: "請選擇月",
-                notEqual: "請選擇月"
-            },
-            birthDayDay: {
-                required: "請選擇日",
-                notEqual: "請選擇日"
-            },
-            inputParticipantChineseName1: {
-                hasInput: "請輸入中文姓名"
-            },
-            inputParticipantID1: {
-                hasInput: "請輸入身份證字號",
-                ROC_Citizen_ID_regex: "身份證字號格式錯誤",
-                ROC_Citizen_ID_arithmetic: "身份證字號似乎偽造"
-            },
-            participantBirthDay1Year: {
-                hasInput: "請選擇西元年",
-                notEqual: "請選擇西元年"
-            },
-            participantBirthDay1Month: {
-                hasInput: "請選擇月",
-                notEqual: "請選擇月"
-            },
-            participantBirthDay1Day: {
-                hasInput: "請選擇日",
-                notEqual: "請選擇日"
-            }
-        },
+        messages: initMsg,
         errorElement: "small",
         errorPlacement: function (error, element) {
             // Add the `help-block` class to the error element

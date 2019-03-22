@@ -147,7 +147,11 @@ module.exports = function(app, config, passport) {
             ic = /"/g;
             lq = /{/g;
             rq = /}/g;
-        inputString = inputString.toString().replace(lt, "&lt;").replace(gt, "&gt;").replace(ap, "&#39;").replace(ic, "&#34;").replace(lq, "").replace(rq, "");
+        if(typeof inputString === 'string') {
+            inputString = inputString.toString().replace(lt, "&lt;").replace(gt, "&gt;").replace(ap, "&#39;").replace(ic, "&#34;").replace(lq, "").replace(rq, "");
+        } else {
+            logger.debug("Unsupported input type " + (typeof inputString))
+        }
         return inputString;
     };
 
@@ -369,18 +373,13 @@ module.exports = function(app, config, passport) {
                 var specificInfos = {
                     "0": {
                         inputID: securityValid(inputForm.inputID),
-                        birthDay: securityValid(inputForm.birthDay),
+                        birthDayYear: securityValid(inputForm.birthDayYear),
+                        birthDayMonth: securityValid(inputForm.birthDayMonth),
+                        birthDayDay: securityValid(inputForm.birthDayDay),
                         inputParticipant: securityValid(inputForm.inputParticipant),
-                        inputParticipantID1: securityValid(inputForm.inputParticipantID1),
-                        inputParticipantChineseName1: securityValid(inputForm.inputParticipantChineseName1),
-                        participantBirthDay1: securityValid(inputForm.participantBirthDay1),
-                        inputParticipantID2: securityValid(inputForm.inputParticipantID2),
-                        inputParticipantChineseName2: securityValid(inputForm.inputParticipantChineseName2),
-                        participantBirthDay2: securityValid(inputForm.participantBirthDay2),
-                        inputParticipantID3: securityValid(inputForm.inputParticipantID3),
-                        inputParticipantChineseName3: securityValid(inputForm.inputParticipantChineseName3),
-                        participantBirthDay3: securityValid(inputForm.participantBirthDay3),
+                        participantFee: securityValid(inputForm.participantFee),
                         inputShuttle: securityValid(inputForm.inputShuttle),
+                        shuttleFare: securityValid(inputForm.shuttleFare),
                     },
                     "1": {
                     },
@@ -390,14 +389,22 @@ module.exports = function(app, config, passport) {
                         vegetarianRadioOptions2: securityValid(inputForm.vegetarianRadioOptions2),  
                     } 
                 }
+                specificInfos[0].participants = {}
+                for(var i=1;i<=specificInfos[0].inputParticipant;i++) {
+                    specificInfos[0].participants['inputParticipantChineseName'+i] = securityValid(inputForm['inputParticipantChineseName'+i])
+                    specificInfos[0].participants['inputParticipantID'+i] = securityValid(inputForm['inputParticipantID'+i])
+                    specificInfos[0].participants['participantBirthDay'+i+'Year'] = securityValid(inputForm['participantBirthDay'+i+'Year'])
+                    specificInfos[0].participants['participantBirthDay'+i+'Month'] = securityValid(inputForm['participantBirthDay'+i+'Month'])
+                    specificInfos[0].participants['participantBirthDay'+i+'Day'] = securityValid(inputForm['participantBirthDay'+i+'Day'])
+                }
+
                 var metadataInfos = {
                     lastModTs: currentTs(),
                     lastModUser: securityValid(inputForm.currentUser)
                 }
 
                 var enrollInfo = commonInfos;
-                enrollInfo = enrollInfo.concat(specificInfos[event.type])
-                enrollInfo = enrollInfo.concat(metadataInfos)
+                Object.assign(enrollInfo, specificInfos[event.type], metadataInfos)
 
                 if(data._id) {
                     enrollInfo._id = data._id;
@@ -438,17 +445,13 @@ module.exports = function(app, config, passport) {
                             var specificInfoHists = {
                                 "0" : {
                                     inputID: enrollInfo.inputID,
-                                    birthDay: enrollInfo.birthDay,
-                                    inputParticipantID1: enrollInfo.inputParticipantID1,
-                                    inputParticipantChineseName1: enrollInfo.inputParticipantChineseName1,
-                                    participantBirthDay1: enrollInfo.participantBirthDay1,
-                                    inputParticipantID2: enrollInfo.inputParticipantID2,
-                                    inputParticipantChineseName2: enrollInfo.inputParticipantChineseName2,
-                                    participantBirthDay2: enrollInfo.participantBirthDay2,
-                                    inputParticipantID3: enrollInfo.inputParticipantID3,
-                                    inputParticipantChineseName3: inputForm.inputParticipantChineseName3,
-                                    participantBirthDay3: enrollInfo.participantBirthDay3,
-                                    inputShuttle: enrollInfo.inputShuttle
+                                    birthDayYear: enrollInfo.birthDayYear,
+                                    birthDayMonth: enrollInfo.birthDayMonth,
+                                    birthDayDay: enrollInfo.birthDayDay,
+                                    inputParticipant: enrollInfo.inputParticipant,
+                                    participantFee: enrollInfo.participantFee,
+                                    inputShuttle: enrollInfo.inputShuttle,
+                                    shuttleFare: enrollInfo.shuttleFare,
                                 },
                                 "1": {
 
@@ -460,15 +463,21 @@ module.exports = function(app, config, passport) {
                                 }
 
                             }
+                            specificInfoHists[0].participants = {}
+                            for(var i=1;i<=specificInfoHists[0].inputParticipant;i++) {
+                                specificInfoHists[0].participants['inputParticipantChineseName'+i] = enrollInfo['inputParticipantChineseName'+i]
+                                specificInfoHists[0].participants['inputParticipantID'+i] = enrollInfo['inputParticipantID'+i]
+                                specificInfoHists[0].participants['participantBirthDay'+i+'Year'] = enrollInfo['participantBirthDay'+i+'Year']
+                                specificInfoHists[0].participants['participantBirthDay'+i+'Month'] = enrollInfo['participantBirthDay'+i+'Month']
+                                specificInfoHists[0].participants['participantBirthDay'+i+'Day'] = enrollInfo['participantBirthDay'+i+'Day']
+                            }
                             var metadataInfoHists = {
                                 lastModTs: enrollInfo.lastModTs,
                                 lastModUser: enrollInfo.lastModUser
                             }
                             
                             var enrollInfoHist = histInfoHists;
-                            enrollInfoHist = enrollInfoHist.concat(commonInfoHists);
-                            enrollInfoHist = enrollInfoHist.concat(specificInfoHists[event.type]);
-                            enrollInfoHist = enrollInfoHist.concat(metadataInfoHists);
+                            Object.assign(enrollInfoHist, commonInfoHists, specificInfoHists[event.type], metadataInfoHists)
                             customlogger.info('enroll_hist_db.insert');
                             enroll_hist_db.insert(
                                 enrollInfoHist,
@@ -521,17 +530,14 @@ module.exports = function(app, config, passport) {
         // Family Day
         "0": [
             "inputID",
-            "birthDay",
-            "inputParticipantID1",
-            "inputParticipantChineseName1",
-            "participantBirthDay1",
-            "inputParticipantID2",
-            "inputParticipantChineseName2",
-            "participantBirthDay2",
-            "inputParticipantID3",
-            "inputParticipantChineseName3",
-            "participantBirthDay3",
+            "birthDayYear",
+            "birthDayMonth",
+            "birthDayDay",
+            "inputParticipant",
+            "participantFee",
             "inputShuttle",
+            "shuttleFare",
+            "participants"
         ],
         // Sports Day
         "1": [
@@ -650,59 +656,15 @@ module.exports = function(app, config, passport) {
     };
 
     // 寄送報名資訊更新 Email
-    var sendSuccessEnrollEmail = function(type, enrollInfo, emailReceiver, callback) {
-
-        // 組合整份 Email 的內容
+    var sendSuccessEnrollEmail = function(enrollInfo, emailReceiver, callback) {
         var emailSubject = event.name + " 報名資訊更新通知";
-        var emailContent = "Dear " + enrollInfo.inputEnglishName + ", <br /><br />感謝您的報名 " + event.name + "，以下為您的報名資訊：<br /><br />";
-
-        // 判斷使用者類型，以便顯示親友費用
+        const pug = require('pug');
+        // Compile the source code
+        const mailTemplate = pug.compileFile(app.get('views') + '/mail.pug');
         var usertype = getUserType(enrollInfo.inputSN);
         var mobileNo1 = enrollInfo.mobileNo1;
-
-        if(type == 2) {
-            // 餐點
-            var vegetarianRadioOptions1 = "葷食";
-            var vegetarianRadioOptions2 = "葷食";
-            if(enrollInfo.vegetarianRadioOptions1 == "Y") {
-                vegetarianRadioOptions1 = "素食";
-            }
-            if(enrollInfo.vegetarianRadioOptions2 == "Y") {
-                vegetarianRadioOptions2 = "素食";
-            }
-
-            if(usertype=='regular') {
-                emailContent += "員工本人： " + vegetarianRadioOptions1 + " <br />";
-            } else {
-                emailContent += "員工本人： " + vegetarianRadioOptions1 + " <br />";
-            }
-
-            if(enrollInfo.participantSelect1 == "不攜伴") {
-                if(usertype=='regular') {
-                    emailContent += "親友人數： 不攜伴 <br />";
-                } else {
-                    // contractor 無法攜伴
-                }
-            } else {
-                if(usertype=='regular') {
-                    emailContent += "親友人數： 1位 " + vegetarianRadioOptions2 + " - IBMer親友免費 <br />";
-                } else {
-                    // contractor 無法攜伴
-                    // emailContent += "親友人數： 1位 " + vegetarianRadioOptions2 + " - Contractor親友自費800元 <br />";
-                }
-            }
-
-
-            var mobileNo1Display = "(" + mobileNo1.substring(0, 4) + "-" + mobileNo1.substring(4, 7) + "-" + mobileNo1.substring(7, 10) + ")";
-
-            // 其他重要訊息
-            emailContent += "<br />";
-            emailContent += "EWC將根據上述報名資訊，於活動前一個工作天12/20 (四)，發送電子入場券至您的手機門號 "+mobileNo1Display+"<br />";
-            emailContent += "<p style=\"border-top: 1px solid #b2c2ca; padding-top: 1em;\">請注意，報名期間為 11月20日 (二) 中午12點 至 12月7日 (五) 下午5點30分止，若需更新任何報名資訊，請於上述期間自行至報名系統進行修改，若您沒有報名此活動或有活動相關問題，請與EWC – Mimmie Chu/Taiwan/Contr/IBM (#3841) 聯絡。</p>";
-
-            // apply style
-            emailContent = '<div style="border: 2px solid #b2c2ca; padding: 1em; margin: .5em; border-radius: .7em; background: #fcfeff;">' + emailContent + '</div>';
-        }
+        var mobileNo1Display = "(" + mobileNo1.substring(0, 4) + "-" + mobileNo1.substring(4, 7) + "-" + mobileNo1.substring(7, 10) + ")";
+        var emailContent = mailTemplate({usertype: usertype, enrollInfo: enrollInfo, event: event, mobileNo1Display: mobileNo1Display})
 
         sendMailAgentHTML(emailReceiver, emailSubject, emailContent, function(err, res){
             customlogger.info("callback from sendMailAgentHTML");
@@ -735,7 +697,7 @@ module.exports = function(app, config, passport) {
                 // success insert to database
                 if(err == null) {
 
-                    sendSuccessEnrollEmail(event.type, data, data.inputEmail, function(regErr, regRes){
+                    sendSuccessEnrollEmail(data, data.inputEmail, function(regErr, regRes){
                         customlogger.info("success to callback /form/enroll");
                         if(regErr == null) {
                         	customlogger.info("LOG003 success enroll ", req.user.uid);

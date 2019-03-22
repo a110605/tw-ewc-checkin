@@ -1,0 +1,43 @@
+html
+  body
+    div(style='border: 2px solid #b2c2ca; padding: 1em; margin: .5em; border-radius: .7em; background: #fcfeff;')
+        p Dear #{enrollInfo.inputEnglishName}
+        p
+        p
+        p 感謝您的報名 #{event.name}，以下為您的報名資訊：
+        p
+        p
+        if event.type == 0
+            p 參加費用：#{enrollInfo.participantFee}
+            p 親友人數：#{enrollInfo.inputParticipant}
+            p 搭車人數：#{enrollInfo.inputShuttle}
+            p 搭車費用：#{enrollInfo.shuttleFare}
+            p
+            p 以下資訊為投保團體旅遊平安險之用
+            p 員工本人中文姓名：#{enrollInfo.inputChineseName1}, 身份證字號：#{enrollInfo.inputID}, 生日：西元#{enrollInfo.birthDayYear}年#{enrollInfo.birthDayMonth}月#{enrollInfo.birthDayDay}日
+            if enrollInfo.inputParticipant > 0
+                - for (var i = 1; i <= enrollInfo.inputParticipant; i++)
+                    p 親友#{i}中文姓名：#{enrollInfo.participants['inputParticipantChineseName'+i]}, 身份證字號：#{enrollInfo.participants['inputParticipantID'+i]}, 生日：西元#{enrollInfo.participants['participantBirthDay'+i+'Year']}年#{enrollInfo.participants['participantBirthDay'+i+'Month']}月#{enrollInfo.participants['participantBirthDay'+i+'Day']}日   
+        else if event.type == 1
+        else if event.type == 2
+            // 判斷使用者類型，以便顯示親友費用
+            // 餐點
+            if usertype == 'regular'
+                if enrollInfo.vegetarianRadioOptions1 == "Y"
+                    p 員工本人： 素食
+                else
+                    p 員工本人： 葷食
+                if enrollInfo.participantSelect1 == "不攜伴"
+                    p 親友人數： 不攜伴
+                else
+                    if enrollInfo.vegetarianRadioOptions2 == "Y"
+                        p 親友人數： 1位 素食 - IBMer親友免費
+                    else
+                        p 親友人數： 1位 葷食 - IBMer親友免費
+            else
+                if enrollInfo.vegetarianRadioOptions1 == "Y"
+                    p 員工本人： 素食
+                else
+                    p 員工本人： 葷食
+        p EWC將根據上述報名資訊，於活動前一個工作天5/3 (五)，發送電子入場券至您的手機門號 #{mobileNo1Display}
+        p(style='border-top: 1px solid #b2c2ca; padding-top: 1em;') 請注意，報名期間為 4月9日 (二) 中午12點 至 4月13日 (五) 下午5點30分止，若需更新任何報名資訊，請於上述期間自行至報名系統進行修改，若您沒有報名此活動或有活動相關問題，請與EWC – Mimmie Chu/Taiwan/Contr/IBM (#3841) 聯絡。

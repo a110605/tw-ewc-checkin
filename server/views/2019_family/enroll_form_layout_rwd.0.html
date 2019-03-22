@@ -1,671 +1,415 @@
 <!DOCTYPE html>
-<html lang="en">
-
-<head>
-
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
-
-  <title>IBM EWC 63rd Enroll System</title>
-
-  <!-- Bootstrap core CSS -->
-  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico" />
-
-  <!-- Custom fonts for this template -->
-  <!--
-    <link href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
-    -->
-
-  <!-- Custom styles for this template -->
-  <link href="css/one-page-wonder.min.css" rel="stylesheet">
-
-  <style>
-    .alert-text,
-    .mustMark {
-      color: #ee0979;
-    }
-
-    .mustMark {
-      font-weight: 800;
-    }
-
-    .has-error input,
-    .has-error select {
-      border-color: #ee0979;
-    }
-
-    .registerForm th[scope=col] {
-      background: rgb(31, 116, 189);
-      color: #fff;
-    }
-
-    .registerForm th[scope=row] {
-      background: rgb(223, 234, 245);
-    }
-
-    .registerForm td,
-    .registerForm th {
-      border: 1px solid #999;
-    }
-
-    .table.registerForm thead th {
-      border-bottom: 2px solid #999;
-    }
-
-    .btn-light {
-      background: #ccc;
-    }
-
-
-    .confirmAlertSection {
-      width: 100%;
-      margin: 0 auto;
-    }
-
-    @media (max-width: 768px) {
-      .container-fluid {
-        width: 90%;
-        max-width: none;
-      }
-
-      .confirmAlertSection {
-        width: 90%;
-        margin: 0 auto;
-      }
-    }
-
-    .bg-board {
-      border-right: 1px solid #999;
-      border-bottom: 1px solid #999;
-    }
-
-    .bg-main {
-      color: #fff;
-      background-color: #337ab7;
-      padding: 15px;
-      border-top: 1px solid #999;
-      border-left: 1px solid #999;
-    }
-
-    .bg-normal {
-      color: #000;
-      background-color: #fff;
-      padding: 15px;
-      border-top: 1px solid #999;
-      border-left: 1px solid #999;
-    }
-
-    .bg-normal-title {
-      color: #000;
-      background-color: #d9edf7;
-      padding: 15px;
-      border-top: 1px solid #999;
-      border-left: 1px solid #999;
-    }
-
-    .form-text {
-      margin-top: 0;
-    }
-
-    .row-flex {
-      display: flex;
-    }
-
-    .col-v-centered {
-      display: flex;
-      align-items: center;
-    }
-
-
-    /* loading */
-    .lds-roller {
-      display: inline-block;
-      position: relative;
-      width: 64px;
-      height: 64px;
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-    }
-
-    .lds-roller div {
-      animation: lds-roller 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-      transform-origin: 32px 32px;
-    }
-
-    .lds-roller div:after {
-      content: " ";
-      display: block;
-      position: absolute;
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: #fff;
-      margin: -3px 0 0 -3px;
-    }
-
-    .lds-roller div:nth-child(1) {
-      animation-delay: -0.036s;
-    }
-
-    .lds-roller div:nth-child(1):after {
-      top: 50px;
-      left: 50px;
-    }
-
-    .lds-roller div:nth-child(2) {
-      animation-delay: -0.072s;
-    }
-
-    .lds-roller div:nth-child(2):after {
-      top: 54px;
-      left: 45px;
-    }
-
-    .lds-roller div:nth-child(3) {
-      animation-delay: -0.108s;
-    }
-
-    .lds-roller div:nth-child(3):after {
-      top: 57px;
-      left: 39px;
-    }
-
-    .lds-roller div:nth-child(4) {
-      animation-delay: -0.144s;
-    }
-
-    .lds-roller div:nth-child(4):after {
-      top: 58px;
-      left: 32px;
-    }
-
-    .lds-roller div:nth-child(5) {
-      animation-delay: -0.18s;
-    }
-
-    .lds-roller div:nth-child(5):after {
-      top: 57px;
-      left: 25px;
-    }
-
-    .lds-roller div:nth-child(6) {
-      animation-delay: -0.216s;
-    }
-
-    .lds-roller div:nth-child(6):after {
-      top: 54px;
-      left: 19px;
-    }
-
-    .lds-roller div:nth-child(7) {
-      animation-delay: -0.252s;
-    }
-
-    .lds-roller div:nth-child(7):after {
-      top: 50px;
-      left: 14px;
-    }
-
-    .lds-roller div:nth-child(8) {
-      animation-delay: -0.288s;
-    }
-
-    .lds-roller div:nth-child(8):after {
-      top: 45px;
-      left: 10px;
-    }
-
-    @keyframes lds-roller {
-      0% {
-        transform: rotate(0deg);
-      }
-
-      100% {
-        transform: rotate(360deg);
-      }
-    }
-  </style>
-
-</head>
-
-<body>
-
-  <div id="loading"
-    style="background: #d9edf7; position: absolute; left: 0; right: 0; top: 0; bottom: 0; z-index: 5000; text-align: center!important;">
-    <div class="lds-roller" style="position: relative; left: 0px; margin-top: auto;">
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
+<div id="loading"
+  style="background: #d9edf7; position: absolute; left: 0; right: 0; top: 0; bottom: 0; z-index: 5000; text-align: center!important;">
+  <div class="lds-roller" style="position: relative; left: 0px; margin-top: auto;">
+  </div>
+</div>
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="#"><span class="d-lg-none">IBM EWC</span><span class="d-none d-lg-block">IBM EWC
+        63rd Enroll System</span></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+      aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" id="username" style="color: #fff;"> Hi IBMer</a>
+        </li>
+      </ul>
     </div>
   </div>
+</nav>
 
-  <!-- Navigation -->
-  <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
-    <div class="container">
-      <a class="navbar-brand" href="#"><span class="d-lg-none">IBM EWC</span><span class="d-none d-lg-block">IBM EWC
-          63rd Enroll System</span></a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
-        aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarResponsive">
-        <ul class="navbar-nav ml-auto">
+<section id="register" style="margin-top: 100px; margin-bottom: 100px; ">
+  <div class="container">
 
-          <li class="nav-item">
-            <a class="nav-link" id="username" style="color: #fff;"> Hi IBMer</a>
-          </li>
+    <div class="row" id="enrollSection">
 
-        </ul>
-      </div>
-    </div>
-  </nav>
+      <div class="col-12">
 
-  <section id="register" style="margin-top: 100px; margin-bottom: 100px; ">
-    <div class="container">
-
-      <div class="row" id="enrollSection">
-
-        <div class="col-12">
-
-          <form id="registerForm" method="post" class="form-horizontal row" action="">
-            <div class="container-fluid bg-board">
-              <div class="row">
-                <div class="col-12 text-center bg-main">IBM 2019 Family Day 報名</div>
-              </div>
-              <div class="row row-flex">
-                <div class="col-6 col-md-6 align-middle bg-normal-title col-v-centered">IBMer報名資料</div>
-                <div class="col-6 col-md-6 align-middle bg-normal-title col-v-centered">
-                  <div id="userTypeButtons" style="display: none;">
-                    <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="userTypeRadioOptions"
-                        id="userTypeRadioOptions1" value="regular" readonly="readonly">
-                      <label class="form-check-label" for="userTypeRadioOptions1">Regular</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="userTypeRadioOptions"
-                        id="userTypeRadioOptions2" value="contractor" readonly="readonly">
-                      <label class="form-check-label" for="userTypeRadioOptions2">Contractor</label>
-                    </div>
+        <form id="registerForm" method="post" class="form-horizontal row" action="">
+          <div class="container-fluid bg-board">
+            <div class="row">
+              <div class="col-12 text-center bg-main">IBM 2019 Family Day 報名</div>
+            </div>
+            <div class="row row-flex">
+              <div class="col-6 col-md-6 align-middle bg-normal-title col-v-centered">IBMer報名資料</div>
+              <div class="col-6 col-md-6 align-middle bg-normal-title col-v-centered">
+                <div id="userTypeButtons" style="display: none;">
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="userTypeRadioOptions" id="userTypeRadioOptions1"
+                      value="regular" readonly="readonly">
+                    <label class="form-check-label" for="userTypeRadioOptions1">Regular</label>
                   </div>
-                  <span id="userTypeWording"></span>
-                </div>
-              </div>
-              <div class="row row-flex">
-                <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">
-                  <div>員工證號 <span class="d-lg-none"><br /></span>(Serial No)：</div>
-                </div>
-                <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
-                  <input type="text" class="form-control" id="inputSN" placeholder="Enter SN" readonly="readonly">
-                </div>
-                <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">Email：</div>
-                <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
-                  <input type="email" class="form-control" id="inputEmail" name="inputEmail"
-                    aria-describedby="emailHelp" placeholder="Enter email" readonly="readonly">
-                </div>
-              </div>
-              <div class="row row-flex">
-                <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">
-                  <div>英文姓名 <span class="d-lg-none"><br /></span>(English Name)：</div>
-                </div>
-                <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
-                  <input type="text" class="form-control" id="inputEnglishName" name="inputEnglishName"
-                    placeholder="Enter English Name" readonly="readonly">
-                </div>
-                <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">
-                  <div>中文姓名 <span class="d-lg-none"><br /></span>(Chinese Name)：</div>
-                </div>
-                <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
-                  <div><input type="text" class="form-control" id="inputChineseName1" name="inputChineseName1"
-                      placeholder="請輸入中文姓名"></div>
-                </div>
-              </div>
-              <div class="row row-flex">
-                <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">
-                  <div>部門 <span class="d-lg-none"><br /></span>(Department)：</div>
-                </div>
-                <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
-                  <div><select class="form-control" id="departmentSelect1" name="departmentSelect1">
-                      <option>請選擇</option>
-                      <option>Analytic</option>
-                      <option>CDL</option>
-                      <option>Cloud</option>
-                      <option>Cognitive Solution</option>
-                      <option>CSL</option>
-                      <option>CTA</option>
-                      <option>Digital Business</option>
-                      <option>ESU (T1-T6)</option>
-                      <option>F&O</option>
-                      <option>GBP</option>
-                      <option>GBS</option>
-                      <option>GTS</option>
-                      <option>HR</option>
-                      <option>IGF</option>
-                      <option>Legal</option>
-                      <option>M&C</option>
-                      <option>System Hardware</option>
-                      <option>System Software</option>
-                      <option>T&O / Finance</option>
-                      <option>Others</option>
-                    </select></div>
-                </div>
-                <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">
-                  <div>位置 <span class="d-lg-none"><br /></span>(Location)：</div>
-                </div>
-                <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
-                  <div><select class="form-control" id="locationSelect1" name="locationSelect1">
-                      <option>請選擇</option>
-                      <option>CFC</option>
-                      <option>NKO</option>
-                      <option>Beitou</option>
-                      <option>林口E-Center</option>
-                    </select></div>
-                </div>
-              </div>
-              <div class="row row-flex">
-                <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">
-                  <div>手機號碼 <span class="d-lg-none"><br /></span>(Mobile)：<br />* 電子入場券將發送至此門號</div>
-                </div>
-                <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
-                  <div><input type="text" class="form-control" id="mobileNo1" name="mobileNo1"
-                      placeholder="格式：09XXXXXXXX"></div>
-                </div>
-                <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered"></div>
-                <div class="col-6 col-md-3 align-middle bg-normal col-v-centered"></div>
-              </div>
-              <div class="row row-flex">
-                <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">
-                  <div>身份證字號 <span class="d-lg-none"><br /></span>(ID)：</div>
-                </div>
-                <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
-                  <div><input type="text" class="form-control" name="inputID" id="inputID" placeholder="請輸入身份證字號"></div>
-                </div>
-                <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">
-                  <div>生日 <span class="d-lg-none"><br /></span>(Birth Day)：</div>
-                </div>
-                <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
-                  <input type="text" class="form-control" name="birthDay" id="birthDay" placeholder="請選擇">
-                </div>
-              </div>
-              <div class="row row-flex participantNumber">
-                <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">攜伴人數 <span class="d-lg-none"><br /></span>(Friends #)：</div>
-                <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
-                  <div>
-                    <div class="form-check form-check-inline">
-                      <label class="form-check-label" for="inputParticipant">
-                        <input type="number" min="0" max="10" class="form-control" name="inputParticipant" id="inputParticipant" value="0" placeholder="請輸入攜伴人數">
-                      </label>
-                    </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="userTypeRadioOptions" id="userTypeRadioOptions2"
+                      value="contractor" readonly="readonly">
+                    <label class="form-check-label" for="userTypeRadioOptions2">Contractor</label>
                   </div>
                 </div>
-                <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">參加費用 <span class="d-lg-none"><br /></span>(Fee of Participation)：</div>
-                <div class="col-6 col-md-3 align-middle bg-normal col-v-centered ">
-                  NT$<b><div class="participantFee">0</div></b>元
-                  <input class=".sr-only" name="participantFee" id="participantFee" type="hidden" value="0">
-                </div>
-              </div>
-              <div class="row row-flex">
-                <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">搭車人數 <span class="d-lg-none"><br /></span>(Passengers #)：</div>
-                <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
-                  <div>
-                    <div class="form-check form-check-inline">
-                      <label class="form-check-label" for="inputShuttle">
-                        <input type="number" min="0" max="11" class="form-control" name="inputShuttle" id="inputShuttle" value="0" placeholder="請輸入搭車人數">
-                      </label>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">搭車費用 <span class="d-lg-none"><br /></span>(Fare)：</div>
-                <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
-                    NT$<b><div class="shuttleFare">0</div></b>元
-                    <input class=".sr-only" name="shuttleFare" id="shuttleFare" type="hidden" value="0">
-                </div>
-              </div>                            
-              <div class="row row-flex regularParticipantWording">
-                <div class="col-12 col-md-12 align-middle bg-normal-title col-v-centered">IBMer若需額外攜帶超過10位親友(第4位以上,
-                  每位500元), 請於報名送出後與 Mimmie Chu/Taiwan/Contr/IBM (#3841) 聯繫</div>
-              </div>
-              <div class="row row-flex contractorParticipantWording">
-                <div class="col-12 col-md-12 align-middle bg-normal-title col-v-centered">CWF
-                  Contractor/IA-in及額外攜帶親友每位500元, 若有第10位以上,
-                  請於報名送出後與 Mimmie Chu/Taiwan/Contr/IBM (#3841) 聯繫</div>
-              </div>
-              <div class="row row-flex">
-                <div class="col-12 col-md-12 align-middle bg-normal col-v-centered">
-                  <div>
-                    <div class="form-check form-check-inline">
-                      <label class="form-check-label" for="personalInfoCheckbox1">
-                        <input class="form-check-input" type="checkbox" id="personalInfoCheckbox1"
-                          name="personalInfoCheckbox1" value="agree">
-                        本人同意提供以上個資，供 IBM 2019 Family Day 使用。
-                      </label>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="container-fluid p-3">
-              <div class="row">
-                <div class="col-12 text-center">
-                  <button type="submit" id="regSubmitBtn" class="btn btn-primary"
-                    style="font-weight: 800;">確認送出</button>
-                  <button type="button" id="cancelBtn" class="btn btn-light">取消</button>
-                </div>
-              </div>
-            </div>
-
-          </form>
-
-        </div>
-      </div>
-
-
-      <div class="row" id="confirmSection">
-
-        <div class="confirmAlertSection">
-          <div class="alert alert-success" role="alert" id="enrollMessage"></div>
-          <div class="alert alert-warning" role="alert" id="confirmSectionStart">
-            請再次檢查報名資料
-          </div>
-        </div>
-
-        <div class="container-fluid bg-board">
-          <div class="row row-flex">
-            <div class="col-12 text-center bg-main">IBM 2019 Family Day 報名</div>
-          </div>
-          <div class="row row-flex">
-            <div class="col-6 col-md-6 align-middle bg-normal-title col-v-centered">IBMer報名資料</div>
-            <div class="col-6 col-md-6 align-middle bg-normal-title col-v-centered">
-              <span id="userTypeRadioOptionsConfirm"></span>
-            </div>
-          </div>
-          <div class="row row-flex">
-            <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">
-              <div>員工證號 <span class="d-lg-none"><br /></span>(Serial No)：</div>
-            </div>
-            <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
-              <span id="inputSNConfirm"></span>
-            </div>
-            <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">Email：</div>
-            <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
-              <span id="inputEmailConfirm"></span>
-            </div>
-          </div>
-          <div class="row row-flex">
-            <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">
-              <div>英文姓名 <span class="d-lg-none"><br /></span>(English Name)：</div>
-            </div>
-            <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
-              <span id="inputEnglishNameConfirm"></span>
-            </div>
-            <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">
-              <div>中文姓名 <span class="d-lg-none"><br /></span>(Chinese Name)：</div>
-            </div>
-            <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
-              <span id="inputChineseName1Confirm"></span>
-            </div>
-          </div>
-          <div class="row row-flex">
-            <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">
-              <div>部門 <span class="d-lg-none"><br /></span>(Department)：</div>
-            </div>
-            <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
-              <span id="departmentSelect1Confirm"></span>
-            </div>
-            <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">
-              <div>位置 <span class="d-lg-none"><br /></span>(Location)：</div>
-            </div>
-            <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
-              <span id="locationSelect1Confirm"></span>
-            </div>
-          </div>
-          <div class="row row-flex">
-            <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">
-              <div>手機號碼 <span class="d-lg-none"><br /></span>(Mobile)：<br />* 電子入場券將發送至此門號</div>
-            </div>
-            <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
-              <span id="mobileNo1Confirm"></span>
-            </div>
-            <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered"></div>
-            <div class="col-6 col-md-3 align-middle bg-normal col-v-centered"></div>
-          </div>
-          <div class="row row-flex">
-              <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">
-                  <div>身份證字號 <span class="d-lg-none"><br /></span>(ID)：</div>
-              </div>
-              <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
-                <span id="inputIDConfirm"></span>
-              </div>
-              <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">
-                <div>生日：</div>
-              </div>
-              <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
-                  西元<span id="birthDayYearConfirm"></span>年
-                  <span id="birthDayMonthConfirm"></span>月
-                  <span id="birthDayDayConfirm"></span>日
-              </div>
-          </div>          
-          <div class="row row-flex">
-              <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">攜伴人數 <span class="d-lg-none"><br /></span>(Friends #)：</div>
-              <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
-                    <span id="inputParticipantConfirm"></span>
-              </div>
-              <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">參加費用 <span class="d-lg-none"><br /></span>(Fee of Participation)：</div>
-              <div class="col-6 col-md-3 align-middle bg-normal col-v-centered ">
-                NT$<b></b><span id="participantFeeConfirm"></b></span>元
+                <span id="userTypeWording"></span>
               </div>
             </div>
             <div class="row row-flex">
-              <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">搭車人數 <span class="d-lg-none"><br /></span>(Passengers #)：</div>
-              <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
-                  <span id="inputShuttleConfirm"></span>
+              <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">
+                <div>員工證號 <span class="d-lg-none"><br /></span>(Serial No)：</div>
               </div>
-              <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">搭車費用 <span class="d-lg-none"><br /></span>(Fare)：</div>
               <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
-                  NT$<b></b><span id="shuttleFareConfirm"></b></span>元
+                <input type="text" class="form-control" id="inputSN" placeholder="Enter SN" readonly="readonly">
               </div>
-          </div>   
-          <div class="row row-flex regularParticipantWording">
-            <div class="col-12 col-md-12 align-middle bg-normal-title col-v-centered">IBMer若需額外攜帶超過10位親友(第4位以上,
-              每位500元),
-              請於報名送出後與 Mimmie Chu/Taiwan/Contr/IBM (#3841) 聯繫</div>
-          </div>
-          <div class="row row-flex contractorParticipantWording">
-            <div class="col-12 col-md-12 align-middle bg-normal-title col-v-centered">CWF Contractor/IA-in額外攜帶親友每位500元,
-              若有第10位以上,
-              請於報名送出後與 Mimmie Chu/Taiwan/Contr/IBM (#3841) 聯繫</div>
-          </div>
-        </div>
-
-        <div class="container-fluid p-3">
-          <div class="row">
-            <div class="col-12 text-center">
-              <button type="submit" id="regSubmitConfirmBtn" class="btn btn-primary">確認送出</button>
-              <button type="button" id="backToEventBtn" class="btn btn-primary" href="../">回活動網站</button>
-              <button type="button" id="backToEditBtn" class="btn btn-light">修改資料</button>
+              <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">Email：</div>
+              <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
+                <input type="email" class="form-control" id="inputEmail" name="inputEmail" aria-describedby="emailHelp"
+                  placeholder="Enter email" readonly="readonly">
+              </div>
+            </div>
+            <div class="row row-flex">
+              <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">
+                <div>英文姓名 <span class="d-lg-none"><br /></span>(English Name)：</div>
+              </div>
+              <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
+                <input type="text" class="form-control" id="inputEnglishName" name="inputEnglishName"
+                  placeholder="Enter English Name" readonly="readonly">
+              </div>
+              <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">
+                <div>中文姓名 <span class="d-lg-none"><br /></span>(Chinese Name)：</div>
+              </div>
+              <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
+                <div><input type="text" class="form-control" id="inputChineseName1" name="inputChineseName1"
+                    placeholder="請輸入中文姓名"></div>
+              </div>
+            </div>
+            <div class="row row-flex">
+              <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">
+                <div>部門 <span class="d-lg-none"><br /></span>(Department)：</div>
+              </div>
+              <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
+                <div><select class="form-control" id="departmentSelect1" name="departmentSelect1">
+                    <option>請選擇</option>
+                    <option>Analytic</option>
+                    <option>CDL</option>
+                    <option>Cloud</option>
+                    <option>Cognitive Solution</option>
+                    <option>CSL</option>
+                    <option>CTA</option>
+                    <option>Digital Business</option>
+                    <option>ESU (T1-T6)</option>
+                    <option>F&O</option>
+                    <option>GBP</option>
+                    <option>GBS</option>
+                    <option>GTS</option>
+                    <option>HR</option>
+                    <option>IGF</option>
+                    <option>Legal</option>
+                    <option>M&C</option>
+                    <option>System Hardware</option>
+                    <option>System Software</option>
+                    <option>T&O / Finance</option>
+                    <option>Others</option>
+                  </select></div>
+              </div>
+              <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">
+                <div>位置 <span class="d-lg-none"><br /></span>(Location)：</div>
+              </div>
+              <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
+                <div><select class="form-control" id="locationSelect1" name="locationSelect1">
+                    <option>請選擇</option>
+                    <option>CFC</option>
+                    <option>NKO</option>
+                    <option>Beitou</option>
+                    <option>林口E-Center</option>
+                  </select></div>
+              </div>
+            </div>
+            <div class="row row-flex">
+              <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">
+                <div>手機號碼 <span class="d-lg-none"><br /></span>(Mobile)：<br />* 電子入場券將發送至此門號</div>
+              </div>
+              <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
+                <div><input type="text" class="form-control" id="mobileNo1" name="mobileNo1"
+                    placeholder="格式：09XXXXXXXX"></div>
+              </div>
+              <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered"></div>
+              <div class="col-6 col-md-3 align-middle bg-normal col-v-centered"></div>
+            </div>
+            <div class="row row-flex">
+              <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">
+                <div>身份證字號 <span class="d-lg-none"><br /></span>(ID)：</div>
+              </div>
+              <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
+                <div><input type="text" class="form-control" name="inputID" id="inputID" placeholder="請輸入身份證字號"></div>
+              </div>
+              <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">
+                <div>生日 <span class="d-lg-none"><br /></span>(Birth Day)：</div>
+              </div>
+              <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
+                <input type="text" class="form-control" name="birthDay" id="birthDay" placeholder="請選擇">
+              </div>
+            </div>
+            <div class="row row-flex participantNumber">
+              <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">攜伴人數 <span
+                  class="d-lg-none"><br /></span>(Friends #)：</div>
+              <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
+                <div>
+                  <div class="form-check form-check-inline">
+                    <label class="form-check-label" for="inputParticipant">
+                      <input type="number" min="0" max="10" class="form-control" name="inputParticipant"
+                        id="inputParticipant" value="0" placeholder="請輸入攜伴人數">
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">參加費用 <span
+                  class="d-lg-none"><br /></span>(Fee of Participation)：</div>
+              <div class="col-6 col-md-3 align-middle bg-normal col-v-centered ">
+                NT$<b><span id="participantFeeWording">0</span></b>元
+                <input class=".sr-only" name="participantFee" id="participantFee" type="hidden" value="0">
+              </div>
+            </div>
+            <div class="row row-flex">
+              <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">搭車人數 <span
+                  class="d-lg-none"><br /></span>(Passengers #)：</div>
+              <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
+                <div>
+                  <div class="form-check form-check-inline">
+                    <label class="form-check-label" for="inputShuttle">
+                      <input type="number" min="0" max="11" class="form-control" name="inputShuttle" id="inputShuttle"
+                        value="0" placeholder="請輸入搭車人數">
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">搭車費用 <span
+                  class="d-lg-none"><br /></span>(Fare)：</div>
+              <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
+                NT$<b><span id="shuttleFareWording">0</span></b>元
+                <input class=".sr-only" name="shuttleFare" id="shuttleFare" type="hidden" value="0">
+              </div>
+            </div>
+            <div class="row row-flex regularParticipantWording">
+              <div class="col-12 col-md-12 align-middle bg-normal-title col-v-centered">IBMer若需額外攜帶超過10位親友(第4位以上,
+                每位500元), 請於報名送出後與 Mimmie Chu/Taiwan/Contr/IBM (#3841) 聯繫</div>
+            </div>
+            <div class="row row-flex contractorParticipantWording">
+              <div class="col-12 col-md-12 align-middle bg-normal-title col-v-centered">CWF
+                Contractor/IA-in及額外攜帶親友每位500元, 若有第10位以上,
+                請於報名送出後與 Mimmie Chu/Taiwan/Contr/IBM (#3841) 聯繫</div>
+            </div>
+            <div class="row row-flex">
+              <div class="col-12 col-md-12 align-middle bg-normal col-v-centered">
+                <div>
+                  <div class="form-check form-check-inline">
+                    <label class="form-check-label" for="personalInfoCheckbox1">
+                      <input class="form-check-input" type="checkbox" id="personalInfoCheckbox1"
+                        name="personalInfoCheckbox1" value="agree">
+                      本人同意提供以上個資，供 IBM 2019 Family Day 使用。
+                    </label>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
+
+          <div class="container-fluid p-3">
+            <div class="row">
+              <div class="col-12 text-center">
+                <button type="submit" id="regSubmitBtn" class="btn btn-primary" style="font-weight: 800;">確認送出</button>
+                <button type="button" id="cancelBtn" class="btn btn-light">取消</button>
+              </div>
+            </div>
+          </div>
+
+        </form>
 
       </div>
-
-
-
-
     </div>
-  </section>
+    <div class="row" id="confirmSection">
 
-
-
-  <!-- Footer -->
-  <footer class="py-5 bg-black">
-    <div class="container">
-      <p class="m-0 text-center text-white small">IBM Taiwan EWC 63rd - 如有相關疑問，請聯絡 EWC – Mimmie Chu/Taiwan/Contr/IBM
-        (#3841) </p>
-    </div>
-    <!-- /.container -->
-  </footer>
-
-  <!-- Modal -->
-  <div class="modal fade" id="postLoadingModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-    aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle">正在送出報名資料</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+      <div class="confirmAlertSection">
+        <div class="alert alert-success" role="alert" id="enrollMessage"></div>
+        <div class="alert alert-warning" role="alert" id="confirmSectionStart">
+          請再次檢查報名資料
         </div>
-        <div class="modal-body">
-          <div id="postLoadingModalText">
+      </div>
 
+      <div class="container-fluid bg-board">
+        <div class="row row-flex">
+          <div class="col-12 text-center bg-main">IBM 2019 Family Day 報名</div>
+        </div>
+        <div class="row row-flex">
+          <div class="col-6 col-md-6 align-middle bg-normal-title col-v-centered">IBMer報名資料</div>
+          <div class="col-6 col-md-6 align-middle bg-normal-title col-v-centered">
+            <span id="userTypeRadioOptionsConfirm"></span>
+          </div>
+        </div>
+        <div class="row row-flex">
+          <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">
+            <div>員工證號 <span class="d-lg-none"><br /></span>(Serial No)：</div>
+          </div>
+          <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
+            <span id="inputSNConfirm"></span>
+          </div>
+          <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">Email：</div>
+          <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
+            <span id="inputEmailConfirm"></span>
+          </div>
+        </div>
+        <div class="row row-flex">
+          <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">
+            <div>英文姓名 <span class="d-lg-none"><br /></span>(English Name)：</div>
+          </div>
+          <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
+            <span id="inputEnglishNameConfirm"></span>
+          </div>
+          <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">
+            <div>中文姓名 <span class="d-lg-none"><br /></span>(Chinese Name)：</div>
+          </div>
+          <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
+            <span id="inputChineseName1Confirm"></span>
+          </div>
+        </div>
+        <div class="row row-flex">
+          <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">
+            <div>部門 <span class="d-lg-none"><br /></span>(Department)：</div>
+          </div>
+          <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
+            <span id="departmentSelect1Confirm"></span>
+          </div>
+          <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">
+            <div>位置 <span class="d-lg-none"><br /></span>(Location)：</div>
+          </div>
+          <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
+            <span id="locationSelect1Confirm"></span>
+          </div>
+        </div>
+        <div class="row row-flex">
+          <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">
+            <div>手機號碼 <span class="d-lg-none"><br /></span>(Mobile)：<br />* 電子入場券將發送至此門號</div>
+          </div>
+          <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
+            <span id="mobileNo1Confirm"></span>
+          </div>
+          <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered"></div>
+          <div class="col-6 col-md-3 align-middle bg-normal col-v-centered"></div>
+        </div>
+        <div class="row row-flex">
+          <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">
+            <div>身份證字號 <span class="d-lg-none"><br /></span>(ID)：</div>
+          </div>
+          <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
+            <span id="inputIDConfirm"></span>
+          </div>
+          <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">
+            <div>生日：</div>
+          </div>
+          <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
+            西元<span id="birthDayConfirmYear"></span>年
+            <span id="birthDayConfirmMonth"></span>月
+            <span id="birthDayConfirmDay"></span>日
+          </div>
+        </div>
+        <div class="row row-flex participantNumberConfirm">
+          <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">攜伴人數 <span
+              class="d-lg-none"><br /></span>(Friends #)：</div>
+          <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
+            <span id="inputParticipantConfirm"></span>
+          </div>
+          <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">參加費用 <span
+              class="d-lg-none"><br /></span>(Fee of Participation)：</div>
+          <div class="col-6 col-md-3 align-middle bg-normal col-v-centered ">
+            NT$<b></b><span id="participantFeeConfirm"></b></span>元
+          </div>
+        </div>
+        <div class="row row-flex">
+          <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">搭車人數 <span
+              class="d-lg-none"><br /></span>(Passengers #)：</div>
+          <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
+            <span id="inputShuttleConfirm"></span>
+          </div>
+          <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">搭車費用 <span
+              class="d-lg-none"><br /></span>(Fare)：</div>
+          <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
+            NT$<b></b><span id="shuttleFareConfirm"></b></span>元
+          </div>
+        </div>
+        <div class="row row-flex regularParticipantWording">
+          <div class="col-12 col-md-12 align-middle bg-normal-title col-v-centered">IBMer若需額外攜帶超過10位親友(第4位以上,
+            每位500元),
+            請於報名送出後與 Mimmie Chu/Taiwan/Contr/IBM (#3841) 聯繫</div>
+        </div>
+        <div class="row row-flex contractorParticipantWording">
+          <div class="col-12 col-md-12 align-middle bg-normal-title col-v-centered">CWF Contractor/IA-in額外攜帶親友每位500元,
+            若有第10位以上,
+            請於報名送出後與 Mimmie Chu/Taiwan/Contr/IBM (#3841) 聯繫</div>
+        </div>
+      </div>
 
-
+      <div class="container-fluid p-3">
+        <div class="row">
+          <div class="col-12 text-center">
+            <button type="submit" id="regSubmitConfirmBtn" class="btn btn-primary">確認送出</button>
+            <button type="button" id="backToEventBtn" class="btn btn-primary" href="../">回活動網站</button>
+            <button type="button" id="backToEditBtn" class="btn btn-light">修改資料</button>
           </div>
         </div>
       </div>
     </div>
   </div>
+</section>
 
-  <!-- Modal -->
-  <div class="modal fade" id="postModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-    aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle">報名結果</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <span id="postModalText"></span>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary" data-dismiss="modal">好的我知道了</button>
+
+
+<!-- Footer -->
+<footer class="py-5 bg-black">
+  <div class="container">
+    <p class="m-0 text-center text-white small">IBM Taiwan EWC 63rd - 如有相關疑問，請聯絡 EWC – Mimmie Chu/Taiwan/Contr/IBM
+      (#3841) </p>
+  </div>
+  <!-- /.container -->
+</footer>
+
+<!-- Modal -->
+<div class="modal fade" id="postLoadingModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">正在送出報名資料</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div id="postLoadingModalText">
+
+
+
         </div>
       </div>
     </div>
   </div>
+</div>
 
-  <!-- Bootstrap core JavaScript -->
-  <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap-birthday.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
-  <script src="js/config.js"></script>
-
-</body>
-
-</html>
+<!-- Modal -->
+<div class="modal fade" id="postModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">報名結果</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <span id="postModalText"></span>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">好的我知道了</button>
+      </div>
+    </div>
+  </div>
+</div>

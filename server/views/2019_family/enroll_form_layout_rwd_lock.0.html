@@ -1,443 +1,239 @@
 <!DOCTYPE html>
-<html lang="en">
-
-  <head>
-
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>IBM EWC 63rd Enroll System</title>
-
-    <!-- Bootstrap core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico" />
-
-    <!-- Custom fonts for this template -->
-    <!--
-    <link href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
-    -->
-
-    <!-- Custom styles for this template -->
-    <link href="css/one-page-wonder.min.css" rel="stylesheet">
-
-    <style>
-
-      .alert-text, .mustMark {
-        color: #ee0979;
-      }
-      .mustMark {
-        font-weight: 800;
-      }
-      .has-error input,
-      .has-error select {
-        border-color: #ee0979;
-      }
-
-      .registerForm th[scope=col] {
-        background: rgb(31,116,189);
-        color: #fff;
-      }
-
-      .registerForm th[scope=row] {
-        background: rgb(223,234,245);
-      }
-
-      .registerForm td,
-      .registerForm th {
-        border: 1px solid #999;
-      }
-
-      .table.registerForm thead th {
-        border-bottom: 2px solid #999;
-      }
-
-      .btn-light {
-        background: #ccc;
-      }
-
-
-      .confirmAlertSection {
-        width: 100%;
-        margin: 0 auto;
-      }
-
-      @media (max-width: 768px) {
-    		.container-fluid {
-    		  width: 90%;
-    		  max-width: none;
-    		}
-        .confirmAlertSection {
-          width: 90%;
-          margin: 0 auto;
-        }
-	    }
-
-      .bg-board {
-      	border-right: 1px solid #999;
-		    border-bottom: 1px solid #999;
-      }
-
-      .bg-main {
-      	color: #fff;
-    		background-color: #337ab7;
-    		padding: 15px;
-    		border-top: 1px solid #999;
-    		border-left: 1px solid #999;
-      }
-
-      .bg-normal {
-      	color: #000;
-    		background-color: #fff;
-    		padding: 15px;
-    		border-top: 1px solid #999;
-    		border-left: 1px solid #999;
-      }
-
-      .bg-normal-title {
-      	color: #000;
-    		background-color: #d9edf7;
-    		padding: 15px;
-    		border-top: 1px solid #999;
-    		border-left: 1px solid #999;
-      }
-
-      .form-text {
-      	margin-top: 0;
-      }
-
-      .row-flex {
-        display: flex;
-      }
-
-      .col-v-centered {
-        display: flex;
-        align-items: center;
-      }
-
-
-      /* loading */
-      .lds-roller {
-        display: inline-block;
-        position: relative;
-        width: 64px;
-        height: 64px;
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-      }
-
-      .lds-roller div {
-           animation: lds-roller 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-           transform-origin: 32px 32px;
-      }
-
-      .lds-roller div:after {
-           content: " ";
-           display: block;
-           position: absolute;
-           width: 6px;
-           height: 6px;
-           border-radius: 50%;
-           background: #fff;
-           margin: -3px 0 0 -3px;
-      }
-
-      .lds-roller div:nth-child(1) {
-           animation-delay: -0.036s;
-      }
-
-      .lds-roller div:nth-child(1):after {
-           top: 50px;
-           left: 50px;
-      }
-
-      .lds-roller div:nth-child(2) {
-           animation-delay: -0.072s;
-      }
-
-      .lds-roller div:nth-child(2):after {
-           top: 54px;
-           left: 45px;
-      }
-
-      .lds-roller div:nth-child(3) {
-           animation-delay: -0.108s;
-      }
-
-      .lds-roller div:nth-child(3):after {
-           top: 57px;
-           left: 39px;
-      }
-
-      .lds-roller div:nth-child(4) {
-           animation-delay: -0.144s;
-      }
-
-      .lds-roller div:nth-child(4):after {
-           top: 58px;
-           left: 32px;
-      }
-
-      .lds-roller div:nth-child(5) {
-           animation-delay: -0.18s;
-      }
-
-      .lds-roller div:nth-child(5):after {
-           top: 57px;
-           left: 25px;
-      }
-
-      .lds-roller div:nth-child(6) {
-           animation-delay: -0.216s;
-      }
-
-      .lds-roller div:nth-child(6):after {
-           top: 54px;
-           left: 19px;
-      }
-
-      .lds-roller div:nth-child(7) {
-           animation-delay: -0.252s;
-      }
-
-      .lds-roller div:nth-child(7):after {
-           top: 50px;
-           left: 14px;
-      }
-
-      .lds-roller div:nth-child(8) {
-           animation-delay: -0.288s;
-      }
-
-      .lds-roller div:nth-child(8):after {
-           top: 45px;
-           left: 10px;
-      }
-
-      @keyframes lds-roller {
-        0% {
-             transform: rotate(0deg);
-        }
-         100% {
-             transform: rotate(360deg);
-        }
-      }
-
-
-    </style>
-
-  </head>
-
-  <body>
-
-<div id="loading" style="background: #d9edf7; position: absolute; left: 0; right: 0; top: 0; bottom: 0; z-index: 5000; text-align: center!important;">
-  <div class="lds-roller" style="position: relative; left: 0px; margin-top: auto;"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+<div id="loading"
+  style="background: #d9edf7; position: absolute; left: 0; right: 0; top: 0; bottom: 0; z-index: 5000; text-align: center!important;">
+  <div class="lds-roller" style="position: relative; left: 0px; margin-top: auto;">
+  </div>
 </div>
-
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
-      <div class="container">
-        <a class="navbar-brand" href="#"><span class="d-lg-none">IBM EWC</span><span class="d-none d-lg-block">IBM EWC 63rd Enroll System</span></a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-          <ul class="navbar-nav ml-auto">
-
-            <li class="nav-item">
-              <a class="nav-link" id="username" style="color: #fff;"> Hi IBMer</a>
-            </li>
-
-          </ul>
-        </div>
-      </div>
-    </nav>
-
-    <!--
-    <header class="masthead text-center text-white">
-      <div class="masthead-content">
-        <div class="container">
-          <h1 class="masthead-heading mb-0">2019 Sports Day 五力全開</h1>
-          <h2 class="masthead-subheading mb-0">Checkin Smarter</h2>
-          <a href="#register" id="genqr_btn" class="btn btn-primary btn-xl rounded-pill mt-5">立即報名 2019 Sports Day</a>
-        </div>
-      </div>
-      <div class="bg-circle-1 bg-circle"></div>
-      <div class="bg-circle-2 bg-circle"></div>
-      <div class="bg-circle-3 bg-circle"></div>
-      <div class="bg-circle-4 bg-circle"></div>
-    </header>
-    -->
-  <section id="expired_wording" style=" margin-top: 12em;">
-    <div class="container">
-      <div class="row" style="height: 70%;">
-        
-        <p style="text-align: center; width: 100%;">系統查無您的報名紀錄，如有疑問請洽 EWC Mimmie Chu/Taiwan/Contr/IBM (#3841) 。</p>
-
-      </div>
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="#"><span class="d-lg-none">IBM EWC</span><span class="d-none d-lg-block">IBM EWC 63rd
+        Enroll System</span></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+      aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" id="username" style="color: #fff;"> Hi IBMer</a>
+        </li>
+      </ul>
     </div>
-  </section>
-  <section id="register" style="margin-top: 100px; margin-bottom: 100px; ">
-    <div class="container">
+  </div>
+</nav>
 
-      <div class="row" id="enrollSection">
+<section id="expired_wording" style=" margin-top: 12em;">
+  <div class="container">
+    <div class="row" style="height: 70%;">
 
-        <div class="col-12">
+      <p style="text-align: center; width: 100%;">系統查無您的報名紀錄，如有疑問請洽 EWC Mimmie Chu/Taiwan/Contr/IBM (#3841) 。</p>
 
-        	<form id="registerForm" method="post" class="form-horizontal row" action="">
-	        	<div class="container-fluid bg-board">
-	        		<div class="row">
-	        			<div class="col-12 text-center bg-main">IBM 2019 Family Day 報名</div>
-	        		</div>
-	        		<div class="row row-flex">
-	        			<div class="col-6 col-md-6 align-middle bg-normal-title col-v-centered">IBMer報名資料</div>
-	        			<div class="col-6 col-md-6 align-middle bg-normal-title col-v-centered">
-		                    <div id="userTypeButtons" style="display: none;">
-		                      <div class="form-check form-check-inline">
-		                        <input class="form-check-input" type="radio" name="userTypeRadioOptions" id="userTypeRadioOptions1" value="regular" readonly="readonly">
-		                        <label class="form-check-label" for="userTypeRadioOptions1">Regular</label>
-		                      </div>
-		                      <div class="form-check form-check-inline">
-		                        <input class="form-check-input" type="radio" name="userTypeRadioOptions" id="userTypeRadioOptions2" value="contractor" readonly="readonly">
-		                        <label class="form-check-label" for="userTypeRadioOptions2">Contractor</label>
-		                      </div>
-		                    </div>
-		                    <span id="userTypeWording"></span>
-	        			</div>
-	        		</div>
-	        		<div class="row row-flex">
-	        			<div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered"><div>員工證號 <span class="d-lg-none"><br /></span>(Serial No)：</div></div>
-	        			<div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
-	        				<input type="text" class="form-control" id="inputSN" placeholder="Enter SN" readonly="readonly">
-	        			</div>
-	        			<div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">Email：</div>
-	        			<div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
-	        				<input type="email" class="form-control" id="inputEmail" name="inputEmail" aria-describedby="emailHelp" placeholder="Enter email" readonly="readonly">
-	        			</div>
-	        		</div>
-	        		<div class="row row-flex">
-	        			<div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered"><div>英文姓名 <span class="d-lg-none"><br /></span>(English Name)：</div></div>
-	        			<div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
-	        				<input type="text" class="form-control" id="inputEnglishName" name="inputEnglishName" placeholder="Enter English Name" readonly="readonly">
-	        			</div>
-	        			<div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered"><div>中文姓名 <span class="d-lg-none"><br /></span>(Chinese Name)：</div></div>
-	        			<div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
-                  <div><input type="text" class="form-control" id="inputChineseName1" name="inputChineseName1" placeholder="請輸入中文姓名"></div>
-	        			</div>
-	        		</div>
-	        		<div class="row row-flex">
-	        			<div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered"><div>部門 <span class="d-lg-none"><br /></span>(Department)：</div></div>
-	        			<div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
-	        				<div><select class="form-control" id="departmentSelect1" name="departmentSelect1">
-		                      <option>請選擇</option>
-		                      <option>Analytic</option>
-		                      <option>CDL</option>
-		                      <option>Cloud</option>
-		                      <option>Cognitive Solution</option>
-		                      <option>CSL</option>
-		                      <option>CTA</option>
-		                      <option>Digital Business</option>
-		                      <option>ESU (T1-T6)</option>
-		                      <option>F&O</option>
-		                      <option>GBP</option>
-		                      <option>GBS</option>
-		                      <option>GTS</option>
-		                      <option>HR</option>
-		                      <option>IGF</option>
-		                      <option>Legal</option>
-		                      <option>M&C</option>
-		                      <option>System Hardware</option>
-		                      <option>System Software</option>
-		                      <option>T&O / Finance</option>
-		                      <option>Others</option>
-		                    </select></div>
-	        			</div>
-	        			<div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered"><div>位置 <span class="d-lg-none"><br /></span>(Location)：</div></div>
-	        			<div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
-	        				<div><select class="form-control" id="locationSelect1" name="locationSelect1">
-		                      <option>請選擇</option>
-		                      <option>CFC</option>
-		                      <option>NKO</option>
-		                      <option>Beitou</option>
-		                      <option>林口E-Center</option>
-		                    </select></div>
-	        			</div>
-	        		</div>
-	        		<div class="row row-flex">
-	        			<div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered"><div>手機號碼 <span class="d-lg-none"><br /></span>(Mobile)：<br />* 電子入場券將發送至此門號</div></div>
-	        			<div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
-	        				<div><input type="text" class="form-control" id="mobileNo1" name="mobileNo1" placeholder="格式：09XXXXXXXX"></div>
-	        			</div>
-	        			<div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">本人是否吃素：</div>
-	        			<div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
-	        				<div class="form-check form-check-inline">
-		                      <input class="form-check-input" type="radio" name="vegetarianRadioOptions1" id="vegetarianRadioOptions1y" value="Y">
-		                      <label class="form-check-label" for="vegetarianRadioOptions1y">是</label>
-		                    </div>
-		                    <div class="form-check form-check-inline">
-		                      <input class="form-check-input" type="radio" name="vegetarianRadioOptions1"  id="vegetarianRadioOptions1n" value="N" checked="checked">
-		                      <label class="form-check-label" for="vegetarianRadioOptions1n">否</label>
-		                    </div>
-	        			</div>
-	        		</div>
-	        		<div class="row row-flex">
-	        			<div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">攜伴人數：</div>
-	        			<div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
-                  <div>
-		                    <div class="form-check form-check-inline">
-		                      <label class="form-check-label" for="participantSelect1">
-		                        <select class="form-control" id="participantSelect1" name="participantSelect1">
-		                          <option>請選擇</option>
-		                          <option value="不攜伴">不攜伴</option>
-		                        </select>
-		                      </label>
-		                    </div>
+    </div>
+  </div>
+</section>
+<section id="register" style="margin-top: 100px; margin-bottom: 100px; ">
+  <div class="container">
+
+    <div class="row" id="enrollSection">
+
+      <div class="col-12">
+
+        <form id="registerForm" method="post" class="form-horizontal row" action="">
+          <div class="container-fluid bg-board">
+            <div class="row">
+              <div class="col-12 text-center bg-main">IBM 2019 Family Day 報名</div>
+            </div>
+            <div class="row row-flex">
+              <div class="col-6 col-md-6 align-middle bg-normal-title col-v-centered">IBMer報名資料</div>
+              <div class="col-6 col-md-6 align-middle bg-normal-title col-v-centered">
+                <div id="userTypeButtons" style="display: none;">
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="userTypeRadioOptions" id="userTypeRadioOptions1"
+                      value="regular" readonly="readonly">
+                    <label class="form-check-label" for="userTypeRadioOptions1">Regular</label>
                   </div>
-	        			</div>
-	        			<div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered"><span class="friend1-vegetarian-content">親友是否吃素：</span></div>
-	        			<div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
-		                    <div class="form-check form-check-inline friend1-vegetarian-content">
-		                      <input class="form-check-input" type="radio" name="vegetarianRadioOptions2" id="vegetarianRadioOptions2y" value="Y">
-		                      <label class="form-check-label" for="vegetarianRadioOptions2y">是</label>
-		                    </div>
-		                    <div class="form-check form-check-inline friend1-vegetarian-content">
-		                      <input class="form-check-input" type="radio" name="vegetarianRadioOptions2" id="vegetarianRadioOptions2n" value="N" checked="checked">
-		                      <label class="form-check-label" for="vegetarianRadioOptions2y">否</label>
-		                    </div>
-	        			</div>
-	        		</div>
-              <div class="row row-flex regularParticipantWording">
-                <div class="col-12 col-md-12 align-middle bg-normal-title col-v-centered">IBMer若需額外攜帶超過3位親友(第4位以上, 每位500元), 請於報名送出後與 Mimmie Chu/Taiwan/Contr/IBM (#3841) 聯繫</div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="userTypeRadioOptions" id="userTypeRadioOptions2"
+                      value="contractor" readonly="readonly">
+                    <label class="form-check-label" for="userTypeRadioOptions2">Contractor</label>
+                  </div>
+                </div>
+                <span id="userTypeWording"></span>
               </div>
-	        		<div class="row row-flex">
-	        			<div class="col-12 col-md-12 align-middle bg-normal col-v-centered">
-                  <div>
-  	        				<div class="form-check form-check-inline">
-  		                      <label class="form-check-label" for="personalInfoCheckbox1">
-  		                        <input class="form-check-input" type="checkbox" id="personalInfoCheckbox1" name="personalInfoCheckbox1" value="agree">
-  		                        本人同意提供以上個資，供 IBM 2019 Family Day 使用。
-  		                      </label>
-  		              </div>
+            </div>
+            <div class="row row-flex">
+              <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">
+                <div>員工證號 <span class="d-lg-none"><br /></span>(Serial No)：</div>
+              </div>
+              <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
+                <input type="text" class="form-control" id="inputSN" placeholder="Enter SN" readonly="readonly">
+              </div>
+              <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">Email：</div>
+              <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
+                <input type="email" class="form-control" id="inputEmail" name="inputEmail" aria-describedby="emailHelp"
+                  placeholder="Enter email" readonly="readonly">
+              </div>
+            </div>
+            <div class="row row-flex">
+              <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">
+                <div>英文姓名 <span class="d-lg-none"><br /></span>(English Name)：</div>
+              </div>
+              <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
+                <input type="text" class="form-control" id="inputEnglishName" name="inputEnglishName"
+                  placeholder="Enter English Name" readonly="readonly">
+              </div>
+              <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">
+                <div>中文姓名 <span class="d-lg-none"><br /></span>(Chinese Name)：</div>
+              </div>
+              <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
+                <div><input type="text" class="form-control" id="inputChineseName1" name="inputChineseName1"
+                    placeholder="請輸入中文姓名"></div>
+              </div>
+            </div>
+            <div class="row row-flex">
+              <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">
+                <div>部門 <span class="d-lg-none"><br /></span>(Department)：</div>
+              </div>
+              <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
+                <div><select class="form-control" id="departmentSelect1" name="departmentSelect1">
+                    <option>請選擇</option>
+                    <option>Analytic</option>
+                    <option>CDL</option>
+                    <option>Cloud</option>
+                    <option>Cognitive Solution</option>
+                    <option>CSL</option>
+                    <option>CTA</option>
+                    <option>Digital Business</option>
+                    <option>ESU (T1-T6)</option>
+                    <option>F&O</option>
+                    <option>GBP</option>
+                    <option>GBS</option>
+                    <option>GTS</option>
+                    <option>HR</option>
+                    <option>IGF</option>
+                    <option>Legal</option>
+                    <option>M&C</option>
+                    <option>System Hardware</option>
+                    <option>System Software</option>
+                    <option>T&O / Finance</option>
+                    <option>Others</option>
+                  </select></div>
+              </div>
+              <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">
+                <div>位置 <span class="d-lg-none"><br /></span>(Location)：</div>
+              </div>
+              <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
+                <div><select class="form-control" id="locationSelect1" name="locationSelect1">
+                    <option>請選擇</option>
+                    <option>CFC</option>
+                    <option>NKO</option>
+                    <option>Beitou</option>
+                    <option>林口E-Center</option>
+                  </select></div>
+              </div>
+            </div>
+            <div class="row row-flex">
+              <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">
+                <div>手機號碼 <span class="d-lg-none"><br /></span>(Mobile)：<br />* 電子入場券將發送至此門號</div>
+              </div>
+              <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
+                <div><input type="text" class="form-control" id="mobileNo1" name="mobileNo1"
+                    placeholder="格式：09XXXXXXXX"></div>
+              </div>
+              <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered"></div>
+              <div class="col-6 col-md-3 align-middle bg-normal col-v-centered"></div>
+            </div>
+            <div class="row row-flex">
+              <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">
+                <div>身份證字號 <span class="d-lg-none"><br /></span>(ID)：</div>
+              </div>
+              <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
+                <div><input type="text" class="form-control" name="inputID" id="inputID" placeholder="請輸入身份證字號"></div>
+              </div>
+              <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">
+                <div>生日 <span class="d-lg-none"><br /></span>(Birth Day)：</div>
+              </div>
+              <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
+                <input type="text" class="form-control" name="birthDay" id="birthDay" placeholder="請選擇">
+              </div>
+            </div>
+            <div class="row row-flex participantNumber">
+              <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">攜伴人數 <span
+                  class="d-lg-none"><br /></span>(Friends #)：</div>
+              <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
+                <div>
+                  <div class="form-check form-check-inline">
+                    <label class="form-check-label" for="inputParticipant">
+                      <input type="number" min="0" max="10" class="form-control" name="inputParticipant"
+                        id="inputParticipant" value="0" placeholder="請輸入攜伴人數">
+                    </label>
                   </div>
-	        			</div>
-	        		</div>
-	        	</div>
+                </div>
+              </div>
+              <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">參加費用 <span
+                  class="d-lg-none"><br /></span>(Fee of Participation)：</div>
+              <div class="col-6 col-md-3 align-middle bg-normal col-v-centered ">
+                NT$<b><span id="participantFeeWording">0</span></b>元
+                <input class=".sr-only" name="participantFee" id="participantFee" type="hidden" value="0">
+              </div>
+            </div>
+            <div class="row row-flex">
+              <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">搭車人數 <span
+                  class="d-lg-none"><br /></span>(Passengers #)：</div>
+              <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
+                <div>
+                  <div class="form-check form-check-inline">
+                    <label class="form-check-label" for="inputShuttle">
+                      <input type="number" min="0" max="11" class="form-control" name="inputShuttle" id="inputShuttle"
+                        value="0" placeholder="請輸入搭車人數">
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">搭車費用 <span
+                  class="d-lg-none"><br /></span>(Fare)：</div>
+              <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
+                NT$<b><span id="shuttleFareWording">0</span></b>元
+                <input class=".sr-only" name="shuttleFare" id="shuttleFare" type="hidden" value="0">
+              </div>
+            </div>
+            <div class="row row-flex regularParticipantWording">
+              <div class="col-12 col-md-12 align-middle bg-normal-title col-v-centered">IBMer若需額外攜帶超過10位親友(第4位以上,
+                每位500元), 請於報名送出後與 Mimmie Chu/Taiwan/Contr/IBM (#3841) 聯繫</div>
+            </div>
+            <div class="row row-flex contractorParticipantWording">
+              <div class="col-12 col-md-12 align-middle bg-normal-title col-v-centered">CWF
+                Contractor/IA-in及額外攜帶親友每位500元, 若有第10位以上,
+                請於報名送出後與 Mimmie Chu/Taiwan/Contr/IBM (#3841) 聯繫</div>
+            </div>
+            <div class="row row-flex">
+              <div class="col-12 col-md-12 align-middle bg-normal col-v-centered">
+                <div>
+                  <div class="form-check form-check-inline">
+                    <label class="form-check-label" for="personalInfoCheckbox1">
+                      <input class="form-check-input" type="checkbox" id="personalInfoCheckbox1"
+                        name="personalInfoCheckbox1" value="agree">
+                      本人同意提供以上個資，供 IBM 2019 Family Day 使用。
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
 
-	        	<div class="container-fluid p-3">
-					    <div class="row">
-	        			<div class="col-12 text-center">
-			            <!-- <button type="submit" id="regSubmitBtn" class="btn btn-primary" style="font-weight: 800;">確認送出</button> -->
-			            <!-- <button type="button" id="cancelBtn" class="btn btn-light">取消</button> -->
-			          </div>
-	        		</div>
-	        	</div>
+          <div class="container-fluid p-3">
+            <div class="row">
+              <div class="col-12 text-center">
+                <!-- <button type="submit" id="regSubmitBtn" class="btn btn-primary" style="font-weight: 800;">確認送出</button> -->
+                <!-- <button type="button" id="cancelBtn" class="btn btn-light">取消</button> -->
+              </div>
+            </div>
+          </div>
 
-	        </form>
+        </form>
 
-<!--
+        <!--
             <form id="registerForm" method="post" class="form-horizontal row" action="">
             <table class="table table-bordered registerForm">
               <thead>
@@ -585,97 +381,140 @@
           </form>
 -->
 
+      </div>
+    </div>
+    <div class="row" id="confirmSection">
+
+      <div class="confirmAlertSection">
+        <div class="alert alert-success" role="alert" id="enrollMessage"></div>
+        <div class="alert alert-warning" role="alert" id="confirmSectionStart">
+          請再次檢查報名資料
         </div>
       </div>
 
-
-      <div class="row" id="confirmSection">
-
-      		<div class="confirmAlertSection">
-      			<div class="alert alert-success" role="alert" id="enrollMessage"></div>
-	      		<div class="alert alert-warning" role="alert" id="confirmSectionStart">
-	              請再次檢查報名資料
-	          </div>
-      		</div>
-      		
-	        <div class="container-fluid bg-board">
-	        	<div class="row row-flex">
-	        		<div class="col-12 text-center bg-main">IBM 2019 Family Day 報名</div>
-	        	</div>
-	        	<div class="row row-flex">
-	        		<div class="col-6 col-md-6 align-middle bg-normal-title col-v-centered">IBMer報名資料</div>
-	        		<div class="col-6 col-md-6 align-middle bg-normal-title col-v-centered">
-		                 <span id="userTypeRadioOptionsConfirm"></span>
-	        		</div>
-	        	</div>
-	        	<div class="row row-flex">
-	        		<div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered"><div>員工證號 <span class="d-lg-none"><br /></span>(Serial No)：</div></div>
-	        		<div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
-	        			<span id="inputSNConfirm"></span>
-	        		</div>
-	        		<div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">Email：</div>
-	        		<div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
-	        			<span id="inputEmailConfirm"></span>
-	        		</div>
-	        	</div>
-	        	<div class="row row-flex">
-	        		<div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered"><div>英文姓名 <span class="d-lg-none"><br /></span>(English Name)：</div></div>
-	        		<div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
-	        			<span id="inputEnglishNameConfirm"></span>
-	        		</div>
-	        		<div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered"><div>中文姓名 <span class="d-lg-none"><br /></span>(Chinese Name)：</div></div>
-	        		<div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
-	        			<span id="inputChineseName1Confirm"></span>
-	        		</div>
-	        	</div>
-	        	<div class="row row-flex">
-	        		<div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered"><div>部門 <span class="d-lg-none"><br /></span>(Department)：</div></div>
-	        		<div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
-	        			<span id="departmentSelect1Confirm"></span>
-	        		</div>
-	        		<div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered"><div>位置 <span class="d-lg-none"><br /></span>(Location)：</div></div>
-	        		<div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
-	        			<span id="locationSelect1Confirm"></span>
-	        		</div>
-	        	</div>
-	        	<div class="row row-flex">
-	        		<div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered"><div>手機號碼 <span class="d-lg-none"><br /></span>(Mobile)：<br />* 電子入場券將發送至此門號</div></div>
-	        		<div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
-	        			<span id="mobileNo1Confirm"></span>
-	        		</div>
-	        		<div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">本人是否吃素：</div>
-	        		<div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
-	        			<span id="vegetarianRadioOptions1Confirm"></span>
-	        		</div>
-	        	</div>
-	        	<div class="row row-flex">
-	        		<div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">攜伴人數：</div>
-	        		<div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
-		                <span id="participantSelect1Confirm"></span>
-	        		</div>
-	        		<div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered"><span class="friend1-vegetarian-content">親友是否吃素：</span></div>
-	        		<div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
-		                <span id="vegetarianRadioOptions2Confirm" class="friend1-vegetarian-content"></span>
-	        		</div>
-	        	</div>
-            <div class="row row-flex regularParticipantWording">
-                <div class="col-12 col-md-12 align-middle bg-normal-title col-v-centered">IBMer若需額外攜帶超過3位親友(第4位以上, 每位500元), 請於報名送出後與 Mimmie Chu/Taiwan/Contr/IBM (#3841) 聯繫</div>
-              </div>
-	        </div>
-
-	        <div class="container-fluid p-3">
-				  <div class="row">
-	        		<div class="col-12 text-center">
-		              <!-- <button type="submit" id="regSubmitConfirmBtn" class="btn btn-primary">確認送出</button> -->
-                  <button type="button" id="backToEventBtn" class="btn btn-primary" href="../">回活動網站</button>
-		              <!-- <button type="button" id="backToEditBtn" class="btn btn-light">修改資料</button> -->
-		          </div>
-	        	</div>
-	        </div>
-      	
+      <div class="container-fluid bg-board">
+        <div class="row row-flex">
+          <div class="col-12 text-center bg-main">IBM 2019 Family Day 報名</div>
+        </div>
+        <div class="row row-flex">
+          <div class="col-6 col-md-6 align-middle bg-normal-title col-v-centered">IBMer報名資料</div>
+          <div class="col-6 col-md-6 align-middle bg-normal-title col-v-centered">
+            <span id="userTypeRadioOptionsConfirm"></span>
+          </div>
+        </div>
+        <div class="row row-flex">
+          <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">
+            <div>員工證號 <span class="d-lg-none"><br /></span>(Serial No)：</div>
+          </div>
+          <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
+            <span id="inputSNConfirm"></span>
+          </div>
+          <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">Email：</div>
+          <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
+            <span id="inputEmailConfirm"></span>
+          </div>
+        </div>
+        <div class="row row-flex">
+          <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">
+            <div>英文姓名 <span class="d-lg-none"><br /></span>(English Name)：</div>
+          </div>
+          <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
+            <span id="inputEnglishNameConfirm"></span>
+          </div>
+          <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">
+            <div>中文姓名 <span class="d-lg-none"><br /></span>(Chinese Name)：</div>
+          </div>
+          <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
+            <span id="inputChineseName1Confirm"></span>
+          </div>
+        </div>
+        <div class="row row-flex">
+          <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">
+            <div>部門 <span class="d-lg-none"><br /></span>(Department)：</div>
+          </div>
+          <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
+            <span id="departmentSelect1Confirm"></span>
+          </div>
+          <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">
+            <div>位置 <span class="d-lg-none"><br /></span>(Location)：</div>
+          </div>
+          <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
+            <span id="locationSelect1Confirm"></span>
+          </div>
+        </div>
+        <div class="row row-flex">
+          <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">
+            <div>手機號碼 <span class="d-lg-none"><br /></span>(Mobile)：<br />* 電子入場券將發送至此門號</div>
+          </div>
+          <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
+            <span id="mobileNo1Confirm"></span>
+          </div>
+          <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered"></div>
+          <div class="col-6 col-md-3 align-middle bg-normal col-v-centered"></div>
+        </div>
+        <div class="row row-flex">
+          <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">
+            <div>身份證字號 <span class="d-lg-none"><br /></span>(ID)：</div>
+          </div>
+          <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
+            <span id="inputIDConfirm"></span>
+          </div>
+          <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">
+            <div>生日：</div>
+          </div>
+          <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
+            西元<span id="birthDayConfirmYear"></span>年
+            <span id="birthDayConfirmMonth"></span>月
+            <span id="birthDayConfirmDay"></span>日
+          </div>
+        </div>
+        <div class="row row-flex participantNumberConfirm">
+          <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">攜伴人數 <span
+              class="d-lg-none"><br /></span>(Friends #)：</div>
+          <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
+            <span id="inputParticipantConfirm"></span>
+          </div>
+          <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">參加費用 <span
+              class="d-lg-none"><br /></span>(Fee of Participation)：</div>
+          <div class="col-6 col-md-3 align-middle bg-normal col-v-centered ">
+            NT$<b></b><span id="participantFeeConfirm"></b></span>元
+          </div>
+        </div>
+        <div class="row row-flex">
+          <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">搭車人數 <span
+              class="d-lg-none"><br /></span>(Passengers #)：</div>
+          <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
+            <span id="inputShuttleConfirm"></span>
+          </div>
+          <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">搭車費用 <span
+              class="d-lg-none"><br /></span>(Fare)：</div>
+          <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
+            NT$<b></b><span id="shuttleFareConfirm"></b></span>元
+          </div>
+        </div>
+        <div class="row row-flex regularParticipantWording">
+          <div class="col-12 col-md-12 align-middle bg-normal-title col-v-centered">IBMer若需額外攜帶超過10位親友(第4位以上,
+            每位500元),
+            請於報名送出後與 Mimmie Chu/Taiwan/Contr/IBM (#3841) 聯繫</div>
+        </div>
+        <div class="row row-flex contractorParticipantWording">
+          <div class="col-12 col-md-12 align-middle bg-normal-title col-v-centered">CWF Contractor/IA-in額外攜帶親友每位500元,
+            若有第10位以上,
+            請於報名送出後與 Mimmie Chu/Taiwan/Contr/IBM (#3841) 聯繫</div>
+        </div>
       </div>
 
-<!--
+      <div class="container-fluid p-3">
+        <div class="row">
+          <div class="col-12 text-center">
+            <!-- <button type="submit" id="regSubmitConfirmBtn" class="btn btn-primary">確認送出</button> -->
+            <button type="button" id="backToEventBtn" class="btn btn-primary" href="../">回活動網站</button>
+            <!-- <button type="button" id="backToEditBtn" class="btn btn-light">修改資料</button> -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--
       <div class="row" id="confirmSection">
 
             <div class="alert alert-success" role="alert" id="enrollMessage" style="width: 100%;"></div>
@@ -763,551 +602,57 @@
 
       </div>
 -->
+  </div>
+</section>
 
+<!-- Footer -->
+<footer class="py-5 bg-black">
+  <div class="container">
+    <p class="m-0 text-center text-white small">IBM Taiwan EWC 63rd - 如有相關疑問，請聯絡 EWC – Mimmie Chu/Taiwan/Contr/IBM
+      (#3841) </p>
+  </div>
+  <!-- /.container -->
+</footer>
 
-    </div>
-  </section>
-
-
-
-    <!--
-    <section>
-      <div class="container">
-        <div class="row align-items-center">
-          <div class="col-lg-6">
-            <div class="p-5">
-              <img class="img-fluid rounded-circle" src="img/02.jpg" alt="">
-            </div>
-          </div>
-          <div class="col-lg-6">
-            <div class="p-5">
-              <h2 class="display-4">We salute you!</h2>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod aliquid, mollitia odio veniam sit iste esse assumenda amet aperiam exercitationem, ea animi blanditiis recusandae! Ratione voluptatum molestiae adipisci, beatae obcaecati.</p>
-            </div>
-          </div>
-        </div>
+<!-- Modal -->
+<div class="modal fade" id="postLoadingModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">正在送出報名資料</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
-    </section>
-    -->
-
-    <!-- Footer -->
-    <footer class="py-5 bg-black">
-      <div class="container">
-        <p class="m-0 text-center text-white small">IBM Taiwan EWC 63rd - 如有相關疑問，請聯絡 EWC – Mimmie Chu/Taiwan/Contr/IBM (#3841) </p>
-      </div>
-      <!-- /.container -->
-    </footer>
-
-    <!-- Modal -->
-    <div class="modal fade" id="postLoadingModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLongTitle">正在送出報名資料</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <div id="postLoadingModalText">
+      <div class="modal-body">
+        <div id="postLoadingModalText">
 
 
 
-            </div>
-          </div>
         </div>
       </div>
     </div>
+  </div>
+</div>
 
-    <!-- Modal -->
-    <div class="modal fade" id="postModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLongTitle">報名結果</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <span id="postModalText"></span>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-primary" data-dismiss="modal">好的我知道了</button>
-            </div>
-          </div>
-        </div>
+<!-- Modal -->
+<div class="modal fade" id="postModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">報名結果</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
-
-    <!-- Bootstrap core JavaScript -->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
-
-    <script type="text/javascript">
-
-
-
-      $(document).ready(function(){
-
-      $("#regularParticipantWording").hide();
-      // $("#loading").hide();
-      $("#expired_wording").hide();
-
-
-      var user = {};
-
-      var getToken = function(callback) {
-        $.ajax({
-          'url': './getToken',
-          'success': callback,
-          'error': callback
-        });
-      };
-
-      var getProfile = function(token, callback) {
-        $.ajax({
-          'url': '/api/profile?token='+token,
-          'success': callback,
-          'error': callback
-        })
-      };
-
-      var ajaxProcessor = function(method, path, data, callback, failCallback, async) {
-        // POST
-        $.ajax({
-          "method": method,
-          "url": path,
-          "context": document.body,
-          "data": data,
-          "processData": true,
-          "cache": false,
-          "async": async
-        }).done(callback).fail(failCallback);
-      };
-
-      var loadProfile = function() {
-
-        $('#exampleModalLongTitle').html("正在查詢您的報名資料");
-        $('#postLoadingModalText').html("請稍等");
-        $('#postLoadingModal').modal({ show: true});
-
-        ajaxProcessor('GET','./form/query_enroll',{},
-          function(data){
-            if(data && data.result) {
-
-                // 已有報名資料
-
-                var result = data.result;
-
-                if(result.inputSN) {
-                  $("#inputSN").val(result.inputSN);
-                  // $('input[name=userTypeRadioOptions][value='+result.userTypeRadioOptions+']').prop("checked","checked");
-                  $("#userTypeButtons").hide();
-                  $("#userTypeWording").html(usertype);
-
-                  $("#inputEmail").val(result.inputEmail);
-                  $("#inputEnglishName").val(result.inputEnglishName);
-                  $("#inputChineseName1").val(result.inputChineseName1);
-                  $("#departmentSelect1").val(result.departmentSelect1);
-                  $("#locationSelect1").val(result.locationSelect1);
-                  $("#mobileNo1").val(result.mobileNo1);
-                  $('input[name=vegetarianRadioOptions1][value='+result.vegetarianRadioOptions1+']').prop("checked","checked");
-                  $('select[name=participantSelect1] option[value='+result.participantSelect1+']').prop("selected","selected");
-                  $('#personalInfoCheckbox1').prop('checked', true);
-
-                  $('input[name=vegetarianRadioOptions2][value='+result.vegetarianRadioOptions2+']').prop("checked","checked");
-
-                  $("#backToEventBtn").show();
-
-                }
-
-                if(result && result.participantSelect1 == "1位") {
-                  $(".friend1-vegetarian-content").show();
-                } else {
-                  // default display
-                }
-
-                var lastModTs = (result.lastModTs) ? " " + result.lastModTs.replace(/T/g, " ").replace(/Z/g, " ").substring(0, 19) + " " : "";
-
-                $("#enrollMessage").html("你已於"+lastModTs+"報名成功，如對報名結果有疑問，請聯絡 Mimmie Chu/Taiwan/Contr/IBM (#3841)");
-                $("#enrollMessage").show();
-
-                submitToReview();
-                $("#regSubmitConfirmBtn").hide();
-                $("#confirmSectionStart").hide();
-
-                $("#loading").hide();
-
-            } else {
-              $("#register").hide();
-              $("#expired_wording").show();
-              $("#loading").hide();
-            }
-
-            setTimeout(function(){$('#postLoadingModal').modal("hide");}, 500);
-
-          },function(){
-
-                setTimeout(function(){$('#postLoadingModal').modal("hide");}, 500);
-
-            // no data
-          },true);
-      };
-
-      $("#backToEventBtn").click(function(){
-        window.location = "../";
-      });
-
-      $("#backToEventBtn").hide();
-
-      var username, email, sn, usertype;
-
-        $("#friend1").hide();
-        $("#friend2").hide();
-        $("#enrollMessage").hide();
-
-        $("#enrollSection").show();
-        $("#confirmSection").hide();
-
-        getToken(function(token){
-          getProfile(token.token, function(data) {
-            user = data.result.user;
-            $('#username').html("Hi " + user.displayName);
-            $('#inputName').val(user.displayName);
-            $('#inputEmail').val(user.email);
-            username = user.displayName;
-            email = user.email;
-            sn = user.id.substring(0, 6);
-
-            // init form
-            var employee_type = "";
-            $("#inputSN").val(sn);
-            var regular_pattern1 = /^\d/i;
-            var regular_pattern2 = /^\ZZ/i;
-            // regular
-            if(regular_pattern1.test(sn) || regular_pattern2.test(sn)) {
-                usertype = "Regular";
-            } else {
-                usertype = "Contractor";
-            }
-            // $('input[name=userTypeRadioOptions][value='+usertype+']').prop("checked","checked");
-            $("#userTypeButtons").hide();
-            $("#userTypeWording").html(usertype);
-            $("#inputEmail").val(email);
-            $("#inputEnglishName").val(username);
-
-            // 攜帶伴侶選項
-            var regularOptionsHTML = '<option>請選擇</option><option value="不攜伴">不攜伴</option><option value="1位">1位 (IBMer親友免費)</option>';
-            // var contractorOptionsHTML = '<option>請選擇</option><option value="不攜伴">不攜伴</option><option value="1位">1位 (Contractor親友自費800元)</option>';
-            var contractorOptionsHTML = '<option value="不攜伴">Contractor 限本人參加</option>';
-
-            if(usertype == "Regular") {
-              $("#participantSelect1").html(regularOptionsHTML);
-              $(".regularParticipantWording").show();
-            } else {
-              $("#participantSelect1").html(contractorOptionsHTML);
-            }
-
-            $(".friend1-vegetarian-content").hide();
-
-            loadProfile();
-
-          });
-        });
-
-        var submitToReview = function () {
-
-                $("#confirmSectionStart").show();
-                $("#success_msg").hide();
-
-                  var requestRegisterParams = {
-                      userTypeRadioOptions: usertype,
-                      inputSN: $("#inputSN").val(),
-                      inputEmail: $("#inputEmail").val(),
-                      inputEnglishName: $("#inputEnglishName").val(),
-                      inputChineseName1: $("#inputChineseName1").val(),
-                      departmentSelect1: $("#departmentSelect1").val(),
-                      locationSelect1: $("#locationSelect1").val(),
-                      mobileNo1: $("#mobileNo1").val(),
-                      vegetarianRadioOptions1: $('input[name=vegetarianRadioOptions1]:checked', '#registerForm').val(),
-                      participantSelect1: $("#participantSelect1").val(),
-
-                      vegetarianRadioOptions2: $('input[name=vegetarianRadioOptions2]:checked', '#registerForm').val(),
-
-                  };
-
-                  $("#userTypeRadioOptionsConfirm").html(usertype);
-                  $("#inputSNConfirm").html(requestRegisterParams.inputSN);
-                  $("#inputEmailConfirm").html(requestRegisterParams.inputEmail);
-                  $("#inputEnglishNameConfirm").html(requestRegisterParams.inputEnglishName);
-                  $("#inputChineseName1Confirm").html(requestRegisterParams.inputChineseName1);
-                  $("#departmentSelect1Confirm").html(requestRegisterParams.departmentSelect1);
-                  $("#locationSelect1Confirm").html(requestRegisterParams.locationSelect1);
-                  $("#mobileNo1Confirm").html(requestRegisterParams.mobileNo1);
-                  $("#vegetarianRadioOptions1Confirm").html(requestRegisterParams.vegetarianRadioOptions1=="Y" ? "是" : "否");
-                  // 親友
-                  var participant = requestRegisterParams.participantSelect1;
-
-                  if(participant == "不攜伴") {
-
-                  } else {
-                    if(usertype == "Regular") {
-                      participant += " (IBMer親友免費)";
-                    } else if(usertype == "Contractor") {
-                      // participant += " (Contractor親友自費800元)";
-                      participant += " (Contractor僅限本人參加)";
-                    }
-                  }
-
-                  $("#participantSelect1Confirm").html(participant);
-                  $("#vegetarianRadioOptions2Confirm").html(requestRegisterParams.vegetarianRadioOptions2=="Y" ? "是" : "否");
-
-
-
-
-                  //console.log(requestRegisterParams);
-                  $("#enrollSection").hide();
-
-                  $('#exampleModalLongTitle').html("正在準備預覽資料");
-                  $('#postLoadingModalText').html("正在準備預覽資料");
-                  $('#postLoadingModal').modal({ show: true});
-
-                  $("#confirmSection").show();
-
-                  setTimeout(function(){
-
-                    $('#postLoadingModal').modal('hide');
-
-                  }, 500);
-
-
-            };
-
-        $.validator.setDefaults( {
-            // valid and submit
-            submitHandler: submitToReview
-        } );
-
-        $("#backToEditBtn").click(function(){
-          $("#enrollSection").show();
-          $("#regSubmitConfirmBtn").show();
-          $("#backToEventBtn").hide();
-          $("#confirmSection").hide();
-          $("#enrollMessage").hide();
-        });
-
-        $("#cancelBtn").click(loadProfile);
-
-        // 確認無誤，至後端註冊
-        $("#regSubmitConfirmBtn").click(function(){
-          $('#exampleModalLongTitle').html("正在送出報名資料");
-          $('#postLoadingModalText').html("正在送出報名資料，請稍候");
-          $('#postLoadingModal').modal({ show: true});
-
-          var confirmedRequestRegisterParams = {
-            userTypeRadioOptions: usertype,
-            inputSN: $("#inputSN").val(),
-            inputEmail: $("#inputEmail").val(),
-            inputEnglishName: $("#inputEnglishName").val(),
-            inputChineseName1: $("#inputChineseName1").val(),
-            departmentSelect1: $("#departmentSelect1").val(),
-            locationSelect1: $("#locationSelect1").val(),
-            mobileNo1: $("#mobileNo1").val(),
-            vegetarianRadioOptions1: $('input[name=vegetarianRadioOptions1]:checked', '#registerForm').val(),
-
-            vegetarianRadioOptions2: $('input[name=vegetarianRadioOptions2]:checked', '#registerForm').val(),
-
-            participantSelect1: $("#participantSelect1").val()
-          };
-
-          ajaxProcessor('POST','./form/enroll',confirmedRequestRegisterParams,
-            function(data){
-              //console.log(data);
-              if(data.success) {
-                $('#postModalText').html("報名成功，您稍後將收到報名成功的通知信！");
-                loadProfile();
-              } else {
-                $('#postModalText').html("報名沒有成功，請再嘗試一次");
-              }
-              setTimeout(function(){$('#postLoadingModal').modal("hide");$('#postModal').modal({ show: true});$("#confirmSectionStart").hide();/* $("#success_msg").show(); */ $("#regSubmitConfirmBtn").hide();$("#backToEventBtn").show();}, 500);
-            },function(){
-              $('#postModalText').html("報名沒有成功，請再嘗試一次");
-              setTimeout(function(){$('#postLoadingModal').modal("hide");$('#postModal').modal({ show: true});$("#confirmSectionStart").html("報名沒有成功，請再嘗試一次，如仍有問題請聯絡 EWC 工作人員");}, 500);
-            },true);
-
-        });
-
-        jQuery.validator.addMethod("notEqual", function(value, element, param) {
-          return this.optional(element) || value != param;
-        }, "Please specify a different (non-default) value");
-
-        jQuery.validator.addMethod("phoneStartingWith09", function(phone_number, element) {
-            phone_number = phone_number.replace(/\s+/g, "");
-            return this.optional(element) || phone_number.match(/^09\d{8,}$/);
-        }, "Phone number should start with 09");
-
-        var validRule = [];
-
-        validRule[1] = {
-            // IBMer
-            /*
-            inputEmail: {
-              required: true
-            },
-            inputEnglishName: {
-              required: true
-            },
-            */
-            inputChineseName1: {
-              required: true,
-              notEqual: "請選擇"
-            },
-            departmentSelect1: {
-              required: true,
-              notEqual: "請選擇"
-            },
-            locationSelect1: {
-              required: true,
-              notEqual: "請選擇"
-            },
-            mobileNo1: {
-              required: true,
-              rangelength: [10, 10],
-              digits: true,
-              phoneStartingWith09: true
-            },
-            participantSelect1: {
-              required: true,
-              notEqual: "請選擇"
-            },
-            personalInfoCheckbox1: {
-              required: true
-            }
-        };
-
-        var initRule = validRule[1];
-        var currentRule = initRule;
-
-        $( "#registerForm" ).validate( {
-            rules: initRule,
-            messages: {
-              // IBMer
-              inputEmail: {
-                required: "請輸入您的電子郵件"
-              },
-              inputEnglishName: {
-                required: "請輸入您的英文姓名"
-              },
-              departmentSelect1: {
-                required: "請選擇部門",
-                notEqual: "請選擇部門"
-              },
-              locationSelect1: {
-                required: "請選擇辦公室位置",
-                notEqual: "請選擇辦公室位置"
-              },
-              inputChineseName1: {
-                required: "請輸入中文姓名",
-                notEqual: "請輸入中文姓名"
-              },
-              mobileNo1: {
-                required: "請提供行動電話號碼",
-                rangelength: "請提供行動電話號碼",
-                digits: "行動電話號碼格式錯誤"
-              },
-              participantSelect1: {
-                notEqual: "請選擇親友人數"
-              },
-              personalInfoCheckbox1: {
-                required: "您必須同意我們利用您的資料才能線上報名"
-              }
-            },
-            errorElement: "small",
-            errorPlacement: function ( error, element ) {
-              // Add the `help-block` class to the error element
-              error.addClass( "help-block form-text alert-text" );
-              // Add `has-feedback` class to the parent div.form-group
-              // in order to add icons to inputs
-              element.parents( "td" ).addClass( "has-feedback" );
-
-              if ( element.prop( "type" ) === "checkbox" ) {
-                error.insertAfter( element.parent( "label" ) );
-              } else {
-                error.insertAfter( element );
-              }
-
-              // Add the span element, if doesn't exists, and apply the icon classes to it.
-              if ( !element.next( "span" )[ 0 ] ) {
-                $( "<span class='glyphicon glyphicon-remove form-control-feedback'></span>" ).insertAfter( element );
-              }
-            },
-            success: function ( label, element ) {
-              // Add the span element, if doesn't exists, and apply the icon classes to it.
-              if ( !$( element ).next( "span" )[ 0 ] ) {
-                $( "<span class='glyphicon glyphicon-ok form-control-feedback'></span>" ).insertAfter( $( element ) );
-              }
-            },
-            highlight: function ( element, errorClass, validClass ) {
-              $( element ).parents( ".col-sm-8" ).addClass( "has-error" ).removeClass( "has-success" );
-              $( element ).next( "span" ).addClass( "glyphicon-remove" ).removeClass( "glyphicon-ok" );
-            },
-            unhighlight: function ( element, errorClass, validClass ) {
-              $( element ).parents( ".col-sm-8" ).addClass( "has-success" ).removeClass( "has-error" );
-              $( element ).next( "span" ).addClass( "glyphicon-ok" ).removeClass( "glyphicon-remove" );
-            }
-        } );
-
-
-        function addRules(rulesObj){
-            for (var item in rulesObj){
-               $('#'+item).rules('add',rulesObj[item]);
-            }
-        }
-
-        function removeRules(rulesObj){
-            for (var item in rulesObj){
-               $('#'+item).rules('remove');
-            }
-        }
-
-        /*
-        var updateValidRule = function(){
-          console.log("updateValidRule");
-          var previousRule = currentRule;
-          currentRule = validRule[$("#participantSelect1").val()];
-          removeRules(previousRule);
-          addRules(currentRule);
-        };
-        */
-
-        var updatePanel = function(){
-          //console.log("updatePanel");
-          // show and hide blocks
-          var selectVal = $("#participantSelect1").val();
-          $("#friend1").hide();
-          $("#friend2").hide();
-          if(selectVal == "不攜伴") {
-            // hide friend blocks
-            $(".friend1-vegetarian-content").hide();
-          } else {
-            $(".friend1-vegetarian-content").show();
-          }
-        };
-
-        var changeParticipant = function() {
-          updatePanel();
-          // updateValidRule();
-        };
-
-        $("#participantSelect1").change(changeParticipant);
-
-
-
-      });
-
-    </script>
-
-  </body>
-
-</html>
+      <div class="modal-body">
+        <span id="postModalText"></span>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">好的我知道了</button>
+      </div>
+    </div>
+  </div>
+</div>
