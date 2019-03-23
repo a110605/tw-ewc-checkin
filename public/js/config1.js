@@ -230,84 +230,7 @@ $(document).ready(function () {
         }
     }
 
-    var loadProfile = function () {
-
-        $('#exampleModalLongTitle').html("正在查詢您的報名資料");
-        $('#postLoadingModalText').html("請稍等");
-        $('#postLoadingModal').modal({ show: true });
-
-        ajaxProcessor('GET', './form/query_enroll', {},
-            function (data) {
-                if (data && data.result) {
-
-                    // 已有報名資料
-
-                    var result = data.result;
-
-                    if (result.inputSN) {
-                        $("#inputSN").val(result.inputSN);
-                        // $('input[name=userTypeRadioOptions][value='+result.userTypeRadioOptions+']').prop("checked","checked");
-                        $("#userTypeButtons").hide();
-                        $("#userTypeWording").html(usertype);
-
-                        $("#inputEmail").val(result.inputEmail);
-                        $("#inputEnglishName").val(result.inputEnglishName);
-                        $("#inputChineseName1").val(result.inputChineseName1);
-                        $("#departmentSelect1").val(result.departmentSelect1);
-                        $("#locationSelect1").val(result.locationSelect1);
-                        $("#mobileNo1").val(result.mobileNo1);
-                        $("#inputID").val(result.inputID);
-                        $("select[name='birthDayYear']").val(result.birthDayYear);
-                        $("select[name='birthDayMonth']").val(result.birthDayMonth);
-                        $("select[name='birthDayDay']").val(result.birthDayDay);
-                        $("#inputParticipant").val(result.inputParticipant);
-                        $("#participantFee").val(result.participantFee);
-
-                        var participant = new Participant(usertype);
-                        participant.onChange(result.participants)
-                        var shuttle = new Shuttle(usertype);
-                        shuttle.onChange(result.inputShuttle)
-
-                        $('#personalInfoCheckbox1').prop('checked', true);
-                        $("#backToEventBtn").show();
-
-                    }
-
-                    var lastModTs = (result.lastModTs) ? " " + result.lastModTs.replace(/T/g, " ").replace(/Z/g, " ").substring(0, 19) + " " : "";
-
-                    $("#enrollMessage").html("已於" + lastModTs + "報名成功，系統將自動寄送報名確認信，如還需修改請點選 [修改資料]");
-                    $("#enrollMessage").show();
-
-                    submitToReview();
-                    $("#regSubmitConfirmBtn").hide();
-                    $("#confirmSectionStart").hide();
-
-                } else {
-
-                }
-
-                setTimeout(function () { $('#postLoadingModal').modal("hide"); }, 500);
-
-            }, function () {
-
-                setTimeout(function () { $('#postLoadingModal').modal("hide"); }, 500);
-
-                // no data
-            }, true);
-    };
-
-    $("#backToEventBtn").click(function () {
-        window.location = "../";
-    });
-
-    $("#backToEventBtn").hide();
-
-    var username, email, sn, usertype;
-
-    $("#enrollMessage").hide();
-
-    $("#enrollSection").show();
-    $("#confirmSection").hide();
+    var username, email, sn;
 
     getToken(function (token) {
         getProfile(token.token, function (data) {
@@ -318,119 +241,190 @@ $(document).ready(function () {
             username = user.displayName;
             email = user.email;
             sn = user.id.substring(0, 6);
-
-            // init form
-            $("#inputSN").val(sn);
-            var regular_pattern1 = /^\d/i;
-            var regular_pattern2 = /^\ZZ/i;
-            // regular
-            if (regular_pattern1.test(sn) || regular_pattern2.test(sn)) {
-                usertype = "Regular";
-            } else {
-                usertype = "Contractor";
-            }
-
-            $("#userTypeButtons").hide();
-            $("#userTypeWording").html(usertype);
-            $("#inputEmail").val(email);
-            $("#inputEnglishName").val(username);
-
-            loadProfile();
-
         });
     });
 
-    var submitToReview = function () {
+    $("#confirmForm").hide();
+    $("#editSection").hide();
+    $("#success_msg").hide();
+    $("#histSection").hide();
 
-        $("#confirmSectionStart").show();
+    $("#editBtn").click(function () {
+        $("#success_msg").html("請進行編輯");
+        $("#confirmForm").hide();
+        $("#histSection").hide();
+        $("#editSection").show();
+    });
+
+    $("#histBtn").click(function () {
+        loadSingleUserEnrollHistInfo();
+    });
+
+    var currentQueryLastRecord = {};
+
+    var loadSingleUserEnrollInfo = function (postMessage) {
+
         $("#success_msg").hide();
-
-        var requestRegisterParams = {
-            userTypeRadioOptions: usertype,
-            inputSN: $("#inputSN").val(),
-            inputEmail: $("#inputEmail").val(),
-            inputEnglishName: $("#inputEnglishName").val(),
-            inputChineseName1: $("#inputChineseName1").val(),
-            departmentSelect1: $("#departmentSelect1").val(),
-            locationSelect1: $("#locationSelect1").val(),
-            mobileNo1: $("#mobileNo1").val(),
-            inputID: $("#inputID").val(),
-            birthDayYear: $("select[name='birthDayYear']").val(),
-            birthDayMonth: $("select[name='birthDayMonth']").val(),
-            birthDayDay: $("select[name='birthDayDay']").val(),
-            inputParticipant: $("#inputParticipant").val(),
-            participantFee: $("#participantFee").val(),
-            inputShuttle: $("#inputShuttle").val(),
-            shuttleFare: $("#shuttleFare").val()
-        };
-
-        for (var i = 1; i <= requestRegisterParams.inputParticipant; i++) {
-            requestRegisterParams['inputParticipantChineseName'+i] = $("#inputParticipantChineseName" + i).val()
-            requestRegisterParams['inputParticipantID'+i] = $("#inputParticipantID" + i).val()
-            requestRegisterParams['participantBirthDay'+i+ 'Year'] = $("select[name='participantBirthDay" + i + "Year']").val()
-            requestRegisterParams['participantBirthDay'+i+ 'Month'] = $("select[name='participantBirthDay" + i + "Month']").val()
-            requestRegisterParams['participantBirthDay'+i+ 'Day'] = $("select[name='participantBirthDay" + i + "Day']").val()
-        }
-        $("#userTypeRadioOptionsConfirm").html(usertype);
-        $("#inputSNConfirm").html(requestRegisterParams.inputSN);
-        $("#inputEmailConfirm").html(requestRegisterParams.inputEmail);
-        $("#inputEnglishNameConfirm").html(requestRegisterParams.inputEnglishName);
-        $("#inputChineseName1Confirm").html(requestRegisterParams.inputChineseName1);
-        $("#departmentSelect1Confirm").html(requestRegisterParams.departmentSelect1);
-        $("#locationSelect1Confirm").html(requestRegisterParams.locationSelect1);
-        $("#mobileNo1Confirm").html(requestRegisterParams.mobileNo1);
-        $("#inputIDConfirm").html(requestRegisterParams.inputID);
-        $("#birthDayConfirmYear").html(requestRegisterParams.birthDayYear);
-        $("#birthDayConfirmMonth").html(requestRegisterParams.birthDayMonth);
-        $("#birthDayConfirmDay").html(requestRegisterParams.birthDayDay);
-        $("#inputParticipantConfirm").html(requestRegisterParams.inputParticipant);
-        $("#participantFeeConfirm").html(requestRegisterParams.participantFee);
-        $("#inputShuttleConfirm").html(requestRegisterParams.inputShuttle);
-        $("#shuttleFareConfirm").html(requestRegisterParams.shuttleFare);
-        var participant = new Participant(usertype);
-        participant.doInputConfirmList(requestRegisterParams.inputParticipant, requestRegisterParams);
-
-
-        $("#enrollSection").hide();
-
-        $('#exampleModalLongTitle').html("正在準備預覽資料");
-        $('#postLoadingModalText').html("正在準備預覽資料");
+        $("#editSection").hide();
+        $("#histSection").hide();
+        $('#postLoadingModalText').html("正在查詢歷史紀錄，請稍等...");
         $('#postLoadingModal').modal({ show: true });
 
-        $("#confirmSection").show();
+        ajaxProcessor('GET', './form/query_enroll_last_record', { "querySN": $("#query_key").val() },
+            function (data) {
+                console.log(data);
 
-        setTimeout(function () {
-
-            $('#postLoadingModal').modal('hide');
-
-        }, 500);
+                $('#postLoadingModal').modal("hide");
 
 
+                // 查詢成功
+                if (data.success) {
+
+                    // show confirm data
+                    var last_hist = data.result;
+                    currentQueryLastRecord = last_hist;
+                    $("#userTypeRadioOptionsConfirm").html(last_hist.userTypeRadioOptions);
+                    $("#inputSNConfirm").html(last_hist.inputSN);
+                    $("#inputEmailConfirm").html(last_hist.inputEmail);
+                    $("#inputEnglishNameConfirm").html(last_hist.inputEnglishName);
+                    $("#inputChineseName1Confirm").html(last_hist.inputChineseName1);
+                    $("#departmentSelect1Confirm").html(last_hist.departmentSelect1);
+                    $("#locationSelect1Confirm").html(last_hist.locationSelect1);
+                    $("#mobileNo1Confirm").html(last_hist.mobileNo1);
+                    $("#vegetarianRadioOptions1Confirm").html(last_hist.vegetarianRadioOptions1 == "N" ? "否" : "是");
+
+                    $("#vegetarianRadioOptions2Confirm").html(last_hist.vegetarianRadioOptions2 == "N" ? "否" : "是");
+
+                    $("#participantSelect1Confirm").html(last_hist.participantSelect1);
+                    var lastModUser = last_hist.lastModUser.split("|");
+                    $("#lastModUserConfirm").html(lastModUser[1] + " (" + lastModUser[0] + ")");
+                    var lastModTs = last_hist.lastModTs.replace(/T/g, " ").replace(/Z/g, " ");
+                    $("#lastModTsConfirm").html(lastModTs);
+
+                    // filled edit data
+                    var employee_type = "", usertype = "";
+                    var sn = last_hist.inputSN;
+                    $("#inputSN").val(sn);
+                    var regular_pattern1 = /^\d/i;
+                    var regular_pattern2 = /^\ZZ/i;
+                    // regular
+                    if (regular_pattern1.test(sn) || regular_pattern2.test(sn)) {
+                        usertype = "Regular";
+                    } else {
+                        usertype = "Contractor";
+                    }
+                    // 攜帶伴侶選項
+                    var regularOptionsHTML = '<option>請選擇</option><option value="不攜伴">不攜伴</option><option value="1位">1位 (IBMer親友免費)</option>';
+                    var contractorOptionsHTML = '<option>請選擇</option><option value="不攜伴">不攜伴</option><option value="1位">1位 (Contractor親友自費800元)</option>';
+                    if (usertype == "Regular") {
+                        $("#participantSelect1").html(regularOptionsHTML);
+                    } else {
+                        $("#participantSelect1").html(contractorOptionsHTML);
+                    }
+                    $(".friend1-vegetarian-content").hide();
+
+
+                    $("#inputSN").val(last_hist.inputSN);
+                    $('#userTypeRadioOptions').val(last_hist.userTypeRadioOptions);
+                    $("#userTypeButtons").hide();
+                    $("#userTypeWording").html(usertype);
+
+                    $("#inputEmail").val(last_hist.inputEmail);
+                    $("#inputEnglishName").val(last_hist.inputEnglishName);
+                    $("#inputChineseName1").val(last_hist.inputChineseName1);
+                    $("#departmentSelect1").val(last_hist.departmentSelect1);
+                    $("#locationSelect1").val(last_hist.locationSelect1);
+                    $("#mobileNo1").val(last_hist.mobileNo1);
+                    $('input[name=vegetarianRadioOptions1][value=' + last_hist.vegetarianRadioOptions1 + ']').prop("checked", "checked");
+                    $('select[name=participantSelect1] option[value=' + last_hist.participantSelect1 + ']').prop("selected", "selected");
+                    $('#personalInfoCheckbox1').prop('checked', true);
+
+                    $('input[name=vegetarianRadioOptions2][value=' + last_hist.vegetarianRadioOptions2 + ']').prop("checked", "checked");
+
+                    if (last_hist && last_hist.participantSelect1 == "1位") {
+                        $(".friend1-vegetarian-content").show();
+                    } else {
+                        // default display
+                    }
+
+                    if (postMessage) {
+                        $("#success_msg").html(postMessage);
+                    } else {
+                        $("#success_msg").html("查詢完成");
+                    }
+
+                    $("#success_msg").show();
+                    $("#confirmForm").show();
+
+                    // 查詢結果異常
+                } else {
+
+                    $("#success_msg").html("查無資料，詳細錯誤訊息為：" + JSON.stringify(data));
+                    $("#success_msg").show();
+
+                }
+
+            }, function () {
+                console.log("Err");
+                console.log(data);
+            }, true);
     };
 
-    $.validator.setDefaults({
-        // valid and submit
-        submitHandler: submitToReview
+    var loadSingleUserEnrollHistInfo = function () {
+        ajaxProcessor('GET', './form/query_enroll_hist', { "querySN": currentQueryLastRecord.inputSN },
+            function (data) {
+                if (data.success) {
+                    var result = data.result;
+                    console.log(data.result);
+                    var rowsHTML = "";
+                    for (var i = 0; i < result.length; i++) {
+                        var currentResultSet = result[i];
+
+                        var lastModUser = (lastModUser) ? currentResultSet.lastModUser.split("|") : "";
+                        var lastModTs = currentResultSet.lastModTs.replace(/T/g, " ").replace(/Z/g, " ");
+
+                        var details =
+                            "員工類型:" + currentResultSet.userTypeRadioOptions + "<br />" +
+                            "員工證號:" + currentResultSet.inputSN + "<br />" +
+                            "電子郵件:" + currentResultSet.inputEmail + "<br />" +
+                            "英文姓名:" + currentResultSet.inputEnglishName + "<br />" +
+                            "中文姓名:" + currentResultSet.inputChineseName1 + "<br />" +
+                            "部門:" + currentResultSet.departmentSelect1 + "<br />" +
+                            "位置:" + currentResultSet.locationSelect1 + "<br />" +
+                            "手機號碼:" + currentResultSet.mobileNo1 + "<br />" +
+                            "本人是否吃素:" + currentResultSet.vegetarianRadioOptions1 + "<br />" +
+                            "是否攜伴:" + currentResultSet.participantSelect1 + "<br />" +
+                            "親友是否吃素:" + currentResultSet.vegetarianRadioOptions2;
+
+                        var currentRow = '<tr><th scope="row">' + lastModTs + '</th><td colspan="3">' + details + '</td></tr>';
+                        rowsHTML += currentRow;
+                    }
+
+                    $("#hist_title").html(currentQueryLastRecord.inputEnglishName + " " + currentQueryLastRecord.inputChineseName1 + " (" + currentQueryLastRecord.inputSN + ") 的歷史紀錄");
+                    $("#hist_rows").html(rowsHTML);
+                    $("#histSection").show();
+
+                }
+            }
+        );
+    };
+
+    $('#query_key').keypress(function (e) {
+        if (e.which == 13) {
+            loadSingleUserEnrollInfo();
+        }
     });
 
-    $("#backToEditBtn").click(function () {
-        $("#enrollSection").show();
-        $("#regSubmitConfirmBtn").show();
-        $("#backToEventBtn").hide();
-        $("#confirmSection").hide();
-        $("#enrollMessage").hide();
-    });
+    $("#regSubmitConfirmBtn").click(function () { loadSingleUserEnrollInfo(); });
 
-    $("#cancelBtn").click(loadProfile);
+    var sendModifyUser = function () {
 
-    // 確認無誤，至後端註冊
-    $("#regSubmitConfirmBtn").click(function () {
         $('#exampleModalLongTitle').html("正在送出報名資料");
         $('#postLoadingModalText').html("正在送出報名資料，請稍候");
         $('#postLoadingModal').modal({ show: true });
 
         var confirmedRequestRegisterParams = {
-            userTypeRadioOptions: usertype,
+            userTypeRadioOptions: $('#userTypeRadioOptions').val(),
             inputSN: $("#inputSN").val(),
             inputEmail: $("#inputEmail").val(),
             inputEnglishName: $("#inputEnglishName").val(),
@@ -438,39 +432,45 @@ $(document).ready(function () {
             departmentSelect1: $("#departmentSelect1").val(),
             locationSelect1: $("#locationSelect1").val(),
             mobileNo1: $("#mobileNo1").val(),
-            inputID: $("#inputID").val(),
-            birthDayYear: $("select[name='birthDayYear']").val(),
-            birthDayMonth: $("select[name='birthDayMonth']").val(),
-            birthDayDay: $("select[name='birthDayDay']").val(),
-            inputParticipant: $("#inputParticipant").val(),
-            participantFee: $("#participantFee").val(),
-            inputShuttle: $("#inputShuttle").val(),
-            shuttleFare: $("#shuttleFare").val()
+            vegetarianRadioOptions1: $('input[name=vegetarianRadioOptions1]:checked', '#registerForm').val(),
+
+            vegetarianRadioOptions2: $('input[name=vegetarianRadioOptions2]:checked', '#registerForm').val(),
+
+            participantSelect1: $("#participantSelect1").val()
         };
 
-        for (var i = 1; i <= confirmedRequestRegisterParams.inputParticipant; i++) {
-            confirmedRequestRegisterParams['inputParticipantChineseName'+i] = $("#inputParticipantChineseName" + i).val()
-            confirmedRequestRegisterParams['inputParticipantID'+i] = $("#inputParticipantID" + i).val()
-            confirmedRequestRegisterParams['participantBirthDay'+i+ 'Year'] = $("select[name='participantBirthDay" + i + "Year']").val()
-            confirmedRequestRegisterParams['participantBirthDay'+i+ 'Month'] = $("select[name='participantBirthDay" + i + "Month']").val()
-            confirmedRequestRegisterParams['participantBirthDay'+i+ 'Day'] = $("select[name='participantBirthDay" + i + "Day']").val()
-        }
-
-        ajaxProcessor('POST', './form/enroll', confirmedRequestRegisterParams,
+        ajaxProcessor('POST', './form/update_enroll', confirmedRequestRegisterParams,
             function (data) {
-                //console.log(data);
+                console.log(data);
                 if (data.success) {
-                    $('#postModalText').html("報名成功，您稍後將收到報名成功的通知信！");
-                    loadProfile();
+                    $('#postModalText').html("資料更新完成");
+                    loadSingleUserEnrollInfo("資料更新完成");
                 } else {
-                    $('#postModalText').html("報名沒有成功，請再嘗試一次");
+                    $('#postModalText').html("資料更新沒有成功，請再嘗試一次");
                 }
-                setTimeout(function () { $('#postLoadingModal').modal("hide"); $('#postModal').modal({ show: true }); $("#confirmSectionStart").hide();/* $("#success_msg").show(); */ $("#regSubmitConfirmBtn").hide(); $("#backToEventBtn").show(); }, 500);
+                setTimeout(
+                    function () {
+                        $('#postLoadingModal').modal("hide");
+                        $('#postModal').modal({ show: true });
+                    }, 500);
             }, function () {
-                $('#postModalText').html("報名沒有成功，請再嘗試一次");
-                setTimeout(function () { $('#postLoadingModal').modal("hide"); $('#postModal').modal({ show: true }); $("#confirmSectionStart").html("報名沒有成功，請再嘗試一次，如仍有問題請聯絡 EWC 工作人員"); }, 500);
+                $('#postModalText').html("資料更新沒有成功，請再嘗試一次");
+                setTimeout(
+                    function () {
+                        $('#postLoadingModal').modal("hide");
+                        $('#postModal').modal({ show: true });
+                        $("#success_msg").html("報名沒有成功，請再嘗試一次，如仍有問題請聯絡系統管理人員");
+                        $("#success_msg").show();
+                    }, 500);
             }, true);
 
+    };
+
+    $.validator.setDefaults({
+        // valid and submit
+        submitHandler: function () {
+            sendModifyUser();
+        }
     });
 
     jQuery.validator.addMethod("notEqual", function (value, element, param) {
@@ -616,50 +616,6 @@ $(document).ready(function () {
         }
     }
 
-    for (var i = 1; i <= $("#inputParticipant").attr('max'); i++) {
-        validRule[1]['inputParticipantChineseName' + i] = {
-            required: true
-        };
-        validRule[1]['inputParticipantID' + i] = {
-            required: true,
-            ROC_Citizen_ID_regex: true,
-            ROC_Citizen_ID_arithmetic: true
-        };
-        validRule[1]['participantBirthDay' + i + 'Year'] = {
-            required: true,
-            notEqual: 0
-        };
-        validRule[1]['participantBirthDay' + i + 'Month'] = {
-            required: true,
-            notEqual: 0
-        };
-        validRule[1]['participantBirthDay' + i + 'Day'] = {
-            required: true,
-            notEqual: 0
-        };
-        
-        validMsg[1]['inputParticipantChineseName' + i] = {
-            required: "請輸入親友" + i + "中文姓名"
-        };
-        validMsg[1]['inputParticipantID' + i] = {
-            required: "請輸入親友" + i + "身份證字號",
-            ROC_Citizen_ID_regex: "親友" + i + "身份證字號格式錯誤",
-            ROC_Citizen_ID_arithmetic: "親友" + i + "身份證字號似乎偽造"
-        };
-        validMsg[1]['participantBirthDay' + i + 'Year'] = {
-            required: "請選擇西元年",
-            notEqual: "請選擇西元年"
-        };
-        validMsg[1]['participantBirthDay' + i + 'Month'] = {
-            required: "請選擇月",
-            notEqual: "請選擇月"
-        };
-        validMsg[1]['participantBirthDay' + i + 'Day'] = {
-            required: "請選擇日",
-            notEqual: "請選擇日"
-        };
-    }
-  
     var initRule = validRule[1];
     var initMsg = validMsg[1];
     var currentRule = initRule;

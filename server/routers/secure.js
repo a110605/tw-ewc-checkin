@@ -337,7 +337,7 @@ module.exports = function(app, config, passport) {
                 // user type check
                 var currentSN = req.user.id.substring(0, 6);
                 if(adminList.indexOf(currentSN) > -1) {
-                    res.render(`enroll_admin.${event.type}.pug`, {title: 'TW EWC Enroll System', user : req.user});
+                    res.render(`enroll_admin.${event.type}.pug`, {title: 'TW EWC Enroll System', user : req.user, mode: 1});
                 } else {
                     res.render("not_found_error", {title: 'TW EWC Enroll System', user : req.user});
                 }
