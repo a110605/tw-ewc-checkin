@@ -147,10 +147,8 @@ module.exports = function(app, config, passport) {
             ic = /"/g;
             lq = /{/g;
             rq = /}/g;
-        if(typeof inputString === 'string') {
+        if(inputString) {
             inputString = inputString.toString().replace(lt, "&lt;").replace(gt, "&gt;").replace(ap, "&#39;").replace(ic, "&#34;").replace(lq, "").replace(rq, "");
-        } else {
-            logger.debug("Unsupported input type " + (typeof inputString))
         }
         return inputString;
     };
