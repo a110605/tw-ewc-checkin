@@ -387,13 +387,15 @@ module.exports = function(app, config, passport) {
                         vegetarianRadioOptions2: securityValid(inputForm.vegetarianRadioOptions2),  
                     } 
                 }
-                specificInfos[0].participants = {}
+                specificInfos[0].participants = []
                 for(var i=1;i<=specificInfos[0].inputParticipant;i++) {
-                    specificInfos[0].participants['inputParticipantChineseName'+i] = securityValid(inputForm['inputParticipantChineseName'+i])
-                    specificInfos[0].participants['inputParticipantID'+i] = securityValid(inputForm['inputParticipantID'+i])
-                    specificInfos[0].participants['participantBirthDay'+i+'Year'] = securityValid(inputForm['participantBirthDay'+i+'Year'])
-                    specificInfos[0].participants['participantBirthDay'+i+'Month'] = securityValid(inputForm['participantBirthDay'+i+'Month'])
-                    specificInfos[0].participants['participantBirthDay'+i+'Day'] = securityValid(inputForm['participantBirthDay'+i+'Day'])
+                    var tmp = {}
+                    tmp['inputParticipantChineseName'+i] = securityValid(inputForm['inputParticipantChineseName'+i]);
+                    tmp['inputParticipantID'+i] = securityValid(inputForm['inputParticipantID'+i]);
+                    tmp['participantBirthDay'+i+'Year'] = securityValid(inputForm['participantBirthDay'+i+'Year']);
+                    tmp['participantBirthDay'+i+'Month'] = securityValid(inputForm['participantBirthDay'+i+'Month']);
+                    tmp['participantBirthDay'+i+'Day'] = securityValid(inputForm['participantBirthDay'+i+'Day']);
+                    specificInfos[0].participants.push(tmp)
                 }
 
                 var metadataInfos = {
@@ -461,13 +463,15 @@ module.exports = function(app, config, passport) {
                                 }
 
                             }
-                            specificInfoHists[0].participants = {}
+                            specificInfoHists[0].participants = []
                             for(var i=1;i<=specificInfoHists[0].inputParticipant;i++) {
-                                specificInfoHists[0].participants['inputParticipantChineseName'+i] = enrollInfo.participants['inputParticipantChineseName'+i]
-                                specificInfoHists[0].participants['inputParticipantID'+i] = enrollInfo.participants['inputParticipantID'+i]
-                                specificInfoHists[0].participants['participantBirthDay'+i+'Year'] = enrollInfo.participants['participantBirthDay'+i+'Year']
-                                specificInfoHists[0].participants['participantBirthDay'+i+'Month'] = enrollInfo.participants['participantBirthDay'+i+'Month']
-                                specificInfoHists[0].participants['participantBirthDay'+i+'Day'] = enrollInfo.participants['participantBirthDay'+i+'Day']
+                                var tmp = {}
+                                tmp['inputParticipantChineseName'+i] = enrollInfo.participants['inputParticipantChineseName'+i]
+                                tmp['inputParticipantID'+i] = enrollInfo.participants['inputParticipantID'+i]
+                                tmp['participantBirthDay'+i+'Year'] = enrollInfo.participants['participantBirthDay'+i+'Year']
+                                tmp['participantBirthDay'+i+'Month'] = enrollInfo.participants['participantBirthDay'+i+'Month']
+                                tmp['participantBirthDay'+i+'Day'] = enrollInfo.participants['participantBirthDay'+i+'Day']
+                                specificInfoHists[0].participants.push(tmp)
                             }
                             var metadataInfoHists = {
                                 lastModTs: enrollInfo.lastModTs,

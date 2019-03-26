@@ -1,3 +1,4 @@
+var totalPaidParticipantReleased = 200
 var getToken = function (callback) {
     $.ajax({
         'url': './getToken',
@@ -92,15 +93,16 @@ function brithDayWigetTemplate(label) {
 class Participant {
     constructor(type) {
         this.id = "inputParticipant";
-        this.wordking = "regularParticipantWording";
+        this.wordking = (type == "Regular" ? "regularParticipantWording" : "contractorParticipantWording");
         this.price = 500;
         this.fee = "participantFee";
         this.feeWording = "participantFeeWording";
         this.doWording = function (inputParticipantVal) {
-            if (inputParticipantVal > 0) {
+            if (type == "Regular" && inputParticipantVal > 0) {
                 $("." + this.wordking).show();
-            }
-            else {
+            } else if (type == "Contractor") {
+                $("." + this.wordking).show();
+            } else {
                 $("." + this.wordking).hide();
             }
         }
@@ -108,14 +110,14 @@ class Participant {
             if (type == "Regular" && inputParticipantVal > 3) {
                 $("#" + this.feeWording).text((inputParticipantVal - 3) * this.price)
                 $("#" + this.fee).val((inputParticipantVal - 3) * this.price)
-            } else if (this.type == "Contractor") {
-                $("#" + this.fee).val((inputParticipantVal + 1) * this.price)
+            } else if (type == "Contractor") {
+                $("#" + this.feeWording).text(this.price)
             } else {
                 $("#" + this.feeWording).text(0)
                 $("#" + this.fee).val(0)
             }
         }
-        this.doInputList = function (inputParticipantVal, result) {
+        this.doInputList = function (inputParticipantVal, participants) {
             if (type == "Regular") {
                 const maxAttr = $("#" + this.id).attr("max");
                 for (var i = 1; i <= maxAttr; i++) {
@@ -132,12 +134,12 @@ class Participant {
                             var options = $.extend(true, birthDayFormat, brithDayWigetTemplate("participantBirthDay" + i))
                             $('#participantBirthDay' + i).bootstrapBirthday(options);
                         } 
-                        if (result) {
-                            $("#inputParticipantChineseName" + i).val(result['inputParticipantChineseName' + i])
-                            $("#inputParticipantID" + i).val(result['inputParticipantID' + i])
-                            $("select[name='participantBirthDay" + i + "Year']").val(result['participantBirthDay' + i + 'Year']);
-                            $("select[name='participantBirthDay" + i + "Month']").val(result['participantBirthDay' + i + 'Month']);
-                            $("select[name='participantBirthDay" + i + "Day']").val(result['participantBirthDay' + i + 'Day']);
+                        if (participants) {
+                            $("#inputParticipantChineseName" + i).val(participants[i-1]['inputParticipantChineseName' + i])
+                            $("#inputParticipantID" + i).val(participants[i-1]['inputParticipantID' + i])
+                            $("select[name='participantBirthDay" + i + "Year']").val(participants[i-1]['participantBirthDay' + i + 'Year']);
+                            $("select[name='participantBirthDay" + i + "Month']").val(participants[i-1]['participantBirthDay' + i + 'Month']);
+                            $("select[name='participantBirthDay" + i + "Day']").val(participants[i-1]['participantBirthDay' + i + 'Day']);
                         }
                     } else if (inputParticipantVal == 0 || i > inputParticipantVal) {
                         if ($(".participantGroup" + i).length != 0) {
@@ -146,41 +148,44 @@ class Participant {
                     }
                 }
             } else {
-                $(".participantNumber").hide();
+                // $("#" + this.id).attr('disabled', true);
+                $(".totalPaidParticipantNumber").hide();
             }
 
         }
-        this.doInputConfirmList = function (inputParticipantVal, result) {
-            if (type == "Regular") {
-                const maxAttr = $("#" + this.id).attr("max");
-                for (var i = 1; i <= maxAttr; i++) {
-                    if (i <= inputParticipantVal) {
-                        //no existing
-                        if ($(".participantGroupConfirm" + i).length == 0) {
-                            var tmpl = $.templates('#participantConfirmRow');
-                            var row = tmpl.render({label:i});
-                            if (i == 1) {
-                                $(".participantNumberConfirm").after(row)
-                            } else {
-                                $(".participantGroupConfirm" + (i - 1)).after(row)
-                            }
-                        } 
-                        if (result) {
-                            $("#inputParticipantChineseNameConfirm" + i).text(result['inputParticipantChineseName' + i])
-                            $("#inputParticipantIDConfirm" + i).text(result['inputParticipantID' + i])
-                            $("#participantBirthDayConfirm" + i + "Year").text(result['participantBirthDay' + i + 'Year']);
-                            $("#participantBirthDayConfirm" + i + "Month").text(result['participantBirthDay' + i + 'Month']);
-                            $("#participantBirthDayConfirm" + i + "Day").text(result['participantBirthDay' + i + 'Day']);
+        this.doInputConfirmList = function (inputParticipantVal, participants) {
+            const maxAttr = $("#" + this.id).attr("max");
+            for (var i = 1; i <= maxAttr; i++) {
+                if (i <= inputParticipantVal) {
+                    //no existing
+                    if ($(".participantGroupConfirm" + i).length == 0) {
+                        var tmpl = $.templates('#participantConfirmRow');
+                        var row = tmpl.render({label:i});
+                        if (i == 1) {
+                            $(".participantNumberConfirm").after(row)
+                        } else {
+                            $(".participantGroupConfirm" + (i - 1)).after(row)
                         }
-                    } else if (inputParticipantVal == 0 || i > inputParticipantVal) {
-                        if ($(".participantGroupConfirm" + i).length != 0) {
-                            $(".participantGroupConfirm" + i).remove();
-                        }
+                    } 
+                    
+                    if (participants) {
+                        $("#inputParticipantChineseNameConfirm" + i).text(participants[i-1]['inputParticipantChineseName' + i])
+                        $("#inputParticipantIDConfirm" + i).text(participants[i-1]['inputParticipantID' + i])
+                        $("#participantBirthDayConfirm" + i + "Year").text(participants[i-1]['participantBirthDay' + i + 'Year']);
+                        $("#participantBirthDayConfirm" + i + "Month").text(participants[i-1]['participantBirthDay' + i + 'Month']);
+                        $("#participantBirthDayConfirm" + i + "Day").text(participants[i-1]['participantBirthDay' + i + 'Day']);
+                    }
+                } else if (inputParticipantVal == 0 || i > inputParticipantVal) {
+                    if ($(".participantGroupConfirm" + i).length != 0) {
+                        $(".participantGroupConfirm" + i).remove();
                     }
                 }
-            } else {
-                $(".participantNumberConfirm").hide();
             }
+        }
+        this.doMaxAttr = function () {
+            if (type == "Contractor") {
+                $("#" + this.id).attr("max", 0)
+            } 
         }
         this.doShuttle = function (inputParticipantVal) {
             if (type == "Regular") {
@@ -195,6 +200,7 @@ class Participant {
             this.doFee(inputParticipantVal)
             this.doInputList(inputParticipantVal)
             this.doShuttle(inputParticipantVal)
+            this.doMaxAttr()
         };
     }
 }
@@ -406,3 +412,57 @@ for (var i = 1; i <= $("#inputParticipant").attr('max'); i++) {
         notEqual: "請選擇日"
     };
 }
+
+var getRemainedPaidParticipantNumber = function () {
+        
+    ajaxProcessor('GET', './form/query_enroll_hist', { "querySN": currentQueryLastRecord.inputSN },
+        function (data) {
+            if (data.success) {
+                var result = data.result;
+                console.log(data.result);
+                var rowsHTML = "";
+                for (var i = 0; i < result.length; i++) {
+                    var currentResultSet = result[i];
+
+                    var lastModUser = (lastModUser) ? currentResultSet.lastModUser.split("|") : "";
+                    var lastModTs = currentResultSet.lastModTs.replace(/T/g, " ").replace(/Z/g, " ");
+
+                    var details =
+                        "員工類型:" + currentResultSet.userTypeRadioOptions + "<br />" +
+                        "員工證號:" + currentResultSet.inputSN + "<br />" +
+                        "電子郵件:" + currentResultSet.inputEmail + "<br />" +
+                        "英文姓名:" + currentResultSet.inputEnglishName + "<br />" +
+                        "中文姓名:" + currentResultSet.inputChineseName1 + "<br />" +
+                        "部門:" + currentResultSet.departmentSelect1 + "<br />" +
+                        "位置:" + currentResultSet.locationSelect1 + "<br />" +
+                        "手機號碼:" + currentResultSet.mobileNo1 + "<br />" +
+                        "身份證字號:" + currentResultSet.mobileNo1 + "<br />" +
+                        "生日:" + currentResultSet.mobileNo1 + "<br />" +
+                        "攜伴人數:" + currentResultSet.inputParticipant + "<br />" +
+                        "參加費用:" + currentResultSet.participantFee + "<br />" +
+                        "搭車人數:" + currentResultSet.inputShuttle + "<br />" +
+                        "搭車費用:" + currentResultSet.shuttleFare + "<br />";
+                    
+                    for (var j = 1; j <= currentResultSet.inputParticipant; j++) {
+                        var tmp = (currentResultSet.participants['inputParticipantChineseName'+j] ? "親友: " + j + "之中文姓名: " + currentResultSet.participants['inputParticipantChineseName'+j] : "")
+                        + (currentResultSet.participants['inputParticipantID'+j]? "身份證字號: " + currentResultSet.participants['inputParticipantID'+j] : "")
+                        + (currentResultSet.participants['participantBirthDay'+j+ 'Year'] ? "生日: 西元" + currentResultSet.participants['participantBirthDay'+j+ 'Year'] + "年" : "")
+                        + (currentResultSet.participants['participantBirthDay'+j+ 'Month'] ? currentResultSet.participants['participantBirthDay'+j+ 'Month'] + "月" : "")
+                        + (currentResultSet.participants['participantBirthDay'+j+ 'Day'] ? currentResultSet.participants['participantBirthDay'+j+ 'Day'] + "日" : "")
+                        if(tmp.length > 0) {
+                            details = details + tmp + "<br />";
+                        }    
+                    }  
+
+                    var currentRow = '<tr><th scope="row">' + lastModTs + '</th><td colspan="3">' + details + '</td></tr>';
+                    rowsHTML += currentRow;
+                }
+
+                $("#hist_title").html(currentQueryLastRecord.inputEnglishName + " " + currentQueryLastRecord.inputChineseName1 + " (" + currentQueryLastRecord.inputSN + ") 的歷史紀錄");
+                $("#hist_rows").html(rowsHTML);
+                $("#histSection").show();
+
+            }
+        }
+    );
+};

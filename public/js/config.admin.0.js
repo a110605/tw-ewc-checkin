@@ -1,5 +1,6 @@
 $(document).ready(function () {
     $(".regularParticipantWording").hide();
+    $(".contractorParticipantWording").hide();
     $("#inputParticipant").val(0)
     $("#participantFee").val(0)
     $("#inputShuttle").val(0)
@@ -130,6 +131,9 @@ $(document).ready(function () {
                     var participant = new Participant(usertype);
                     participant.doInputList(last_hist.inputParticipant, last_hist.participants)
                     participant.doShuttle(last_hist.inputParticipant)
+                    participant.doFee(last_hist.inputParticipant)
+                    participant.doWording(last_hist.inputParticipant)
+                    participant.doMaxAttr()
 
                     if (postMessage) {
                         $("#success_msg").html(postMessage);

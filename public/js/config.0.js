@@ -1,10 +1,13 @@
 $(document).ready(function () {
     $(".regularParticipantWording").hide();
+    $(".contractorParticipantWording").hide();
     $("#inputParticipant").val(0)
     $("#participantFee").val(0)
     $("#inputShuttle").val(0)
     $("#inputShuttle").attr("max", 1)
     $("#shuttleFare").val(0)
+    $("#totalPaidParticipantReleased").text(totalPaidParticipantReleased)
+
 
     $("#loading").hide();
 
@@ -51,10 +54,12 @@ $(document).ready(function () {
                         var participant = new Participant(usertype);
                         participant.doInputList(result.inputParticipant, result.participants)
                         participant.doShuttle(result.inputParticipant)
-
+                        participant.doFee(result.inputParticipant)
+                        participant.doWording(result.inputParticipant)
+                        participant.doMaxAttr()
+                        
                         $('#personalInfoCheckbox1').prop('checked', true);
                         $("#backToEventBtn").show();
-
                     }
 
                     var lastModTs = (result.lastModTs) ? " " + result.lastModTs.replace(/T/g, " ").replace(/Z/g, " ").substring(0, 19) + " " : "";
@@ -114,6 +119,7 @@ $(document).ready(function () {
                 usertype = "Contractor";
             }
             // usertype = "Contractor";
+
             $("#userTypeButtons").hide();
             $("#userTypeWording").html(usertype);
             $("#inputEmail").val(email);
@@ -147,14 +153,17 @@ $(document).ready(function () {
             inputShuttle: $("#inputShuttle").val(),
             shuttleFare: $("#shuttleFare").val()
         };
-
+        requestRegisterParams.participants = []
         for (var i = 1; i <= requestRegisterParams.inputParticipant; i++) {
-            requestRegisterParams['inputParticipantChineseName'+i] = $("#inputParticipantChineseName" + i).val()
-            requestRegisterParams['inputParticipantID'+i] = $("#inputParticipantID" + i).val()
-            requestRegisterParams['participantBirthDay'+i+ 'Year'] = $("select[name='participantBirthDay" + i + "Year']").val()
-            requestRegisterParams['participantBirthDay'+i+ 'Month'] = $("select[name='participantBirthDay" + i + "Month']").val()
-            requestRegisterParams['participantBirthDay'+i+ 'Day'] = $("select[name='participantBirthDay" + i + "Day']").val()
+            var tmp = {}
+            tmp['inputParticipantChineseName'+i] = $("#inputParticipantChineseName" + i).val();
+            tmp['inputParticipantID'+i] = $("#inputParticipantID" + i).val();
+            tmp['participantBirthDay'+i+ 'Year'] = $("select[name='participantBirthDay" + i + "Year']").val();
+            tmp['participantBirthDay'+i+ 'Month'] = $("select[name='participantBirthDay" + i + "Month']").val();
+            tmp['participantBirthDay'+i+ 'Day'] = $("select[name='participantBirthDay" + i + "Day']").val();
+            requestRegisterParams.participants.push(tmp)
         }
+
         $("#userTypeRadioOptionsConfirm").html(usertype);
         $("#inputSNConfirm").html(requestRegisterParams.inputSN);
         $("#inputEmailConfirm").html(requestRegisterParams.inputEmail);
@@ -172,7 +181,7 @@ $(document).ready(function () {
         $("#inputShuttleConfirm").html(requestRegisterParams.inputShuttle);
         $("#shuttleFareConfirm").html(requestRegisterParams.shuttleFare);
         var participant = new Participant(usertype);
-        participant.doInputConfirmList(requestRegisterParams.inputParticipant, requestRegisterParams);
+        participant.doInputConfirmList(requestRegisterParams.inputParticipant, requestRegisterParams.participants);
 
 
         $("#enrollSection").hide();
@@ -227,6 +236,7 @@ $(document).ready(function () {
             shuttleFare: $("#shuttleFare").val()
         };
 
+        //JSON object could not be HTTP request parameters
         for (var i = 1; i <= confirmedRequestRegisterParams.inputParticipant; i++) {
             confirmedRequestRegisterParams['inputParticipantChineseName'+i] = $("#inputParticipantChineseName" + i).val()
             confirmedRequestRegisterParams['inputParticipantID'+i] = $("#inputParticipantID" + i).val()
