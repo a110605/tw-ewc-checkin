@@ -1,6 +1,6 @@
 html
-  block heads
-    head
+  head
+    block heads1
       title= title
       meta(charset='utf-8')
       meta(name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no')
@@ -21,6 +21,8 @@ html
       script(src='vendor/bootstrap/js/bootstrap.bundle.min.js')
       script(src='vendor/bootstrap/js/bootstrap-birthday.min.js')
       script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js')
-      script(src='js/config.js')
+      script(src='js/common.0.js')
+    block heads2
+      script(src='js/config.0.js')
   block content
     include enroll_form_layout_rwd.0.html

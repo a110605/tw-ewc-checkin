@@ -463,17 +463,16 @@ module.exports = function(app, config, passport) {
                             }
                             specificInfoHists[0].participants = {}
                             for(var i=1;i<=specificInfoHists[0].inputParticipant;i++) {
-                                specificInfoHists[0].participants['inputParticipantChineseName'+i] = enrollInfo['inputParticipantChineseName'+i]
-                                specificInfoHists[0].participants['inputParticipantID'+i] = enrollInfo['inputParticipantID'+i]
-                                specificInfoHists[0].participants['participantBirthDay'+i+'Year'] = enrollInfo['participantBirthDay'+i+'Year']
-                                specificInfoHists[0].participants['participantBirthDay'+i+'Month'] = enrollInfo['participantBirthDay'+i+'Month']
-                                specificInfoHists[0].participants['participantBirthDay'+i+'Day'] = enrollInfo['participantBirthDay'+i+'Day']
+                                specificInfoHists[0].participants['inputParticipantChineseName'+i] = enrollInfo.participants['inputParticipantChineseName'+i]
+                                specificInfoHists[0].participants['inputParticipantID'+i] = enrollInfo.participants['inputParticipantID'+i]
+                                specificInfoHists[0].participants['participantBirthDay'+i+'Year'] = enrollInfo.participants['participantBirthDay'+i+'Year']
+                                specificInfoHists[0].participants['participantBirthDay'+i+'Month'] = enrollInfo.participants['participantBirthDay'+i+'Month']
+                                specificInfoHists[0].participants['participantBirthDay'+i+'Day'] = enrollInfo.participants['participantBirthDay'+i+'Day']
                             }
                             var metadataInfoHists = {
                                 lastModTs: enrollInfo.lastModTs,
                                 lastModUser: enrollInfo.lastModUser
                             }
-                            
                             var enrollInfoHist = histInfoHists;
                             Object.assign(enrollInfoHist, commonInfoHists, specificInfoHists[event.type], metadataInfoHists)
                             customlogger.info('enroll_hist_db.insert');
@@ -547,6 +546,7 @@ module.exports = function(app, config, passport) {
             "participantSelect1",
         ]
     };
+    
     var metadata_fields = [
         "lastModTs",
         "lastModUser"
