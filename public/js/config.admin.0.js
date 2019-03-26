@@ -1,6 +1,5 @@
 $(document).ready(function () {
     $(".regularParticipantWording").hide();
-    $(".contractorParticipantWording").hide();
     $("#inputParticipant").val(0)
     $("#participantFee").val(0)
     $("#inputShuttle").val(0)
@@ -98,7 +97,7 @@ $(document).ready(function () {
                     } else {
                         usertype = "Contractor";
                     }
-
+                    // usertype = "Contractor";
                     var participant = new Participant(usertype);
                     participant.doInputConfirmList(last_hist.inputParticipant, last_hist.participants);
 

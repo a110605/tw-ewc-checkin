@@ -92,7 +92,7 @@ function brithDayWigetTemplate(label) {
 class Participant {
     constructor(type) {
         this.id = "inputParticipant";
-        this.wordking = (type == "Regular" ? "regularParticipantWording" : "contractorParticipantWording");
+        this.wordking = "regularParticipantWording";
         this.price = 500;
         this.fee = "participantFee";
         this.feeWording = "participantFeeWording";
@@ -109,7 +109,6 @@ class Participant {
                 $("#" + this.feeWording).text((inputParticipantVal - 3) * this.price)
                 $("#" + this.fee).val((inputParticipantVal - 3) * this.price)
             } else if (this.type == "Contractor") {
-                $("#" + this.feeWording).text((inputParticipantVal + 1) * this.price)
                 $("#" + this.fee).val((inputParticipantVal + 1) * this.price)
             } else {
                 $("#" + this.feeWording).text(0)
@@ -117,65 +116,78 @@ class Participant {
             }
         }
         this.doInputList = function (inputParticipantVal, result) {
-            const maxAttr = $("#" + this.id).attr("max");
-            for (var i = 1; i <= maxAttr; i++) {
-                if (i <= inputParticipantVal) {
-                    //no existing
-                    if ($(".participantGroup" + i).length == 0) {
-                        var tmpl = $.templates('#participantRow');
-                        var row = tmpl.render({label:i});
-                        if (i == 1) {
-                            $(".participantNumber").after(row)
-                        } else {
-                            $(".participantGroup" + (i - 1)).after(row)
+            if (type == "Regular") {
+                const maxAttr = $("#" + this.id).attr("max");
+                for (var i = 1; i <= maxAttr; i++) {
+                    if (i <= inputParticipantVal) {
+                        //no existing
+                        if ($(".participantGroup" + i).length == 0) {
+                            var tmpl = $.templates('#participantRow');
+                            var row = tmpl.render({label:i});
+                            if (i == 1) {
+                                $(".participantNumber").after(row)
+                            } else {
+                                $(".participantGroup" + (i - 1)).after(row)
+                            }
+                            var options = $.extend(true, birthDayFormat, brithDayWigetTemplate("participantBirthDay" + i))
+                            $('#participantBirthDay' + i).bootstrapBirthday(options);
+                        } 
+                        if (result) {
+                            $("#inputParticipantChineseName" + i).val(result['inputParticipantChineseName' + i])
+                            $("#inputParticipantID" + i).val(result['inputParticipantID' + i])
+                            $("select[name='participantBirthDay" + i + "Year']").val(result['participantBirthDay' + i + 'Year']);
+                            $("select[name='participantBirthDay" + i + "Month']").val(result['participantBirthDay' + i + 'Month']);
+                            $("select[name='participantBirthDay" + i + "Day']").val(result['participantBirthDay' + i + 'Day']);
                         }
-                        var options = $.extend(true, birthDayFormat, brithDayWigetTemplate("participantBirthDay" + i))
-                        $('#participantBirthDay' + i).bootstrapBirthday(options);
-                    } 
-                    if (result) {
-                        $("#inputParticipantChineseName" + i).val(result['inputParticipantChineseName' + i])
-                        $("#inputParticipantID" + i).val(result['inputParticipantID' + i])
-                        $("select[name='participantBirthDay" + i + "Year']").val(result['participantBirthDay' + i + 'Year']);
-                        $("select[name='participantBirthDay" + i + "Month']").val(result['participantBirthDay' + i + 'Month']);
-                        $("select[name='participantBirthDay" + i + "Day']").val(result['participantBirthDay' + i + 'Day']);
-                    }
-                } else if (inputParticipantVal == 0 || i > inputParticipantVal) {
-                    if ($(".participantGroup" + i).length != 0) {
-                        $(".participantGroup" + i).remove();
+                    } else if (inputParticipantVal == 0 || i > inputParticipantVal) {
+                        if ($(".participantGroup" + i).length != 0) {
+                            $(".participantGroup" + i).remove();
+                        }
                     }
                 }
+            } else {
+                $(".participantNumber").hide();
             }
+
         }
         this.doInputConfirmList = function (inputParticipantVal, result) {
-            const maxAttr = $("#" + this.id).attr("max");
-            for (var i = 1; i <= maxAttr; i++) {
-                if (i <= inputParticipantVal) {
-                    //no existing
-                    if ($(".participantGroupConfirm" + i).length == 0) {
-                        var tmpl = $.templates('#participantConfirmRow');
-                        var row = tmpl.render({label:i});
-                        if (i == 1) {
-                            $(".participantNumberConfirm").after(row)
-                        } else {
-                            $(".participantGroupConfirm" + (i - 1)).after(row)
+            if (type == "Regular") {
+                const maxAttr = $("#" + this.id).attr("max");
+                for (var i = 1; i <= maxAttr; i++) {
+                    if (i <= inputParticipantVal) {
+                        //no existing
+                        if ($(".participantGroupConfirm" + i).length == 0) {
+                            var tmpl = $.templates('#participantConfirmRow');
+                            var row = tmpl.render({label:i});
+                            if (i == 1) {
+                                $(".participantNumberConfirm").after(row)
+                            } else {
+                                $(".participantGroupConfirm" + (i - 1)).after(row)
+                            }
+                        } 
+                        if (result) {
+                            $("#inputParticipantChineseNameConfirm" + i).text(result['inputParticipantChineseName' + i])
+                            $("#inputParticipantIDConfirm" + i).text(result['inputParticipantID' + i])
+                            $("#participantBirthDayConfirm" + i + "Year").text(result['participantBirthDay' + i + 'Year']);
+                            $("#participantBirthDayConfirm" + i + "Month").text(result['participantBirthDay' + i + 'Month']);
+                            $("#participantBirthDayConfirm" + i + "Day").text(result['participantBirthDay' + i + 'Day']);
                         }
-                    } 
-                    if (result) {
-                        $("#inputParticipantChineseNameConfirm" + i).text(result['inputParticipantChineseName' + i])
-                        $("#inputParticipantIDConfirm" + i).text(result['inputParticipantID' + i])
-                        $("#participantBirthDayConfirm" + i + "Year").text(result['participantBirthDay' + i + 'Year']);
-                        $("#participantBirthDayConfirm" + i + "Month").text(result['participantBirthDay' + i + 'Month']);
-                        $("#participantBirthDayConfirm" + i + "Day").text(result['participantBirthDay' + i + 'Day']);
-                    }
-                } else if (inputParticipantVal == 0 || i > inputParticipantVal) {
-                    if ($(".participantGroupConfirm" + i).length != 0) {
-                        $(".participantGroupConfirm" + i).remove();
+                    } else if (inputParticipantVal == 0 || i > inputParticipantVal) {
+                        if ($(".participantGroupConfirm" + i).length != 0) {
+                            $(".participantGroupConfirm" + i).remove();
+                        }
                     }
                 }
+            } else {
+                $(".participantNumberConfirm").hide();
             }
         }
         this.doShuttle = function (inputParticipantVal) {
-            $("#inputShuttle").attr("max", parseInt(inputParticipantVal) + 1)
+            if (type == "Regular") {
+                $("#inputShuttle").attr("max", parseInt(inputParticipantVal) + 1)
+            } else {
+                $("#inputShuttle").attr("max", 1)
+            }
         }
         this.onChange = function () {
             var inputParticipantVal = $("#" + this.id).val()

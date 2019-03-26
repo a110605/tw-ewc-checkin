@@ -1,6 +1,5 @@
 $(document).ready(function () {
     $(".regularParticipantWording").hide();
-    $(".contractorParticipantWording").hide();
     $("#inputParticipant").val(0)
     $("#participantFee").val(0)
     $("#inputShuttle").val(0)
@@ -114,7 +113,7 @@ $(document).ready(function () {
             } else {
                 usertype = "Contractor";
             }
-
+            // usertype = "Contractor";
             $("#userTypeButtons").hide();
             $("#userTypeWording").html(usertype);
             $("#inputEmail").val(email);
