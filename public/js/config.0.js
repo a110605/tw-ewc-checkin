@@ -44,7 +44,9 @@ $(document).ready(function () {
                         $("select[name='birthDayYear']").val(result.birthDayYear);
                         $("select[name='birthDayMonth']").val(result.birthDayMonth);
                         $("select[name='birthDayDay']").val(result.birthDayDay);
-                        $("#inputParticipant").val(result.inputParticipant);
+                        if (usertype == "Regular") {
+                            $("#inputParticipant").val(result.inputParticipant);
+                        }
                         $("#participantFee").val(result.participantFee);
                         $("#inputShuttle").val(result.inputShuttle);
                         $("#shuttleFare").val(result.shuttleFare);

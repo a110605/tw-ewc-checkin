@@ -145,7 +145,9 @@ class Participant {
                             }
                             var options = $.extend(true, birthDayFormat, brithDayWigetTemplate("participantBirthDay" + i))
                             $('#participantBirthDay' + i).bootstrapBirthday(options);
-                        } 
+                        } else {
+                            $(".participantGroup" + i).show();
+                        }
                         if (participants) {
                             $("#inputParticipantChineseName" + i).val(participants[i-1]['inputParticipantChineseName' + i])
                             $("#inputParticipantID" + i).val(participants[i-1]['inputParticipantID' + i])
@@ -155,12 +157,12 @@ class Participant {
                         }
                     } else if (inputParticipantVal == 0 || i > inputParticipantVal) {
                         if ($(".participantGroup" + i).length != 0) {
-                            $(".participantGroup" + i).remove();
+                            $(".participantGroup" + i).hide();
                         }
                     }
                 }
             } else {
-                $(".totalPaidParticipantNumber").hide();
+                $(".participantNumber").hide();
             }
 
         }
@@ -178,7 +180,6 @@ class Participant {
                             $(".participantGroupConfirm" + (i - 1)).after(row)
                         }
                     } 
-                    
                     if (participants) {
                         $("#inputParticipantChineseNameConfirm" + i).text(participants[i-1]['inputParticipantChineseName' + i])
                         $("#inputParticipantIDConfirm" + i).text(participants[i-1]['inputParticipantID' + i])
@@ -188,7 +189,7 @@ class Participant {
                     }
                 } else if (inputParticipantVal == 0 || i > inputParticipantVal) {
                     if ($(".participantGroupConfirm" + i).length != 0) {
-                        $(".participantGroupConfirm" + i).remove();
+                        $(".participantGroupConfirm" + i).hide();
                     }
                 }
             }
@@ -336,6 +337,10 @@ validRule[1] = {
         required: true,
         notEqual: 0
     },
+    genderSelect1: {
+        required: true,
+        notEqual: "請選擇"
+    },
     personalInfoCheckbox1: {
         required: true
     }
@@ -381,6 +386,9 @@ validMsg[1] = {
         required: "請選擇日",
         notEqual: "請選擇日"
     },
+    genderSelect1: {
+        notEqual: "請選擇性別"
+    },
     personalInfoCheckbox1: {
     required: "您必須同意我們利用您的資料才能線上報名"
     }
@@ -407,6 +415,10 @@ for (var i = 1; i <= $("#inputParticipant").attr('max'); i++) {
         required: true,
         notEqual: 0
     };
+    validRule[1]['participantGenderSelect' + i] = {
+        required: true,
+        notEqual: "請選擇"
+    };
     
     validMsg[1]['inputParticipantChineseName' + i] = {
         required: "請輸入親友" + i + "中文姓名"
@@ -427,5 +439,8 @@ for (var i = 1; i <= $("#inputParticipant").attr('max'); i++) {
     validMsg[1]['participantBirthDay' + i + 'Day'] = {
         required: "請選擇日",
         notEqual: "請選擇日"
+    };
+    validMsg[1]['participantGenderSelect' + i] = {
+        notEqual: "請選擇性別"
     };
 }

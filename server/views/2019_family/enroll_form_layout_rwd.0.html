@@ -36,192 +36,192 @@
                 <div class="col-12 text-center bg-main">IBM 2019 Family Day 報名</div>
               </div>
               <div class="row row-flex">
-                <div class="col-6 col-md-6 align-middle bg-normal-title col-v-centered">IBMer報名資料</div>
+                <div class="col-6 col-md-6 align-middle bg-normal-title col-v-centered">基本資料
+                </div>
                 <div class="col-6 col-md-6 align-middle bg-normal-title col-v-centered">
-                  <div id="userTypeButtons" style="display: none;">
-                    <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="userTypeRadioOptions"
-                        id="userTypeRadioOptions1" value="regular" readonly="readonly">
-                      <label class="form-check-label" for="userTypeRadioOptions1">Regular</label>
+                    <div id="userTypeButtons" style="display: none;">
+                        <div class="form-check form-check-inline">
+                          <input class="form-check-input" type="radio" name="userTypeRadioOptions"
+                            id="userTypeRadioOptions1" value="regular" readonly="readonly">
+                          <label class="form-check-label" for="userTypeRadioOptions1">Regular</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                          <input class="form-check-input" type="radio" name="userTypeRadioOptions"
+                            id="userTypeRadioOptions2" value="contractor" readonly="readonly">
+                          <label class="form-check-label" for="userTypeRadioOptions2">Contractor</label>
+                        </div>
+                      </div>
+                      <span id="userTypeWording"></span>
+                </div>
+              </div>
+              <div class="row row-flex">
+                <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
+                    <div> <span class="badge badge-secondary">員工證號 (Serial No)</span>
+                      <input type="text" class="form-control" id="inputSN" placeholder="Enter SN" readonly="readonly">
+                    </div>                  
+                </div>
+                <div class="col-6 col-md-3 align-middle bg-normal-top col-v-centered">
+                    <div> <span class="badge badge-secondary">Email</span>
+                      <input type="email" class="form-control" id="inputEmail" name="inputEmail"
+                        aria-describedby="emailHelp" placeholder="Enter email" readonly="readonly"></div>
+                </div>
+                <div class="col-6 col-md-3 align-middle bg-normal-top col-v-centered">
+                    <div>
+                        <span class="badge badge-secondary">英文姓名 (English Name)</span>
+                        <input type="text" class="form-control" id="inputEnglishName" name="inputEnglishName"
+                          placeholder="Enter English Name" readonly="readonly">
+                      </div>
+                </div>
+                <div class="col-6 col-md-3 align-middle bg-normal-top col-v-centered">
+                    <div>
+                        <span class="badge badge-secondary">中文姓名 (Chinese Name)</span>
+                        <input type="text" class="form-control" id="inputChineseName1" name="inputChineseName1"
+                          placeholder="請輸入中文姓名"></div>                 
+                </div>
+              </div>
+              <div class="row row-flex">
+                <div class="col-6 col-md-3 align-middle bg-normal-middle-left col-v-centered">
+                    <div>
+                        <span class="badge badge-secondary">部門 (Department)</span>
+                        <select class="form-control" id="departmentSelect1" name="departmentSelect1">
+                          <option>請選擇</option>
+                          <option>Analytic</option>
+                          <option>CDL</option>
+                          <option>Cloud</option>
+                          <option>Cognitive Solution</option>
+                          <option>CSL</option>
+                          <option>CTA</option>
+                          <option>Digital Business</option>
+                          <option>ESU (T1-T6)</option>
+                          <option>F&O</option>
+                          <option>GBP</option>
+                          <option>GBS</option>
+                          <option>GTS</option>
+                          <option>HR</option>
+                          <option>IGF</option>
+                          <option>Legal</option>
+                          <option>M&C</option>
+                          <option>System Hardware</option>
+                          <option>System Software</option>
+                          <option>T&O / Finance</option>
+                          <option>Others</option>
+                        </select>
+                      </div>
+                </div>
+                <div class="col-6 col-md-3 align-middle bg-normal-middle col-v-centered">
+                    <div>
+                        <span class="badge badge-secondary">位置 (Location)</span>
+                        <select class="form-control" id="locationSelect1" name="locationSelect1">
+                          <option>請選擇</option>
+                          <option>CFC</option>
+                          <option>NKO</option>
+                          <option>Beitou</option>
+                          <option>林口E-Center</option>
+                        </select>
+                      </div>                  
+                </div>
+                <div class="col-6 col-md-3 align-middle bg-normal-middle col-v-centered">
+                    <div>
+                        <span class="badge badge-secondary">手機號碼 (Mobile)</span>
+                        <input type="text" class="form-control" id="mobileNo1" name="mobileNo1" placeholder="格式：09XXXXXXXX">
+                      </div>
+                </div>
+                <div class="col-6 col-md-3 align-middle bg-normal-middle col-v-centered">
+                    <div>
+                        <span class="badge badge-secondary">身份證字號 (ID)</span>
+                        <input type="text" class="form-control" name="inputID" id="inputID" placeholder="請輸入身份證字號">
+                      </div>
+                </div>
+              </div>
+              <div class="row row-flex">
+                <div class="col-6 col-md-3 align-middle bg-normal-bottom-left col-v-centered">
+                    <div><span class="badge badge-secondary">生日 (Birth Day)</span>
+                      <input type="text" class="form-control" name="birthDay" id="birthDay" placeholder="請選擇">
                     </div>
-                    <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="userTypeRadioOptions"
-                        id="userTypeRadioOptions2" value="contractor" readonly="readonly">
-                      <label class="form-check-label" for="userTypeRadioOptions2">Contractor</label>
+                </div>
+                <div class="col-6 col-md-3 align-middle bg-normal-bottom col-v-centered">
+                    <div><span class="badge badge-secondary">姓別 (Gender)</span>
+                      <select class="form-control" id="genderSelect1" name="genderSelect1">
+                          <option>請選擇</option>
+                          <option value="female">女 (Female)</option>
+                          <option value="male">男 (Male)</option>
+                          <option value="other">其它 (Other)</option>
+                        </select>
+                    </div> 
+                </div>
+                <div class="col-6 col-md-3 align-middle bg-normal-bottom col-v-centered">
+                  <div><span class="badge badge-secondary">攜伴人數 (Friends #)</span>
+                    <div>
+                      <div class="form-check form-check-inline">
+                        <label class="form-check-label" for="inputParticipant">
+                          <input type="number" min="0" max="10" class="form-control" name="inputParticipant"
+                            id="inputParticipant" value="0" placeholder="請輸入攜伴人數">
+                        </label>
+                      </div>
                     </div>
                   </div>
-                  <span id="userTypeWording"></span>
                 </div>
-              </div>
-              <div class="row row-flex">
-                <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
-                  <div> <span class="badge badge-secondary">員工證號 (Serial No)</span>
-                    <input type="text" class="form-control" id="inputSN" placeholder="Enter SN" readonly="readonly">
+                <div class="col-6 col-md-3 align-middle bg-normal-bottom col-v-centered">
+                    <div><span class="badge badge-secondary">參加費用 (Fee of Participation)</span>
+                      <div class="form-check form-check-inline">
+                            NT$<div class="form-control" id="participantFeeWording" readonly="readonly">0</div>元</div>
+                          <input class=".sr-only" name="participantFee" id="participantFee" type="hidden" value="0">
+                    </div>
                   </div>
-                </div>
-                <div class="col-6 col-md-3 align-middle bg-no-left col-v-centered">
-                  <div> <span class="badge badge-secondary">Email</span>
-                    <input type="email" class="form-control" id="inputEmail" name="inputEmail"
-                      aria-describedby="emailHelp" placeholder="Enter email" readonly="readonly"></div>
-
-                </div>
-                <div class="col-6 col-md-3 align-middle bg-no-left col-v-centered">
-                  <div>
-                    <span class="badge badge-secondary">英文姓名 (English Name)</span>
-                    <input type="text" class="form-control" id="inputEnglishName" name="inputEnglishName"
-                      placeholder="Enter English Name" readonly="readonly">
-                  </div>
-                </div>
-                <div class="col-6 col-md-3 align-middle bg-no-left col-v-centered">
-                  <div>
-                    <span class="badge badge-secondary">中文姓名 (Chinese Name)</span>
-                    <input type="text" class="form-control" id="inputChineseName1" name="inputChineseName1"
-                      placeholder="請輸入中文姓名"></div>
-                </div>
-              </div>
-              <div class="row row-flex">
-                <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">
-                  <div>部門 <span class="d-lg-none"><br /></span>(Department)：</div>
-                </div>
-                <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
-                  <div><select class="form-control" id="departmentSelect1" name="departmentSelect1">
-                      <option>請選擇</option>
-                      <option>Analytic</option>
-                      <option>CDL</option>
-                      <option>Cloud</option>
-                      <option>Cognitive Solution</option>
-                      <option>CSL</option>
-                      <option>CTA</option>
-                      <option>Digital Business</option>
-                      <option>ESU (T1-T6)</option>
-                      <option>F&O</option>
-                      <option>GBP</option>
-                      <option>GBS</option>
-                      <option>GTS</option>
-                      <option>HR</option>
-                      <option>IGF</option>
-                      <option>Legal</option>
-                      <option>M&C</option>
-                      <option>System Hardware</option>
-                      <option>System Software</option>
-                      <option>T&O / Finance</option>
-                      <option>Others</option>
-                    </select></div>
-                </div>
-                <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">
-                  <div>位置 <span class="d-lg-none"><br /></span>(Location)：</div>
-                </div>
-                <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
-                  <div><select class="form-control" id="locationSelect1" name="locationSelect1">
-                      <option>請選擇</option>
-                      <option>CFC</option>
-                      <option>NKO</option>
-                      <option>Beitou</option>
-                      <option>林口E-Center</option>
-                    </select></div>
-                </div>
-              </div>
-              <div class="row row-flex">
-                <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">
-                  <div>手機號碼 <span class="d-lg-none"><br /></span>(Mobile)：<br />* 電子入場券將發送至此門號</div>
-                </div>
-                <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
-                  <div><input type="text" class="form-control" id="mobileNo1" name="mobileNo1"
-                      placeholder="格式：09XXXXXXXX"></div>
-                </div>
-                <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered"></div>
-                <div class="col-6 col-md-3 align-middle bg-normal col-v-centered"></div>
-              </div>
-              <div class="row row-flex">
-                <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">
-                  <div>身份證字號 <span class="d-lg-none"><br /></span>(ID)：</div>
-                </div>
-                <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
-                  <div><input type="text" class="form-control" name="inputID" id="inputID" placeholder="請輸入身份證字號"></div>
-                </div>
-                <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">
-                  <div>生日 <span class="d-lg-none"><br /></span>(Birth Day)：</div>
-                </div>
-                <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
-                  <input type="text" class="form-control" name="birthDay" id="birthDay" placeholder="請選擇">
-                </div>
               </div>
               <script type="text/x-jsrender" id="participantRow">
                 <div class="participantGroup{{:label}}">
                   <div class="row row-flex">
-                    <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">
-                      <div>親友{{:label}} (Friend {{:label}})：</div>
-                    </div>
                     <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
                       <div>
-                        <span class="badge badge-secondary">中文姓名 (Chinese Name)</span>
+                        <span class="badge badge-secondary">親友{{:label}}中文姓名 (Chinese Name {{:label}})</span>
                         <input type="text" class="form-control" id="inputParticipantChineseName{{:label}}"
                           name="inputParticipantChineseName{{:label}}" placeholder="請輸入親友{{:label}}中文姓名">
                       </div>
                     </div>
-                    <div class="col-6 col-md-3 align-middle bg-no-left col-v-centered">
+                    <div class="col-6 col-md-3 align-middle bg-normal-top col-v-centered">
                       <div>
-                        <span class="badge badge-secondary">身份證字號 (ID)</span>
+                        <span class="badge badge-secondary">親友{{:label}}身份證字號 (ID {{:label}})</span>
                         <input type="text" class="form-control" name="inputParticipantID{{:label}}"
                           id="inputParticipantID{{:label}}" placeholder="請輸入親友{{:label}}身份證字號">
                       </div>
                     </div>
-                    <div class="col-6 col-md-3 align-middle bg-no-left col-v-centered">
+                    <div class="col-6 col-md-3 align-middle bg-normal-top col-v-centered">
                       <div>
-                        <span class="badge badge-secondary">生日 (Birth Day)</span>
+                        <span class="badge badge-secondary">親友{{:label}}生日 (Birth Day {{:label}})</span>
                         <input type="text" class="form-control" name="participantBirthDay{{:label}}"
                           id="participantBirthDay{{:label}}" placeholder="請輸入">
                       </div>
+                    </div>
+                    <div class="col-6 col-md-3 align-middle bg-normal-top col-v-centered">
+                        <div><span class="badge badge-secondary">親友{{:label}}姓別 (Gender {{:label}})</span>
+                          <select class="form-control" id="participantGenderSelect{{:label}}" name="participantGenderSelect{{:label}}">
+                              <option>請選擇</option>
+                              <option value="female">女 (Female)</option>
+                              <option value="male">男 (Male)</option>
+                              <option value="other">其它 (Other)</option>
+                            </select>
+                        </div> 
                     </div>
                   </div>
                 </div>
               </script>
               <div class="row row-flex participantNumber">
-                <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">攜伴人數 <span
-                    class="d-lg-none"><br /></span>(Friends #)：</div>
-                <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
-                  <div>
-                    <div class="form-check form-check-inline">
-                      <label class="form-check-label" for="inputParticipant">
-                        <input type="number" min="0" max="10" class="form-control" name="inputParticipant"
-                          id="inputParticipant" value="0" placeholder="請輸入攜伴人數">
-                        <span class="badge badge-secondary">總數 (Released #)：<span
-                            id="totalPaidParticipantReleased"></span></span>
-                        <span class="badge badge-secondary">已登記 (Enrolled #)：<span
-                            id="totalPaidParticipantEnrolled"></span></span>
-                        <span class="badge badge-secondary">剩餘 (Remained #)：<span
-                            id="totalPaidParticipantRemained"></span></span>
-                      </label>
-                    </div>
+                  <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">親友資料
                   </div>
-                </div>
-                <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">參加費用 <span
-                    class="d-lg-none"><br /></span>(Fee of Participation)：</div>
-                <div class="col-6 col-md-3 align-middle bg-normal col-v-centered ">
-                  NT$<b><span id="participantFeeWording">0</span></b>元
-                  <input class=".sr-only" name="participantFee" id="participantFee" type="hidden" value="0">
-                </div>
-              </div>
-              <div class="row row-flex totalPaidParticipantNumber">
-                <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">
-                  <div>開放付費攜伴 (Paid Participant Released)：</div>
-                </div>
-                <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
-                  <div>
-
+                  <div class="col-6 col-md-3 align-middle bg-normal-title-right col-v-centered">
+                      <span class="badge badge-secondary">付費攜伴總數 (Released #)：<span
+                        id="totalPaidParticipantReleased"></span></span>
                   </div>
-                </div>
-                <div class="col-6 col-md-3 align-middle bg-no-left col-v-centered">
-                  <div>
-
+                  <div class="col-6 col-md-3 align-middle bg-normal-title-right col-v-centered">
+                    <span class="badge badge-secondary">已報名付費攜伴人數 (Enrolled #)：<span
+                        id="totalPaidParticipantEnrolled"></span></span>
                   </div>
-                </div>
-                <div class="col-6 col-md-3 align-middle bg-no-left col-v-centered">
-                  <div>
-
-                  </div>
-                </div>
-              </div>
+                  <div class="col-6 col-md-3 align-middle bg-normal-title-right col-v-centered">
+                    <span class="badge badge-secondary">可報名付費攜伴人數 (Remained #)：<span
+                        id="totalPaidParticipantRemained"></span></span>
+                  </div>                                    
+              </div>              
               <div class="row row-flex">
                 <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">搭車人數 <span
                     class="d-lg-none"><br /></span>(Passengers #)：</div>
@@ -386,10 +386,10 @@
                       <span class="badge badge-secondary">中文姓名 (Chinese Name)</span>：<span
                           id="inputParticipantChineseNameConfirm{{:label}}"></span>
                   </div>
-                  <div class="col-6 col-md-3 align-middle bg-no-left col-v-centered">
+                  <div class="col-6 col-md-3 align-middle bg-normal-top col-v-centered">
                       <span class="badge badge-secondary">身份證字號 (ID)</span>：<span id="inputParticipantIDConfirm{{:label}}"></span>
                   </div>
-                  <div class="col-6 col-md-3 align-middle bg-no-left col-v-centered">
+                  <div class="col-6 col-md-3 align-middle bg-normal-top col-v-centered">
                       <span class="badge badge-secondary">生日 (Birth Day)</span>：
                       <small>西元</small><span id="participantBirthDayConfirm{{:label}}Year"></span><small>年</small>
                       <span id="participantBirthDayConfirm{{:label}}Month"></span><small>月</small>

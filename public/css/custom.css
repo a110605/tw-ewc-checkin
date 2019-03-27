@@ -73,11 +73,37 @@
     border-left: 1px solid #999;
 }
 
-.bg-no-left {
+.bg-normal-top {
     color: #000;
     background-color: #fff;
     padding: 15px;
     border-top: 1px solid #999;
+}
+
+.bg-normal-middle {
+    color: #000;
+    background-color: #fff;
+    padding: 15px;
+}
+
+.bg-normal-middle-left {
+    color: #000;
+    background-color: #fff;
+    padding: 15px;
+    border-left: 1px solid #999;
+}
+
+.bg-normal-bottom {
+    color: #000;
+    background-color: #fff;
+    padding: 15px;
+}
+
+.bg-normal-bottom-left {
+    color: #000;
+    background-color: #fff;
+    padding: 15px;
+    border-left: 1px solid #999;
 }
 
 .bg-normal-title {
@@ -86,6 +112,13 @@
     padding: 15px;
     border-top: 1px solid #999;
     border-left: 1px solid #999;
+}
+
+.bg-normal-title-right {
+    color: #000;
+    background-color: #d9edf7;
+    padding: 15px;
+    border-top: 1px solid #999;
 }
 
 .form-text {
