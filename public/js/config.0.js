@@ -182,7 +182,7 @@ $(document).ready(function () {
         $("#shuttleFareConfirm").html(requestRegisterParams.shuttleFare);
         var participant = new Participant(usertype);
         participant.doInputConfirmList(requestRegisterParams.inputParticipant, requestRegisterParams.participants);
-
+        participant.doWording(0)
 
         $("#enrollSection").hide();
 
