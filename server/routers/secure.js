@@ -779,6 +779,28 @@ module.exports = function(app, config, passport) {
         }
     });
 
+    // 查詢 enrolled paid participant number
+    router.get('/form/query_paid_participant_number',function(req, res){
+        customlogger.info('/form/query_paid_participant_number');
+        customlogger.info('req=', req.body);
+        if (req.user) {
+            customlogger.info(req.user.uid);
+            enroll_db.view('enroll_views', 'paid-participants-view', function(err, data){
+                if(err == null) {
+                    res.json({"success": true, "result": data.rows[0].value});
+                } else {
+                    res.json({"success": false, "message": "error to reach backend."});
+                    res.status(400);
+                }
+            });
+        } else {
+            res.json({"success": false, "message": "unable to get paid participants number."});
+            res.status(400);
+        }
+    });
+
+    https://b53f2030-f333-4496-bafc-31efff6519a9-bluemix.cloudant.com/enroll/_design/enroll_views/_view/paid-participants-view
+
     // 查詢 user profile
     router.get('/form/query_enroll_last_record',function(req, res){
         customlogger.info('/form/query_enroll_last_record');

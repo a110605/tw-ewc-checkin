@@ -6,8 +6,6 @@ $(document).ready(function () {
     $("#inputShuttle").val(0)
     $("#inputShuttle").attr("max", 1)
     $("#shuttleFare").val(0)
-    $("#totalPaidParticipantReleased").text(totalPaidParticipantReleased)
-
 
     $("#loading").hide();
 
@@ -57,6 +55,13 @@ $(document).ready(function () {
                         participant.doFee(result.inputParticipant)
                         participant.doWording(result.inputParticipant)
                         participant.doMaxAttr()
+
+                        setPaidParticipantNumber({
+                            releasedNumber: totalPaidParticipantReleased,
+                            releasedLocator: '#totalPaidParticipantReleased',
+                            enrolledLocator: '#totalPaidParticipantEnrolled',
+                            remainedLocator: '#totalPaidParticipantRemained'
+                        })
                         
                         $('#personalInfoCheckbox1').prop('checked', true);
                         $("#backToEventBtn").show();

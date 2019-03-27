@@ -3,7 +3,7 @@ var getToken = function (callback) {
     $.ajax({
         'url': './getToken',
         'success': callback,
-        'error': callback
+        'error': function (xhr) { console.log(xhr)}
     });
 };
 
@@ -90,6 +90,18 @@ function brithDayWigetTemplate(label) {
     }
 }
 
+var setPaidParticipantNumber = function (req) {
+    ajaxProcessor('GET', './form/query_paid_participant_number', {}, 
+        function (res) {
+            if (res.success) {
+                $(req.releasedLocator).text(req.releasedNumber)
+                $(req.enrolledLocator).text(res.result)
+                $(req.remainedLocator).text(Number(req.releasedNumber) - Number(res.result))
+            }
+        }
+    );
+};
+
 class Participant {
     constructor(type) {
         this.id = "inputParticipant";
@@ -148,7 +160,6 @@ class Participant {
                     }
                 }
             } else {
-                // $("#" + this.id).attr('disabled', true);
                 $(".totalPaidParticipantNumber").hide();
             }
 
@@ -201,6 +212,12 @@ class Participant {
             this.doInputList(inputParticipantVal)
             this.doShuttle(inputParticipantVal)
             this.doMaxAttr()
+            setPaidParticipantNumber({
+                releasedNumber: totalPaidParticipantReleased,
+                releasedLocator: '#totalPaidParticipantReleased',
+                enrolledLocator: '#totalPaidParticipantEnrolled',
+                remainedLocator: '#totalPaidParticipantRemained'
+            })
         };
     }
 }
@@ -412,57 +429,3 @@ for (var i = 1; i <= $("#inputParticipant").attr('max'); i++) {
         notEqual: "請選擇日"
     };
 }
-
-var getRemainedPaidParticipantNumber = function () {
-        
-    ajaxProcessor('GET', './form/query_enroll_hist', { "querySN": currentQueryLastRecord.inputSN },
-        function (data) {
-            if (data.success) {
-                var result = data.result;
-                console.log(data.result);
-                var rowsHTML = "";
-                for (var i = 0; i < result.length; i++) {
-                    var currentResultSet = result[i];
-
-                    var lastModUser = (lastModUser) ? currentResultSet.lastModUser.split("|") : "";
-                    var lastModTs = currentResultSet.lastModTs.replace(/T/g, " ").replace(/Z/g, " ");
-
-                    var details =
-                        "員工類型:" + currentResultSet.userTypeRadioOptions + "<br />" +
-                        "員工證號:" + currentResultSet.inputSN + "<br />" +
-                        "電子郵件:" + currentResultSet.inputEmail + "<br />" +
-                        "英文姓名:" + currentResultSet.inputEnglishName + "<br />" +
-                        "中文姓名:" + currentResultSet.inputChineseName1 + "<br />" +
-                        "部門:" + currentResultSet.departmentSelect1 + "<br />" +
-                        "位置:" + currentResultSet.locationSelect1 + "<br />" +
-                        "手機號碼:" + currentResultSet.mobileNo1 + "<br />" +
-                        "身份證字號:" + currentResultSet.mobileNo1 + "<br />" +
-                        "生日:" + currentResultSet.mobileNo1 + "<br />" +
-                        "攜伴人數:" + currentResultSet.inputParticipant + "<br />" +
-                        "參加費用:" + currentResultSet.participantFee + "<br />" +
-                        "搭車人數:" + currentResultSet.inputShuttle + "<br />" +
-                        "搭車費用:" + currentResultSet.shuttleFare + "<br />";
-                    
-                    for (var j = 1; j <= currentResultSet.inputParticipant; j++) {
-                        var tmp = (currentResultSet.participants['inputParticipantChineseName'+j] ? "親友: " + j + "之中文姓名: " + currentResultSet.participants['inputParticipantChineseName'+j] : "")
-                        + (currentResultSet.participants['inputParticipantID'+j]? "身份證字號: " + currentResultSet.participants['inputParticipantID'+j] : "")
-                        + (currentResultSet.participants['participantBirthDay'+j+ 'Year'] ? "生日: 西元" + currentResultSet.participants['participantBirthDay'+j+ 'Year'] + "年" : "")
-                        + (currentResultSet.participants['participantBirthDay'+j+ 'Month'] ? currentResultSet.participants['participantBirthDay'+j+ 'Month'] + "月" : "")
-                        + (currentResultSet.participants['participantBirthDay'+j+ 'Day'] ? currentResultSet.participants['participantBirthDay'+j+ 'Day'] + "日" : "")
-                        if(tmp.length > 0) {
-                            details = details + tmp + "<br />";
-                        }    
-                    }  
-
-                    var currentRow = '<tr><th scope="row">' + lastModTs + '</th><td colspan="3">' + details + '</td></tr>';
-                    rowsHTML += currentRow;
-                }
-
-                $("#hist_title").html(currentQueryLastRecord.inputEnglishName + " " + currentQueryLastRecord.inputChineseName1 + " (" + currentQueryLastRecord.inputSN + ") 的歷史紀錄");
-                $("#hist_rows").html(rowsHTML);
-                $("#histSection").show();
-
-            }
-        }
-    );
-};

@@ -54,31 +54,28 @@
                 </div>
               </div>
               <div class="row row-flex">
-                <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">
-                  <div>員工證號 <span class="d-lg-none"><br /></span>(Serial No)：</div>
-                </div>
                 <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
-                  <input type="text" class="form-control" id="inputSN" placeholder="Enter SN" readonly="readonly">
+                  <div> <span class="badge badge-secondary">員工證號 (Serial No)</span>
+                    <input type="text" class="form-control" id="inputSN" placeholder="Enter SN" readonly="readonly">
+                  </div>
                 </div>
-                <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">Email：</div>
-                <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
-                  <input type="email" class="form-control" id="inputEmail" name="inputEmail"
-                    aria-describedby="emailHelp" placeholder="Enter email" readonly="readonly">
+                <div class="col-6 col-md-3 align-middle bg-no-left col-v-centered">
+                  <div> <span class="badge badge-secondary">Email</span>
+                    <input type="email" class="form-control" id="inputEmail" name="inputEmail"
+                      aria-describedby="emailHelp" placeholder="Enter email" readonly="readonly"></div>
+
                 </div>
-              </div>
-              <div class="row row-flex">
-                <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">
-                  <div>英文姓名 <span class="d-lg-none"><br /></span>(English Name)：</div>
+                <div class="col-6 col-md-3 align-middle bg-no-left col-v-centered">
+                  <div>
+                    <span class="badge badge-secondary">英文姓名 (English Name)</span>
+                    <input type="text" class="form-control" id="inputEnglishName" name="inputEnglishName"
+                      placeholder="Enter English Name" readonly="readonly">
+                  </div>
                 </div>
-                <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
-                  <input type="text" class="form-control" id="inputEnglishName" name="inputEnglishName"
-                    placeholder="Enter English Name" readonly="readonly">
-                </div>
-                <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">
-                  <div>中文姓名 <span class="d-lg-none"><br /></span>(Chinese Name)：</div>
-                </div>
-                <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
-                  <div><input type="text" class="form-control" id="inputChineseName1" name="inputChineseName1"
+                <div class="col-6 col-md-3 align-middle bg-no-left col-v-centered">
+                  <div>
+                    <span class="badge badge-secondary">中文姓名 (Chinese Name)</span>
+                    <input type="text" class="form-control" id="inputChineseName1" name="inputChineseName1"
                       placeholder="請輸入中文姓名"></div>
                 </div>
               </div>
@@ -188,6 +185,12 @@
                       <label class="form-check-label" for="inputParticipant">
                         <input type="number" min="0" max="10" class="form-control" name="inputParticipant"
                           id="inputParticipant" value="0" placeholder="請輸入攜伴人數">
+                        <span class="badge badge-secondary">總數 (Released #)：<span
+                            id="totalPaidParticipantReleased"></span></span>
+                        <span class="badge badge-secondary">已登記 (Enrolled #)：<span
+                            id="totalPaidParticipantEnrolled"></span></span>
+                        <span class="badge badge-secondary">剩餘 (Remained #)：<span
+                            id="totalPaidParticipantRemained"></span></span>
                       </label>
                     </div>
                   </div>
@@ -200,28 +203,25 @@
                 </div>
               </div>
               <div class="row row-flex totalPaidParticipantNumber">
-                  <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">
-                    <div>開放付費攜伴 (Paid Participant Released)：</div>
+                <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">
+                  <div>開放付費攜伴 (Paid Participant Released)：</div>
+                </div>
+                <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
+                  <div>
+
                   </div>
-                  <div class="col-6 col-md-3 align-middle bg-normal col-v-centered">
-                    <div>
-                      <span class="badge badge-secondary">總數 (Total#)</span>
-                      <span id="totalPaidParticipantReleased"></span>
-                    </div>
+                </div>
+                <div class="col-6 col-md-3 align-middle bg-no-left col-v-centered">
+                  <div>
+
                   </div>
-                  <div class="col-6 col-md-3 align-middle bg-no-left col-v-centered">
-                    <div>
-                      <span class="badge badge-secondary">已登記人數 (Enrolled #)</span>
-                      <span id="totalPaidParticipantEnrolled"></span>
-                    </div>
+                </div>
+                <div class="col-6 col-md-3 align-middle bg-no-left col-v-centered">
+                  <div>
+
                   </div>
-                  <div class="col-6 col-md-3 align-middle bg-no-left col-v-centered">
-                    <div>
-                      <span class="badge badge-secondary">剩餘人數 (Remained #)</span>
-                      <span id="totalPaidParticipantRemained"></span>
-                    </div>
-                  </div>
-              </div>            
+                </div>
+              </div>
               <div class="row row-flex">
                 <div class="col-6 col-md-3 align-middle bg-normal-title col-v-centered">搭車人數 <span
                     class="d-lg-none"><br /></span>(Passengers #)：</div>
@@ -247,9 +247,9 @@
                   每位500元), 請於報名送出後與 Mimmie Chu/Taiwan/Contr/IBM (#3841) 聯繫</div>
               </div>
               <div class="row row-flex contractorParticipantWording">
-                  <div class="col-12 col-md-12 align-middle bg-normal-title col-v-centered">CWF
-                    Contractor/IA-in無法攜帶親友, 每位500元</div>
-              </div>  
+                <div class="col-12 col-md-12 align-middle bg-normal-title col-v-centered">CWF
+                  Contractor/IA-in無法攜帶親友, 每位500元</div>
+              </div>
               <div class="row row-flex">
                 <div class="col-12 col-md-12 align-middle bg-normal col-v-centered">
                   <div>

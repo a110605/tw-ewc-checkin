@@ -134,6 +134,12 @@ $(document).ready(function () {
                     participant.doFee(last_hist.inputParticipant)
                     participant.doWording(last_hist.inputParticipant)
                     participant.doMaxAttr()
+                    setPaidParticipantNumber({
+                        releasedNumber: totalPaidParticipantReleased,
+                        releasedLocator: '#totalPaidParticipantReleased',
+                        enrolledLocator: '#totalPaidParticipantEnrolled',
+                        remainedLocator: '#totalPaidParticipantRemained'
+                    })
 
                     if (postMessage) {
                         $("#success_msg").html(postMessage);
