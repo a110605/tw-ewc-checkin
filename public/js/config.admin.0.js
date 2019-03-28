@@ -128,21 +128,21 @@ $(document).ready(function () {
                     $("#inputShuttle").val(last_hist.inputShuttle);
                     $("#shuttleFare").val(last_hist.shuttleFare);
 
+                    checkReleasedCapacity({
+                        url: './form/query_paid_participant_number',
+                        released: paidParticipantReleased,
+                        releasedLocator: '#paidParticipantReleased',
+                        enrolledLocator: '#paidParticipantEnrolled',
+                        remainedLocator: '#paidParticipantRemained',
+                        inputLocator: '#inputParticipant'
+                    })
                     var participant = new Participant(usertype);
                     participant.doInputList(last_hist.inputParticipant, last_hist.participants)
                     participant.doShuttle(last_hist.inputParticipant)
                     participant.doFee(last_hist.inputParticipant)
                     participant.doWording(last_hist.inputParticipant)
                     participant.doMaxAttr()
-                    checkReleasedCapacity({
-                        url: './form/query_paid_participant_number',
-                        released: paidParticipantReleased,
-                        threshold: paidParticipantThreshold,
-                        releasedLocator: '#paidParticipantReleased',
-                        enrolledLocator: '#paidParticipantEnrolled',
-                        remainedLocator: '#paidParticipantRemained',
-                        inputLocator: '#inputParticipant'
-                    })
+  
 
                     if (postMessage) {
                         $("#success_msg").html(postMessage);
@@ -269,16 +269,11 @@ $(document).ready(function () {
                     var enrolled = res.result
                     var remained = Number(released) - Number(enrolled)
 
-                    var orig = $("#inputParticipant1").val()
-                    var threshold = paidParticipantThreshold
-                    var buffer = Number(orig) - Number(threshold)
-                    if (buffer < 0) {
-                        buffer = 0
-                    }
-
+                    var reserved = $("#inputParticipant1").val()
+                    var capacity = Number(reserved) + remained
                     var current = confirmedRequestRegisterParams.inputParticipant
-                    var extra = Number(current) - Number(threshold) - buffer
-                    if (extra > remained) {
+
+                    if(current > capacity){
                         $('#postModalText').html("報名沒有成功，因可付費報名人數超過餘額，請再嘗試一次");
                     }
                 }
@@ -385,11 +380,11 @@ $(document).ready(function () {
 
     $("#inputParticipant").change(function () {
         var participant = new Participant(usertype);
-        participant.onChange()
+        participant.doChange()
     });
     $("#inputShuttle").change(function () {
         var shuttle = new Shuttle(usertype);
-        shuttle.onChange();
+        shuttle.doChange();
     });
 
 

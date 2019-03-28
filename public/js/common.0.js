@@ -100,20 +100,12 @@ var checkReleasedCapacity = function (req) {
                 $(req.enrolledLocator).text(enrolled)
                 $(req.remainedLocator).text(remained)
 
-                var orig = $(req.inputLocator + "1").val()
-                var threshold = req.threshold
-                var buffer = Number(orig) - Number(threshold)
-                if(buffer < 0) {
-                    buffer = 0
-                }
-                console.log("buffer: " + buffer)
-                var current = $(req.inputLocator).val()
-                var extra = Number(current) - Number(threshold) - buffer
-                console.log("extra: " + extra)
-                if(extra > remained){
-                    $(req.inputLocator).attr("Max", orig)
-                } else {
+                var reserved = $(req.inputLocator + "1").val()
+                var capacity = Number(reserved) + remained
+                if(capacity > 10){
                     $(req.inputLocator).attr("Max", 10)
+                } else {
+                    $(req.inputLocator).attr("Max", capacity)
                 }
             }
         }
@@ -224,11 +216,10 @@ class Participant {
                 $("#inputShuttle").attr("max", 1)
             }
         }
-        this.onChange = function () {
+        this.doChange = function () {
             checkReleasedCapacity({
                 url: './form/query_paid_participant_number',
                 released: paidParticipantReleased,
-                threshold: paidParticipantThreshold,
                 releasedLocator: '#paidParticipantReleased',
                 enrolledLocator: '#paidParticipantEnrolled',
                 remainedLocator: '#paidParticipantRemained',
@@ -250,7 +241,7 @@ class Shuttle {
         this.price = (type == "Regular" ? 150 : 300);
         this.fare = "shuttleFare"
         this.fareWording = "shuttleFareWording"
-        this.onChange = function () {
+        this.doChange = function () {
             var inputShuttleVal = $("#" + this.id).val()
             if (inputShuttleVal > 0) {
                 $("." + this.wordking).show();
