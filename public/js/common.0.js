@@ -1,4 +1,3 @@
-var totalPaidParticipantReleased = 200
 var getToken = function (callback) {
     $.ajax({
         'url': './getToken',
@@ -90,13 +89,32 @@ function brithDayWigetTemplate(label) {
     }
 }
 
-var setPaidParticipantNumber = function (req) {
-    ajaxProcessor('GET', './form/query_paid_participant_number', {}, 
+var checkReleasedCapacity = function (req) {
+    ajaxProcessor('GET', req.url, {}, 
         function (res) {
             if (res.success) {
-                $(req.releasedLocator).text(req.releasedNumber)
-                $(req.enrolledLocator).text(res.result)
-                $(req.remainedLocator).text(Number(req.releasedNumber) - Number(res.result))
+                var released = req.released
+                var enrolled = res.result
+                var remained = Number(released) - Number(enrolled)
+                $(req.releasedLocator).text(released)
+                $(req.enrolledLocator).text(enrolled)
+                $(req.remainedLocator).text(remained)
+
+                var orig = $(req.inputLocator + "1").val()
+                var threshold = req.threshold
+                var buffer = Number(orig) - Number(threshold)
+                if(buffer < 0) {
+                    buffer = 0
+                }
+                console.log("buffer: " + buffer)
+                var current = $(req.inputLocator).val()
+                var extra = Number(current) - Number(threshold) - buffer
+                console.log("extra: " + extra)
+                if(extra > remained){
+                    $(req.inputLocator).attr("Max", orig)
+                } else {
+                    $(req.inputLocator).attr("Max", 10)
+                }
             }
         }
     );
@@ -119,9 +137,9 @@ class Participant {
             }
         }
         this.doFee = function (inputParticipantVal) {
-            if (type == "Regular" && inputParticipantVal > 3) {
-                $("#" + this.feeWording).text((inputParticipantVal - 3) * this.price)
-                $("#" + this.fee).val((inputParticipantVal - 3) * this.price)
+            if (type == "Regular" && inputParticipantVal > paidParticipantThreshold) {
+                $("#" + this.feeWording).text((inputParticipantVal - paidParticipantThreshold) * this.price)
+                $("#" + this.fee).val((inputParticipantVal - paidParticipantThreshold) * this.price)
             } else if (type == "Contractor") {
                 $("#" + this.feeWording).text(this.price)
             } else {
@@ -207,18 +225,21 @@ class Participant {
             }
         }
         this.onChange = function () {
+            checkReleasedCapacity({
+                url: './form/query_paid_participant_number',
+                released: paidParticipantReleased,
+                threshold: paidParticipantThreshold,
+                releasedLocator: '#paidParticipantReleased',
+                enrolledLocator: '#paidParticipantEnrolled',
+                remainedLocator: '#paidParticipantRemained',
+                inputLocator: '#inputParticipant'
+            })
             var inputParticipantVal = $("#" + this.id).val()
             this.doWording(inputParticipantVal)
             this.doFee(inputParticipantVal)
             this.doInputList(inputParticipantVal)
             this.doShuttle(inputParticipantVal)
             this.doMaxAttr()
-            setPaidParticipantNumber({
-                releasedNumber: totalPaidParticipantReleased,
-                releasedLocator: '#totalPaidParticipantReleased',
-                enrolledLocator: '#totalPaidParticipantEnrolled',
-                remainedLocator: '#totalPaidParticipantRemained'
-            })
         };
     }
 }

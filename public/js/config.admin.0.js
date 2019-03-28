@@ -61,7 +61,7 @@ $(document).ready(function () {
                 setTimeout(function () {
 
                     $('#postLoadingModal').modal('hide');
-        
+
                 }, 500);
 
 
@@ -134,11 +134,14 @@ $(document).ready(function () {
                     participant.doFee(last_hist.inputParticipant)
                     participant.doWording(last_hist.inputParticipant)
                     participant.doMaxAttr()
-                    setPaidParticipantNumber({
-                        releasedNumber: totalPaidParticipantReleased,
-                        releasedLocator: '#totalPaidParticipantReleased',
-                        enrolledLocator: '#totalPaidParticipantEnrolled',
-                        remainedLocator: '#totalPaidParticipantRemained'
+                    checkReleasedCapacity({
+                        url: './form/query_paid_participant_number',
+                        released: paidParticipantReleased,
+                        threshold: paidParticipantThreshold,
+                        releasedLocator: '#paidParticipantReleased',
+                        enrolledLocator: '#paidParticipantEnrolled',
+                        remainedLocator: '#paidParticipantRemained',
+                        inputLocator: '#inputParticipant'
                     })
 
                     if (postMessage) {
@@ -165,7 +168,7 @@ $(document).ready(function () {
     };
 
     var loadSingleUserEnrollHistInfo = function () {
-        
+
         ajaxProcessor('GET', './form/query_enroll_hist', { "querySN": currentQueryLastRecord.inputSN },
             function (data) {
                 if (data.success) {
@@ -193,17 +196,17 @@ $(document).ready(function () {
                             "參加費用:" + currentResultSet.participantFee + "<br />" +
                             "搭車人數:" + currentResultSet.inputShuttle + "<br />" +
                             "搭車費用:" + currentResultSet.shuttleFare + "<br />";
-                        
+
                         for (var j = 1; j <= currentResultSet.inputParticipant; j++) {
-                            var tmp = (currentResultSet.participants['inputParticipantChineseName'+j] ? "親友: " + j + "之中文姓名: " + currentResultSet.participants['inputParticipantChineseName'+j] : "")
-                            + (currentResultSet.participants['inputParticipantID'+j]? "身份證字號: " + currentResultSet.participants['inputParticipantID'+j] : "")
-                            + (currentResultSet.participants['participantBirthDay'+j+ 'Year'] ? "生日: 西元" + currentResultSet.participants['participantBirthDay'+j+ 'Year'] + "年" : "")
-                            + (currentResultSet.participants['participantBirthDay'+j+ 'Month'] ? currentResultSet.participants['participantBirthDay'+j+ 'Month'] + "月" : "")
-                            + (currentResultSet.participants['participantBirthDay'+j+ 'Day'] ? currentResultSet.participants['participantBirthDay'+j+ 'Day'] + "日" : "")
-                            if(tmp.length > 0) {
+                            var tmp = (currentResultSet.participants['inputParticipantChineseName' + j] ? "親友: " + j + "之中文姓名: " + currentResultSet.participants['inputParticipantChineseName' + j] : "")
+                                + (currentResultSet.participants['inputParticipantID' + j] ? "身份證字號: " + currentResultSet.participants['inputParticipantID' + j] : "")
+                                + (currentResultSet.participants['participantBirthDay' + j + 'Year'] ? "生日: 西元" + currentResultSet.participants['participantBirthDay' + j + 'Year'] + "年" : "")
+                                + (currentResultSet.participants['participantBirthDay' + j + 'Month'] ? currentResultSet.participants['participantBirthDay' + j + 'Month'] + "月" : "")
+                                + (currentResultSet.participants['participantBirthDay' + j + 'Day'] ? currentResultSet.participants['participantBirthDay' + j + 'Day'] + "日" : "")
+                            if (tmp.length > 0) {
                                 details = details + tmp + "<br />";
-                            }    
-                        }  
+                            }
+                        }
 
                         var currentRow = '<tr><th scope="row">' + lastModTs + '</th><td colspan="3">' + details + '</td></tr>';
                         rowsHTML += currentRow;
@@ -252,12 +255,44 @@ $(document).ready(function () {
         };
 
         for (var i = 1; i <= confirmedRequestRegisterParams.inputParticipant; i++) {
-            confirmedRequestRegisterParams['inputParticipantChineseName'+i] = $("#inputParticipantChineseName" + i).val()
-            confirmedRequestRegisterParams['inputParticipantID'+i] = $("#inputParticipantID" + i).val()
-            confirmedRequestRegisterParams['participantBirthDay'+i+ 'Year'] = $("select[name='participantBirthDay" + i + "Year']").val()
-            confirmedRequestRegisterParams['participantBirthDay'+i+ 'Month'] = $("select[name='participantBirthDay" + i + "Month']").val()
-            confirmedRequestRegisterParams['participantBirthDay'+i+ 'Day'] = $("select[name='participantBirthDay" + i + "Day']").val()
-        }   
+            confirmedRequestRegisterParams['inputParticipantChineseName' + i] = $("#inputParticipantChineseName" + i).val()
+            confirmedRequestRegisterParams['inputParticipantID' + i] = $("#inputParticipantID" + i).val()
+            confirmedRequestRegisterParams['participantBirthDay' + i + 'Year'] = $("select[name='participantBirthDay" + i + "Year']").val()
+            confirmedRequestRegisterParams['participantBirthDay' + i + 'Month'] = $("select[name='participantBirthDay" + i + "Month']").val()
+            confirmedRequestRegisterParams['participantBirthDay' + i + 'Day'] = $("select[name='participantBirthDay" + i + "Day']").val()
+        }
+
+        ajaxProcessor('GET', './form/query_paid_participant_number', {},
+            function (res) {
+                if (res.success) {
+                    var released = paidParticipantReleased
+                    var enrolled = res.result
+                    var remained = Number(released) - Number(enrolled)
+
+                    var orig = $("#inputParticipant1").val()
+                    var threshold = paidParticipantThreshold
+                    var buffer = Number(orig) - Number(threshold)
+                    if (buffer < 0) {
+                        buffer = 0
+                    }
+
+                    var current = confirmedRequestRegisterParams.inputParticipant
+                    var extra = Number(current) - Number(threshold) - buffer
+                    if (extra > remained) {
+                        $('#postModalText').html("報名沒有成功，因可付費報名人數超過餘額，請再嘗試一次");
+                    }
+                }
+            }
+            , function () {
+                $('#postModalText').html("確認可付費報名人數失敗，請再嘗試一次");
+                setTimeout(
+                    function () { 
+                        $('#postLoadingModal').modal("hide");
+                        $('#postModal').modal({ show: true });
+                        $("#success_msg").html("報名沒有成功，請再嘗試一次，如仍有問題請聯絡系統管理人員");
+                    }, 500);
+            }, true);
+
         ajaxProcessor('POST', './form/update_enroll', confirmedRequestRegisterParams,
             function (data) {
                 console.log(data);
@@ -291,7 +326,7 @@ $(document).ready(function () {
             sendModifyUser();
         }
     });
-  
+
     var initRule = validRule[1];
     var initMsg = validMsg[1];
     var currentRule = initRule;

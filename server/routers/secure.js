@@ -225,9 +225,15 @@ module.exports = function(app, config, passport) {
                         res.render("thankyou", {type: event.type});
                     } else {
                         if(nowDate >= enroll_s && nowDate < enroll_e) {                      
-                            res.render(`enroll_form_layout_rwd.${event.type}.pug`, {title: 'TW EWC Checik-in System', user : req.user});
+                            res.render(`enroll_form_layout_rwd.${event.type}.pug`, 
+                            {title: 'TW EWC Checik-in System',
+                             user : req.user,
+                            paidParticipantReleased:event.paid_participant_released,
+                            paidParticipantThreshold:event.paid_participant_threshold
+                            });
                         } else {
-                            res.render(`enroll_form_layout_rwd_lock.${event.type}.pug`, {title: 'TW EWC Checik-in System', user : req.user});
+                            res.render(`enroll_form_layout_rwd_lock.${event.type}.pug`, {title: 'TW EWC Checik-in System', user : req.user,
+                            paidParticipantReleased:event.paid_participant_released});
                         }
                     }
                 // Foreign (IA-in: International Assignment inbound) or vendor
@@ -335,7 +341,8 @@ module.exports = function(app, config, passport) {
                 // user type check
                 var currentSN = req.user.id.substring(0, 6);
                 if(adminList.indexOf(currentSN) > -1) {
-                    res.render(`enroll_admin.${event.type}.pug`, {title: 'TW EWC Enroll System', user : req.user, mode: 1});
+                    res.render(`enroll_admin.${event.type}.pug`, {title: 'TW EWC Enroll System', user : req.user, mode: 1,
+                    paidParticipantReleased:event.paid_participant_released});
                 } else {
                     res.render("not_found_error", {title: 'TW EWC Enroll System', user : req.user});
                 }
@@ -657,6 +664,18 @@ module.exports = function(app, config, passport) {
 
     };
 
+    var enrollQueryView = function(view, callback)  {
+        enroll_db.view('enroll_views', view, function(err, data){
+            if(err == null) {
+                customlogger.info('Query View ' + view + ' successful.');
+                callback(null, data)
+            } else {
+                customlogger.info('Query View ' + view + ' failed.');
+                callback(err, {})
+            }
+        });
+    }
+
     // 寄送報名資訊更新 Email
     var sendSuccessEnrollEmail = function(enrollInfo, emailReceiver, callback) {
         var emailSubject = event.name + " 報名資訊更新通知";
@@ -785,7 +804,7 @@ module.exports = function(app, config, passport) {
         customlogger.info('req=', req.body);
         if (req.user) {
             customlogger.info(req.user.uid);
-            enroll_db.view('enroll_views', 'paid-participants-view', function(err, data){
+            enrollQueryView('paid-participants-view', function(err, data){
                 if(err == null) {
                     res.json({"success": true, "result": data.rows[0].value});
                 } else {
@@ -794,7 +813,7 @@ module.exports = function(app, config, passport) {
                 }
             });
         } else {
-            res.json({"success": false, "message": "unable to get paid participants number."});
+            res.json({"success": false, "message": "You are not authorized to get paid participants number."});
             res.status(400);
         }
     });

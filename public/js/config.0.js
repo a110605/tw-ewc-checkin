@@ -46,6 +46,7 @@ $(document).ready(function () {
                         $("select[name='birthDayDay']").val(result.birthDayDay);
                         if (usertype == "Regular") {
                             $("#inputParticipant").val(result.inputParticipant);
+                            $("#inputParticipant1").val(result.inputParticipant);
                         }
                         $("#participantFee").val(result.participantFee);
                         $("#inputShuttle").val(result.inputShuttle);
@@ -58,11 +59,14 @@ $(document).ready(function () {
                         participant.doWording(result.inputParticipant)
                         participant.doMaxAttr()
 
-                        setPaidParticipantNumber({
-                            releasedNumber: totalPaidParticipantReleased,
-                            releasedLocator: '#totalPaidParticipantReleased',
-                            enrolledLocator: '#totalPaidParticipantEnrolled',
-                            remainedLocator: '#totalPaidParticipantRemained'
+                        checkReleasedCapacity({
+                            url: './form/query_paid_participant_number',
+                            released: paidParticipantReleased,
+                            threshold: paidParticipantThreshold,
+                            releasedLocator: '#paidParticipantReleased',
+                            enrolledLocator: '#paidParticipantEnrolled',
+                            remainedLocator: '#paidParticipantRemained',
+                            inputLocator: '#inputParticipant'
                         })
                         
                         $('#personalInfoCheckbox1').prop('checked', true);
@@ -251,6 +255,31 @@ $(document).ready(function () {
             confirmedRequestRegisterParams['participantBirthDay'+i+ 'Month'] = $("select[name='participantBirthDay" + i + "Month']").val()
             confirmedRequestRegisterParams['participantBirthDay'+i+ 'Day'] = $("select[name='participantBirthDay" + i + "Day']").val()
         }
+        ajaxProcessor('GET', './form/query_paid_participant_number', {}, 
+            function (res) {
+                if (res.success) {
+                    var released = paidParticipantReleased
+                    var enrolled = res.result
+                    var remained = Number(released) - Number(enrolled)
+
+                    var orig = $("#inputParticipant1").val()
+                    var threshold = paidParticipantThreshold
+                    var buffer = Number(orig) - Number(threshold)
+                    if(buffer < 0) {
+                        buffer = 0
+                    }
+    
+                    var current = confirmedRequestRegisterParams.inputParticipant.length
+                    var extra = Number(current) - Number(threshold) - buffer
+                    if(extra > remained){
+                        $('#postModalText').html("報名沒有成功，因可付費報名人數超過餘額，請再嘗試一次");
+                    }
+                }
+            }
+            , function () {
+                $('#postModalText').html("確認可付費報名人數失敗，請再嘗試一次");
+                setTimeout(function () { $('#postLoadingModal').modal("hide"); $('#postModal').modal({ show: true }); $("#confirmSectionStart").html("報名沒有成功，請再嘗試一次，如仍有問題請聯絡 EWC 工作人員"); }, 500);
+            }, true);
 
         ajaxProcessor('POST', './form/enroll', confirmedRequestRegisterParams,
             function (data) {
